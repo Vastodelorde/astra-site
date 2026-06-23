@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АСТРА — інформаційна архітектура нового сайту (05-information-architecture)</title>
+<style>
+  :root{
+    --navy:#0d1b3e; --navy2:#16275a; --red:#d6263b; --blue:#2f74d0; --blue-bg:#e8f0fb;
+    --ink:#1b2233; --muted:#5d6577; --line:#dde3ee; --card:#ffffff; --bg:#f6f8fc;
+    --home:#2f74d0; --biz:#d6263b;
+  }
+  *{box-sizing:border-box}
+  body{font-family:Inter,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg);margin:0;line-height:1.55;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  header.hero{background:linear-gradient(150deg,var(--navy),var(--navy2));color:#fff;padding:50px 0 40px}
+  .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:700;color:#7ea8e6;margin:0 0 12px}
+  h1{font-size:32px;margin:0 0 12px;font-weight:700;line-height:1.15}
+  header.hero p{color:#c5cee0;max-width:760px;margin:0;font-size:16px}
+  .redline{display:inline-block;width:56px;height:4px;background:var(--red);border-radius:2px;margin-top:20px}
+  h2{font-size:22px;margin:52px 0 6px;background:var(--navy);color:#fff;padding:10px 16px;border-radius:6px}
+  h3{font-size:18px;margin-top:30px;color:var(--navy);border-left:4px solid var(--red);padding-left:11px}
+  h4{font-size:15px;margin-top:22px;color:var(--navy2)}
+  .url{font-family:ui-monospace,monospace;font-size:12px;color:var(--blue);background:var(--blue-bg);padding:3px 7px;border-radius:3px;display:inline-block;margin:3px 0;word-break:break-all}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13px;background:#fff}
+  td,th{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:var(--navy);color:#fff;font-weight:600}
+  tr:nth-child(even) td{background:#fafbfe}
+  .tree{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;background:#0d1b3e;color:#dbe6f7;border-radius:8px;padding:18px 20px;line-height:1.7;overflow-x:auto;white-space:pre}
+  .tree .h{color:#7ea8e6}
+  .tree .r{color:#ff8a96}
+  .tree .ext{color:#ffd27a}
+  .tree .n{color:#9fe0b0}
+  nav.toc{background:#fff;border:1px solid var(--line);padding:16px 22px;border-radius:8px;font-size:14px;columns:2;margin-top:20px}
+  nav.toc a{color:var(--blue);text-decoration:none;display:block;padding:2px 0}
+  .meta{color:var(--muted);font-size:13px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:14px 0}
+  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;padding:2px 9px;border-radius:99px;vertical-align:middle;margin-left:6px}
+  .home{background:var(--blue-bg);color:var(--blue)}
+  .biz{background:#fbe4e7;color:var(--red)}
+  .cross{background:#eef7ee;color:#1f7a3a}
+  .new{background:#fff3cd;color:#8a6400;border:1px solid #ecd9a0}
+  .flag{background:#fff3cd;border:1px solid #e0b000;color:#7a5b00;padding:2px 7px;border-radius:3px;font-size:12px;font-weight:600}
+  .legend{font-size:13px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+  .mega{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:12px 0}
+  .megacol{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:13px}
+  .megacol b{display:block;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--red);padding-bottom:6px;margin-bottom:8px}
+  .megacol a,.megacol span.li{display:block;color:var(--ink);padding:3px 0;text-decoration:none}
+  @media(max-width:820px){.mega{grid-template-columns:1fr 1fr}nav.toc{columns:1}}
+  .tmpl{border:1px solid var(--line);border-radius:10px;padding:0;margin:14px 0;overflow:hidden;background:#fff}
+  .tmpl .head{background:var(--navy);color:#fff;padding:9px 16px;font-weight:600;font-size:15px}
+  .tmpl .body{padding:14px 18px;font-size:13.5px}
+  .tmpl ol{margin:6px 0;padding-left:22px}
+  .tmpl li{margin:4px 0}
+  .stack{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+  .chip{background:var(--blue-bg);color:var(--navy);border:1px solid #cfe0f5;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Документ 05 · Інформаційна архітектура</p>
+    <h1>АСТРА — інформаційна архітектура нового сайту</h1>
+    <p>Повний sitemap, структура мегаменю та футера, URL-схема (укр. slug-и), наскрізний мапінг контенту з інвентаря (нічого не губимо) і перелік шаблонів сторінок. Аудиторна вісь ДІМ / БІЗНЕС зверху; п'ять напрямків — наскрізний шар. Джерела: 01-content-inventory, 02-presentation-analysis, 03-brand-positioning.</p>
+    <span class="redline"></span>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="legend">
+  <b>Позначення:</b>
+  <span class="pill home">ДІМ</span> сторінка/секція для аудиторії «Дім»
+  <span class="pill biz">БІЗНЕС</span> для аудиторії «Бізнес»
+  <span class="pill cross">НАСКРІЗНЕ</span> спільне для обох
+  <span class="pill new">NEW</span> потрібен новий текст (немає на сайті)
+  <span class="flag">(уточнити)</span> звірити з компанією перед публікацією.
+</div>
+
+<nav class="toc">
+<b>Зміст:</b>
+<a href="#principles">0. Принципи архітектури</a>
+<a href="#sitemap">1. Повний sitemap (дерево)</a>
+<a href="#mega">2. Структура мегаменю (хедер)</a>
+<a href="#footer">3. Структура футера</a>
+<a href="#urls">4. URL-схема (укр. slug-и)</a>
+<a href="#mapping">5. Мапінг контенту → сторінки</a>
+<a href="#templates">6. Шаблони сторінок</a>
+<a href="#gaps">7. Прогалини контенту</a>
+</nav>
+
+<!-- ============================================================ -->
+<h2 id="principles">0. Принципи архітектури</h2>
+<div class="card">
+<ul>
+  <li><b>Верхній рівень = аудиторна вісь.</b> Дві точки входу — <span class="pill home">ДІМ</span> (фіз. особи: квартири, приватний сектор, гуртожитки) і <span class="pill biz">БІЗНЕС</span> (юр. особи, ОСББ, забудовники, ритейл, логістика, оператори). Перемикач ДІМ/БІЗНЕС живе в хедері постійно.</li>
+  <li><b>Напрямки = наскрізний продуктовий шар.</b> Інтернет · Телебачення · Безпека · Мережеві рішення · Хмара/ЦОД. Один напрямок може мати «домашнє» і «бізнес»-прочитання, але сторінка напрямку — спільна сутність із секціями під обидві аудиторії.</li>
+  <li><b>Наскрізні розділи</b> (поза аудиторною віссю): Про компанію, Підтримка/Інструкції, Контакти, Новини, Документи. Доступні з обох контекстів.</li>
+  <li><b>Магазин shop.astra.in.ua</b> — лише зовнішнє посилання в хедері/футері, НЕ частина sitemap нового сайту. Так само зовнішні: cabinet (особистий кабінет), speed (спідтест), cloud (де доречно — як підрозділ напрямку «Хмара»).</li>
+  <li><b>Lead-gen наскрізно.</b> «Перевірка адреси / покриття» + форма заявки («Передзвоніть мені») доступні з будь-якої сторінки (модалка + блок у футері).</li>
+  <li><b>Контент успадковано дослівно</b> (01-content-inventory). NEW-текст — лише в зонтичних B2B-вступах і там, де його реально немає.</li>
+</ul>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="sitemap">1. Повний sitemap (дерево)</h2>
+<p class="meta"><span class="r">Червоним</span> — B2B-гілка, <span class="ext" style="color:#b8860b">жовтим</span> — зовнішні посилання, <span class="n" style="color:#1f7a3a">зеленим</span> — NEW (новий текст). Slug-и — у розділі 4.</p>
+<div class="tree">/  <span class="h">Головна</span>  (хаб обох аудиторій, вибір ДІМ / БІЗНЕС)
+│
+├─ /dim/  <span class="h">ДІМ — лендинг аудиторії</span>  <span class="n">(NEW-обгортка)</span>
+│   └─ (агрегує домашні тарифи, ТБ, домофон, акції, покриття)
+│
+├─ /biznes/  <span class="r">БІЗНЕС — лендинг аудиторії</span>  <span class="n">(NEW B2B-лендинг)</span>
+│   ├─ /biznes/rishennia-za-typom-obiekta   <span class="r">Рішення за типом об'єкта</span>  <span class="n">(NEW)</span>
+│   │     офіси · ЖК/ОСББ · ритейл-HoReCa · склади-виробництва · готелі-коворкінги
+│   └─ /biznes/chomu-astra                  <span class="r">Чому обирають АСТРА</span>  <span class="n">(NEW)</span>
+│
+├─ <span class="h">НАПРЯМКИ</span>  (наскрізний шар — /napriamky/…)
+│   ├─ /internet/                      Інтернет  <span class="n">(вступ NEW)</span>
+│   │   ├─ /taryfy/dlia-bahatokvartyrnykh-budynkiv   Тарифи · Багатоквартирні
+│   │   ├─ /taryfy/dlia-pryvatnoho-sektoru           Тарифи · Приватний сектор
+│   │   ├─ /taryfy/dlia-hurtozhytkiv                 Тарифи · Гуртожитки
+│   │   ├─ /taryfy/dlia-biznesu                      <span class="r">Тарифи · Бізнес</span>
+│   │   ├─ /posluhy/statychna-ip-adresa              Постійна IP-адреса
+│   │   ├─ /posluhy/ipv6-adresa                      IPv6-адреса
+│   │   └─ /informatsiia/bezpechnyi-dns…             Безпечний DNS
+│   │
+│   ├─ /tv/                            Телебачення  <span class="n">(вступ-хаб NEW)</span>
+│   │   ├─ /tv/telebachennia-astra                   АСТРА TV
+│   │   ├─ /tv/telebachennia-megogo                  MEGOGO
+│   │   ├─ /tv/telebachennia-sweettv                 Sweet.tv
+│   │   ├─ /tv/telebachennia-youtv                   youtv
+│   │   └─ /tv/prosto-tv                             Кабельне «Просто ТБ» (DVB-C)  <span class="ext">(уточнити)</span>
+│   │
+│   ├─ /bezpeka/                       Безпека  <span class="n">(зонтичний вступ NEW)</span>
+│   │   ├─ /posluhy/astra-kamera                     Відеонагляд (Астра Камера)
+│   │   ├─ /posluhy/domofoniia                       Домофонія
+│   │   ├─ /bezpeka/skud                             <span class="r">СКУД (контроль доступу)</span>  <span class="n">(NEW)</span>
+│   │   ├─ /bezpeka/shlagbaumy                        <span class="r">Шлагбауми / в'їзні групи</span>  <span class="n">(NEW)</span>
+│   │   └─ /bezpeka/ohoronni-systemy-ajax            <span class="r">Охоронні системи (Ajax)</span>  <span class="ext">(уточнити)</span>
+│   │
+│   ├─ /merezhevi-rishennia/           Мережеві рішення  <span class="r">(зонтичний вступ NEW)</span>
+│   │   ├─ /posluhy/peering                          Піринг
+│   │   ├─ /merezhevi-rishennia/noc                  <span class="r">Послуги NOC</span>  <span class="n">(обгортка NEW)</span>
+│   │   ├─ /merezhevi-rishennia/sks-wifi             <span class="r">СКС / Wi-Fi / Mesh</span>  <span class="n">(NEW)</span>
+│   │   └─ /merezhevi-rishennia/volz                 <span class="r">ВОЛЗ / оптичні лінії</span>  <span class="n">(NEW)</span>
+│   │
+│   └─ /hmara/                         Хмара / ЦОД (Astra Cloud)  <span class="r">(хаб)</span>
+│       ├─ /hmara/kolokatsiia                        <span class="r">Колокація</span> (прайс)
+│       ├─ /hmara/vps                                <span class="r">VPS / VDS</span>  <span class="ext">(уточнити прайс)</span>
+│       ├─ /hmara/vydilenyi-server                   <span class="r">Виділений сервер</span>  <span class="ext">(уточнити)</span>
+│       └─ cloud.astra.in.ua                         <span class="ext">↗ зовнішній субдомен (повний кабінет ЦОД)</span>
+│
+├─ /spetspropozytsii/               <span class="h">Спецпропозиції</span> (хаб 5 акцій)
+│   ├─ /spetspropozytsii/z-namy-vyhidnishe          З нами вигідніше!
+│   ├─ /spetspropozytsii/druzi-zavzhdy-razom        Друзі завжди разом
+│   ├─ /spetspropozytsii/pershyi-u-pidizdi          Перший у під'їзді!
+│   ├─ /spetspropozytsii/astra-turbota              Астра Турбота (15%)
+│   └─ /spetspropozytsii/student                    Студент+
+│
+├─ /posluhy/                        <span class="h">Додаткові послуги</span> (хаб)
+│   ├─ /posluhy/orenda-obladnannia      Оренда обладнання
+│   ├─ /posluhy/pryzupynennia-posluh    Призупинення послуг
+│   ├─ /posluhy/kredyt                  Кредит
+│   ├─ /posluhy/spetsvyklyk             Спецвиклик
+│   ├─ /posluhy/wi-fi-iventy            Wi-Fi Івенти
+│   └─ /posluhy/dodatkovi               Додаткові при підключенні (+ NOC)
+│
+├─ <span class="h">НАСКРІЗНІ РОЗДІЛИ</span>
+│   ├─ /informatsiia/pro-kompaniiu      Про компанію
+│   ├─ /pidtrymka/                      Підтримка / Інструкції (хаб)  <span class="n">(хаб NEW)</span>
+│   │   ├─ /nalashtuvannia/…              Інструкції (PPPoE, DHCP, АСТРА TV: ПК/Samsung/iOS/Android)
+│   │   ├─ /informatsiia/oplata          Оплата (методи)
+│   │   └─ /informatsiia/dns-zablokovani-zahrozy   DNS — заблоковані загрози
+│   ├─ /informatsiia/kontakty           Контакти
+│   ├─ /informatsiia/novyny/            Новини (стрічка + статті)
+│   └─ /informatsiia/dokumenty          Документи
+│       ├─ /informatsiia/dohovir-oferta              Договір-оферта
+│       ├─ /informatsiia/pokaznyky-iakosti-posluh…   Показники якості
+│       └─ /informatsiia/vakansii                    Вакансії
+│
+└─ <span class="ext">ЗОВНІШНІ ПОСИЛАННЯ (не в sitemap):</span>
+    ├─ shop.astra.in.ua      <span class="ext">↗ Магазин (Astra SHOP)</span>
+    ├─ cabinet.astra.in.ua   <span class="ext">↗ Особистий кабінет</span>
+    ├─ speed.astra.in.ua     <span class="ext">↗ Спідтест</span>
+    └─ t.me/astraisp · @astraispbot  <span class="ext">↗ Telegram / месенджери</span>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="mega">2. Структура мегаменю (хедер)</h2>
+<p class="meta">Хедер: ліворуч логотип АСТРА; по центру — перемикач <b>ДІМ / БІЗНЕС</b> (визначає контекст і дефолтні CTA/тарифи); далі пункти меню з мегадропами; праворуч — телефон 0&nbsp;800-20-3838, кнопка «Особистий кабінет ↗», червона CTA «Підключитися». Перемикач ДІМ/БІЗНЕС не ховає напрямки — він змінює акценти всередині (наприклад, у «Тарифах» дефолтна вкладка).</p>
+
+<h4>Пункт «ДІМ» <span class="pill home">ДІМ</span> — мегадроп</h4>
+<div class="mega">
+  <div class="megacol"><b>Інтернет дому</b>
+    <span class="li">Багатоквартирні будинки</span>
+    <span class="li">Приватний сектор</span>
+    <span class="li">Гуртожитки</span>
+    <span class="li">Постійна IP / IPv6</span>
+  </div>
+  <div class="megacol"><b>Телебачення</b>
+    <span class="li">АСТРА TV</span>
+    <span class="li">MEGOGO · Sweet.tv · youtv</span>
+    <span class="li">Просто ТБ (DVB-C)</span>
+  </div>
+  <div class="megacol"><b>Безпека дому</b>
+    <span class="li">Домофон у смартфоні</span>
+    <span class="li">Відеонагляд</span>
+  </div>
+  <div class="megacol"><b>Вигода</b>
+    <span class="li">Спецпропозиції (5 акцій)</span>
+    <span class="li">Перевірити покриття</span>
+    <span class="li">Річні тарифи</span>
+  </div>
+</div>
+
+<h4>Пункт «БІЗНЕС» <span class="pill biz">БІЗНЕС</span> — мегадроп</h4>
+<div class="mega">
+  <div class="megacol"><b>Зв'язок (ASTRA ISP)</b>
+    <span class="li">Бізнес-інтернет 100–10000</span>
+    <span class="li">Виділене оптоволокно / SLA</span>
+    <span class="li">Піринг (юр/оператори)</span>
+    <span class="li">Мережеві рішення / NOC</span>
+  </div>
+  <div class="megacol"><b>Безпека (ASTRA INSTALL)</b>
+    <span class="li">Відеонагляд + аналітика</span>
+    <span class="li">СКУД / IP-домофонія</span>
+    <span class="li">Шлагбауми / в'їзні групи</span>
+    <span class="li">СКС · Wi-Fi · ВОЛЗ</span>
+  </div>
+  <div class="megacol"><b>Хмара (ASTRA CLOUD)</b>
+    <span class="li">Колокація (ДЦ Львів 1/2)</span>
+    <span class="li">VPS / VDS</span>
+    <span class="li">Виділений сервер</span>
+  </div>
+  <div class="megacol"><b>Рішення за об'єктом</b>
+    <span class="li">Офіси та БЦ · ЖК/ОСББ</span>
+    <span class="li">Ритейл / HoReCa · Склади</span>
+    <span class="li">Готелі / коворкінги</span>
+    <span class="li">Чому обирають АСТРА</span>
+  </div>
+</div>
+
+<h4>Пункт «Напрямки» (наскрізний, опційний у хедері) — мегадроп</h4>
+<div class="mega">
+  <div class="megacol"><b>Інтернет</b>
+    <span class="li">Тарифи (всі категорії)</span>
+    <span class="li">Технології XGS-PON / IPv6</span>
+    <span class="li">Постійна IP · Безпечний DNS</span>
+  </div>
+  <div class="megacol"><b>Телебачення</b>
+    <span class="li">АСТРА TV · партнерські сервіси</span>
+  </div>
+  <div class="megacol"><b>Безпека · Мережі</b>
+    <span class="li">Відеонагляд · Домофон · СКУД</span>
+    <span class="li">Шлагбауми · NOC · СКС/Wi-Fi</span>
+  </div>
+  <div class="megacol"><b>Хмара / ЦОД</b>
+    <span class="li">Колокація · VPS · Сервери</span>
+  </div>
+</div>
+
+<h4>Прості пункти хедера (без мегадропу)</h4>
+<p class="meta"><b>Підтримка</b> (дроп: Інструкції · Оплата · Призупинення/Кредит · Контакт-центр) · <b>Про компанію</b> · <b>Новини</b> · <b>Контакти</b> · зовнішнє <b>Магазин ↗</b>.</p>
+
+<!-- ============================================================ -->
+<h2 id="footer">3. Структура футера</h2>
+<p class="meta">Чотири колонки + lead-gen стрічка зверху + юр-низ. Navy-фон, дозований червоний акцент.</p>
+<div class="mega" style="grid-template-columns:repeat(5,1fr)">
+  <div class="megacol"><b>Напрямки</b>
+    <span class="li">Інтернет</span><span class="li">Телебачення</span>
+    <span class="li">Безпека</span><span class="li">Мережеві рішення</span>
+    <span class="li">Хмара / ЦОД</span>
+  </div>
+  <div class="megacol"><b>Тарифи</b>
+    <span class="li">Багатоквартирні</span><span class="li">Приватний сектор</span>
+    <span class="li">Гуртожитки</span><span class="li">Бізнес</span>
+    <span class="li">Спецпропозиції</span>
+  </div>
+  <div class="megacol"><b>Послуги</b>
+    <span class="li">Оренда обладнання</span><span class="li">Призупинення · Кредит</span>
+    <span class="li">Спецвиклик · Wi-Fi Івенти</span>
+    <span class="li">Постійна IP · IPv6</span>
+  </div>
+  <div class="megacol"><b>Компанія</b>
+    <span class="li">Про компанію</span><span class="li">Новини</span>
+    <span class="li">Документи</span><span class="li">Вакансії</span>
+    <span class="li">Контакти</span>
+  </div>
+  <div class="megacol"><b>Сервіси ↗</b>
+    <span class="li">Магазин (shop)</span><span class="li">Особистий кабінет</span>
+    <span class="li">Спідтест (speed)</span><span class="li">Astra Cloud</span>
+    <span class="li">Підтримка / Інструкції</span>
+  </div>
+</div>
+<div class="card">
+  <b>Lead-gen стрічка (над колонками):</b> «Перевірте покриття за адресою» + поле адреси + кнопка; поряд «Передзвоніть мені» (номер телефону).<br>
+  <b>Контактний блок:</b> 0&nbsp;800-20-3838 · (093) 170-2977 · (097)/(095) 418-3838 · info@astra.in.ua · Telegram @astraispbot · Viber «АСТРА». Два центри обслуговування (Стрийська 45; Скляна 11А).<br>
+  <b>Соцмережі:</b> TikTok · YouTube · Instagram · LinkedIn · Facebook · Telegram · Viber.<br>
+  <b>Юр-низ:</b> ТзОВ «АСТРА-ЛЬВІВ» · © 2004–2026, компанія АСТРА · Договір-оферта · Показники якості · Політика конфіденційності · «Сузір'я цифрових послуг». <span class="flag">(уточнити юр-реквізити перед публікацією)</span>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="urls">4. URL-схема (укр. slug-и)</h2>
+<p class="meta">Зберігаємо наявні slug-и поточного сайту (де є) для збереження SEO та редіректів. Нові розділи отримують узгоджені slug-и в тому ж стилі. Транслітерація — як на astra.in.ua.</p>
+<table>
+<tr><th>Розділ</th><th>URL (slug)</th><th>Статус</th></tr>
+<tr><td>Головна</td><td>/</td><td>наявний</td></tr>
+<tr><td>Лендинг ДІМ</td><td>/dim</td><td><span class="pill new">NEW</span></td></tr>
+<tr><td>Лендинг БІЗНЕС</td><td>/biznes</td><td><span class="pill new">NEW</span></td></tr>
+<tr><td>Бізнес — рішення за типом об'єкта</td><td>/biznes/rishennia-za-typom-obiekta</td><td><span class="pill new">NEW</span></td></tr>
+<tr><td>Бізнес — чому обирають АСТРА</td><td>/biznes/chomu-astra</td><td><span class="pill new">NEW</span></td></tr>
+<tr><td>Напрямок Інтернет (вступ)</td><td>/internet</td><td><span class="pill new">NEW</span> (вступ)</td></tr>
+<tr><td>Тарифи · Багатоквартирні</td><td>/taryfy/dlia-bahatokvartyrnykh-budynkiv</td><td>наявний</td></tr>
+<tr><td>Тарифи · Приватний сектор</td><td>/taryfy/dlia-pryvatnoho-sektoru</td><td>наявний</td></tr>
+<tr><td>Тарифи · Гуртожитки</td><td>/taryfy/dlia-hurtozhytkiv</td><td>наявний</td></tr>
+<tr><td>Тарифи · Бізнес</td><td>/taryfy/dlia-biznesu</td><td>наявний</td></tr>
+<tr><td>Телебачення (хаб)</td><td>/tv</td><td><span class="pill new">NEW</span> (хаб)</td></tr>
+<tr><td>АСТРА TV / MEGOGO / Sweet.tv / youtv</td><td>/tv/telebachennia-astra · -megogo · -sweettv · -youtv</td><td>наявні</td></tr>
+<tr><td>Просто ТБ (DVB-C)</td><td>/tv/prosto-tv</td><td><span class="flag">(уточнити)</span></td></tr>
+<tr><td>Безпека (зонтик)</td><td>/bezpeka</td><td><span class="pill new">NEW</span></td></tr>
+<tr><td>Відеонагляд</td><td>/posluhy/astra-kamera</td><td>наявний</td></tr>
+<tr><td>Домофонія</td><td>/posluhy/domofoniia</td><td>наявний</td></tr>
+<tr><td>СКУД / Шлагбауми / Ajax</td><td>/bezpeka/skud · /bezpeka/shlagbaumy · /bezpeka/ohoronni-systemy-ajax</td><td><span class="pill new">NEW</span></td></tr>
+<tr><td>Мережеві рішення (зонтик)</td><td>/merezhevi-rishennia</td><td><span class="pill new">NEW</span></td></tr>
+<tr><td>Піринг</td><td>/posluhy/peering</td><td>наявний</td></tr>
+<tr><td>NOC / СКС-Wi-Fi / ВОЛЗ</td><td>/merezhevi-rishennia/noc · /sks-wifi · /volz</td><td><span class="pill new">NEW</span></td></tr>
+<tr><td>Хмара / ЦОД (хаб)</td><td>/hmara</td><td><span class="pill new">NEW</span> (агрегує cloud.*)</td></tr>
+<tr><td>Колокація / VPS / Виділений сервер</td><td>/hmara/kolokatsiia · /vps · /vydilenyi-server</td><td>колокація наявна; VPS/сервер <span class="flag">(уточнити)</span></td></tr>
+<tr><td>Спецпропозиції (хаб + 5)</td><td>/spetspropozytsii · /…/z-namy-vyhidnishe · /druzi-zavzhdy-razom · /pershyi-u-pidizdi · /astra-turbota · /student</td><td>наявні</td></tr>
+<tr><td>Додаткові послуги (хаб)</td><td>/posluhy/orenda-obladnannia · /pryzupynennia-posluh · /kredyt · /spetsvyklyk · /wi-fi-iventy · /dodatkovi</td><td>наявні</td></tr>
+<tr><td>Постійна IP · IPv6 · Безпечний DNS</td><td>/posluhy/statychna-ip-adresa · /posluhy/ipv6-adresa · /informatsiia/bezpechnyi-dns-vid-kompanii-astra</td><td>наявні</td></tr>
+<tr><td>Про компанію</td><td>/informatsiia/pro-kompaniiu</td><td>наявний</td></tr>
+<tr><td>Підтримка / Інструкції (хаб)</td><td>/pidtrymka</td><td><span class="pill new">NEW</span> (хаб)</td></tr>
+<tr><td>Інструкції (налаштування)</td><td>/nalashtuvannia/pidkliuchennia-vruchnu-do-internetu (-dhcp) · /nalashtuvannia/telebachennia-astra/{kompiuter,televizor,set-ios,android}</td><td>наявні</td></tr>
+<tr><td>Оплата</td><td>/informatsiia/oplata</td><td>наявний</td></tr>
+<tr><td>Контакти</td><td>/informatsiia/kontakty</td><td>наявний</td></tr>
+<tr><td>Новини (стрічка + стаття)</td><td>/informatsiia/novyny · /informatsiia/novyny/{slug}</td><td>наявні</td></tr>
+<tr><td>Документи · Договір-оферта · Показники якості · Вакансії</td><td>/informatsiia/dokumenty · /dohovir-oferta · /pokaznyky-iakosti-posluh-iz-dostupu-do-internetu · /vakansii</td><td>наявні</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2 id="mapping">5. Мапінг контенту → сторінки (нічого не губимо)</h2>
+<p class="meta">Кожен елемент інвентаря 01 + слайди 02 розкладено на конкретну сторінку/секцію. Колонка «Джерело» — § інвентаря.</p>
+
+<h3>Бренд / меседжі</h3>
+<table>
+<tr><th>Контент</th><th>Сторінка → секція</th><th>Джерело</th></tr>
+<tr><td>Бренд-лінія «Сузір'я цифрових послуг», hero-меседж, факти 20р/45000+</td><td>Головна → hero; футер</td><td>§0</td></tr>
+<tr><td>Інфраструктурний меседж «Створюємо інфраструктуру зв'язку та безпеки з 2004» <span class="pill new">NEW</span></td><td>/biznes → hero; Головна → суб-меседж</td><td>§0, слайд 01</td></tr>
+<tr><td>Слогани/мікрокопі форм («Залиште заявку…», «Передзвоніть мені», поля форми)</td><td>Наскрізна модалка-заявка + lead-gen блоки</td><td>§0</td></tr>
+<tr><td>«Про компанію» (місія, з 2004, технології)</td><td>/informatsiia/pro-kompaniiu</td><td>§0</td></tr>
+</table>
+
+<h3>Напрямки</h3>
+<table>
+<tr><th>Контент</th><th>Сторінка → секція</th><th>Джерело</th></tr>
+<tr><td>Інтернет: технології FTTB/PON/XGS-PON, лінійка швидкостей, IPv6, енергонезалежність, заміна кабелю 1000 грн</td><td>/internet (вступ) + блок «Технології» на сторінках тарифів</td><td>§1.1</td></tr>
+<tr><td>АСТРА TV (повний опис, мультизвук, відкладений перегляд, додатки, налаштування)</td><td>/tv/telebachennia-astra</td><td>§1.2</td></tr>
+<tr><td>MEGOGO / Sweet.tv / youtv (описи, пакети, активація)</td><td>/tv/telebachennia-{megogo,sweettv,youtv}</td><td>§1.2</td></tr>
+<tr><td>Кабельне «Просто ТБ» DVB-C 149 грн <span class="flag">(уточнити)</span></td><td>/tv/prosto-tv</td><td>§1.2</td></tr>
+<tr><td>Відеонагляд (Астра Камера): бренди Dahua/Hikvision, референси (50+ ОСББ, ритейл, логістика)</td><td>/posluhy/astra-kamera (під /bezpeka)</td><td>§1.3</td></tr>
+<tr><td>Домофонія (розумний домофон, ціни 55/0 грн, список адрес, політика)</td><td>/posluhy/domofoniia (під /bezpeka)</td><td>§1.3</td></tr>
+<tr><td>СКУД (U-Prox, Dahua, Hikvision, ZKTeco) — винесено з тексту відеонагляду <span class="pill new">NEW</span></td><td>/bezpeka/skud</td><td>§1.3, слайд 07</td></tr>
+<tr><td>Шлагбауми/обмеження проїзду (ZKTeco, BFT, Gant, Nice, Came, FAAC) + LPR <span class="pill new">NEW</span></td><td>/bezpeka/shlagbaumy</td><td>§1.3, слайд 07</td></tr>
+<tr><td>Охоронні системи Ajax <span class="flag">(уточнити — зараз у shop)</span></td><td>/bezpeka/ohoronni-systemy-ajax</td><td>слайд 07</td></tr>
+<tr><td>Мережеві рішення: Послуги NOC (Firewall, Dual-WAN, BGP/OSPF, VPN…), тариф 500 грн/год</td><td>/merezhevi-rishennia/noc</td><td>§1.4</td></tr>
+<tr><td>СКС / Wi-Fi-Mesh / GSM-LTE репітери / ВОЛЗ <span class="pill new">NEW</span></td><td>/merezhevi-rishennia/sks-wifi · /volz</td><td>слайди 08</td></tr>
+<tr><td>Хмара/ЦОД: колокація (повний прайс ДЦ Львів 1/2), автономність</td><td>/hmara/kolokatsiia</td><td>§1.5</td></tr>
+<tr><td>VPS/VDS, виділений сервер (HP/Dell/Supermicro) <span class="flag">(уточнити прайс)</span></td><td>/hmara/vps · /hmara/vydilenyi-server</td><td>§12, слайд 09</td></tr>
+</table>
+
+<h3>Тарифи (усі категорії — повні таблиці переносяться 1:1)</h3>
+<table>
+<tr><th>Категорія</th><th>Сторінка</th><th>Джерело</th></tr>
+<tr><td>Багатоквартирні (10 планів + умови/виноски «Все включено», «MEGOGO+ГІГ»)</td><td>/taryfy/dlia-bahatokvartyrnykh-budynkiv</td><td>§2.1</td></tr>
+<tr><td>Приватний сектор (Приватний ГІГ/+ТБ + верхні плани + умови)</td><td>/taryfy/dlia-pryvatnoho-sektoru</td><td>§2.2</td></tr>
+<tr><td>Бізнес (Бізнес 100–10000 + базові безлім + умови SLA)</td><td>/taryfy/dlia-biznesu</td><td>§2.3</td></tr>
+<tr><td>Гуртожитки (Домашній СТО/+ТБ, Гуртожиток 100, поденні, умови)</td><td>/taryfy/dlia-hurtozhytkiv</td><td>§2.4</td></tr>
+</table>
+
+<h3>Спецпропозиції, додаткові послуги, інструкції, інше</h3>
+<table>
+<tr><th>Контент</th><th>Сторінка</th><th>Джерело</th></tr>
+<tr><td>5 акцій (повні умови + FAQ кожної)</td><td>/spetspropozytsii + 5 підсторінок</td><td>§3</td></tr>
+<tr><td>Постійна IP, IPv6, Оренда обладнання, Призупинення, Кредит, Піринг, Безпечний DNS, Спецвиклик, Wi-Fi Івенти, Додаткові при підключенні (+NOC)</td><td>/posluhy/* + /internet (IP/IPv6/DNS)</td><td>§4</td></tr>
+<tr><td>Інструкції (PPPoE, DHCP, АСТРА TV: ПК/Samsung/iOS/Android — повні кроки)</td><td>/nalashtuvannia/* під /pidtrymka</td><td>§5</td></tr>
+<tr><td>Оплата (Portmone, iPay, monobank, Privat24, Абанк, City24, термінали, кабінет)</td><td>/informatsiia/oplata під /pidtrymka</td><td>§6</td></tr>
+<tr><td>Покриття (міста, села, спец-райони 10G/кабель/бізнес-PON)</td><td>Наскрізна «Перевірка покриття» + вкладки на сторінках тарифів</td><td>§7</td></tr>
+<tr><td>Контакти (2 центри, бухгалтерія, цілодобова підтримка, месенджери)</td><td>/informatsiia/kontakty</td><td>§8 <span class="flag">(уточнити адресу/години)</span></td></tr>
+<tr><td>Юр-реквізити, Договір-оферта, Документи, Показники якості, Вакансії, DNS-статистика</td><td>/informatsiia/dokumenty + /dohovir-oferta + /vakansii + /pokaznyky… + /dns-zablokovani-zahrozy</td><td>§9</td></tr>
+<tr><td>Екосистема субдоменів (cabinet, shop↗, cloud, speed)</td><td>Хедер/футер як зовнішні посилання; speed — також у /internet</td><td>§10</td></tr>
+<tr><td>Новини (3 останні + актуалізації тарифів + акція 2,5G)</td><td>/informatsiia/novyny (стрічка) + статті</td><td>§11</td></tr>
+</table>
+
+<h3>B2B-секції зі слайдів (02) → /biznes</h3>
+<table>
+<tr><th>Слайд</th><th>Секція на /biznes</th></tr>
+<tr><td>01 Hero «Цифрові рішення для бізнесу та сучасної нерухомості»</td><td>Hero лендингу БІЗНЕС</td></tr>
+<tr><td>02 П'ять сегментів об'єктів</td><td>/biznes/rishennia-za-typom-obiekta (карткова сітка)</td></tr>
+<tr><td>03 Шість пар «проблема → рішення»</td><td>/biznes → секція «Болі інфраструктури»</td></tr>
+<tr><td>04 Три суббренди ISP / INSTALL / CLOUD</td><td>/biznes → навігаційний блок під hero (мапа на напрямки)</td></tr>
+<tr><td>05–06 ASTRA ISP (XGS-PON, резерв, Європа, моніторинг, сервіс)</td><td>/taryfy/dlia-biznesu + /merezhevi-rishennia (тех-блоки)</td></tr>
+<tr><td>07–08 ASTRA INSTALL (відеонагляд, СКУД, шлагбауми, Ajax, СКС, Wi-Fi, ВОЛЗ, мультимедіа)</td><td>/bezpeka/* + /merezhevi-rishennia/*</td></tr>
+<tr><td>09 ASTRA CLOUD (колокація, VPS, оренда, автономність)</td><td>/hmara/*</td></tr>
+<tr><td>10 Три диференціатори</td><td>/biznes/chomu-astra</td></tr>
+<tr><td>11 Логотипна стіна клієнтів</td><td>/biznes + Головна «Нам довіряють»</td></tr>
+<tr><td>12 Контакти / CTA / QR</td><td>Контакти + наскрізні CTA-блоки</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2 id="templates">6. Шаблони сторінок</h2>
+<p class="meta">Дев'ять базових шаблонів. Кожен — повторюваний каркас секцій. Спільні елементи: хедер з перемикачем ДІМ/БІЗНЕС, наскрізний CTA «Підключитися/Передзвоніть мені», блок «Перевірка покриття», футер.</p>
+
+<div class="tmpl"><div class="head">T1 — Головна (хаб обох аудиторій)</div><div class="body">
+<ol>
+<li>Hero: бренд-лінія «Сузір'я цифрових послуг» + хук-акція «2,5 Гбіт за 255», CTA + перевірка покриття.</li>
+<li>Розвилка ДІМ / БІЗНЕС (дві великі картки-входи).</li>
+<li>П'ять напрямків (плитка: Інтернет/ТБ/Безпека/Мережі/Хмара).</li>
+<li>Trust-смуга: 20+ років · 45 000+ абонентів · 24/7 · енергонезалежна мережа.</li>
+<li>«Нам довіряють» (логотипна стіна, слайд 11).</li>
+<li>Спецпропозиції (карусель 5 акцій).</li>
+<li>Новини (3 останні).</li>
+<li>CTA-блок + футер.</li>
+</ol></div></div>
+
+<div class="tmpl"><div class="head">T2 — Лендинг аудиторії ДІМ <span class="pill home">ДІМ</span></div><div class="body">
+<ol>
+<li>Hero ДІМ (тепло-впевнений тон; «свій львівський провайдер»).</li>
+<li>4 піллари ДІМ (швидкість · працює без світла · все в одному рахунку · місцева підтримка 24/7).</li>
+<li>Тарифи-превʼю за типом житла (багатоквартирні / приватний / гуртожитки) → лінки на T5.</li>
+<li>ТБ-блок (АСТРА TV + партнери), Домофон у смартфоні.</li>
+<li>Спецпропозиції для дому.</li>
+<li>Перевірка покриття + CTA.</li>
+</ol></div></div>
+
+<div class="tmpl"><div class="head">T3 — Лендинг аудиторії БІЗНЕС <span class="pill biz">БІЗНЕС</span> <span class="pill new">NEW</span></div><div class="body">
+<ol>
+<li>Hero B2B: «Цифрові рішення для бізнесу та сучасної нерухомості / Створюємо інфраструктуру зв'язку та безпеки з 2004» (слайд 01).</li>
+<li>Три суббренди ISP / INSTALL / CLOUD (слайд 04) → лінки на напрямки.</li>
+<li>«Рішення за типом об'єкта» (5 сегментів, слайд 02).</li>
+<li>«Болі інфраструктури → рішення» (6 пар, слайд 03).</li>
+<li>«Чому обирають АСТРА» (3 диференціатори, слайд 10).</li>
+<li>Референси/логотипна стіна (слайд 11).</li>
+<li>B2B-CTA: «Замовити консультацію» + закріплений менеджер.</li>
+</ol></div></div>
+
+<div class="tmpl"><div class="head">T4 — Сторінка напрямку / послуги</div><div class="body">
+<ol>
+<li>Hero напрямку (вступ; для Безпеки/Мереж — NEW зонтичний текст).</li>
+<li>Підпослуги напрямку (картки-лінки).</li>
+<li>Блок «Для дому / Для бізнесу» (перемикач акцентів).</li>
+<li>Тех-специфікація / бренди обладнання (де є: Dahua, Hikvision, U-Prox…).</li>
+<li>Референси / сценарії за сегментом.</li>
+<li>FAQ (дослівні з інвентаря) + CTA.</li>
+</ol>
+<div class="stack"><span class="chip">Інтернет</span><span class="chip">Телебачення</span><span class="chip">Безпека</span><span class="chip">Мережеві рішення</span><span class="chip">Хмара/ЦОД</span><span class="chip">+ дод. послуги</span></div>
+</div></div>
+
+<div class="tmpl"><div class="head">T5 — Тарифи (категорія)</div><div class="body">
+<ol>
+<li>Перемикач категорії (Багатоквартирні · Приватний · Гуртожитки · Бізнес).</li>
+<li>Тогл ціна щомісяця / за передоплати (рік).</li>
+<li>Сітка карток тарифів (назва · швидкість · склад · ціна, з перекресленою старою).</li>
+<li>Розгорнуті описи планів («Все включено», «MEGOGO+ГІГ») — дослівно.</li>
+<li>Загальні умови / виноски (PON, заміна кабелю, поріг відключення) — дослівно.</li>
+<li>Перевірка покриття для категорії + форма заявки (Ім'я/Телефон/Адреса/Промокод/Тариф).</li>
+</ol></div></div>
+
+<div class="tmpl"><div class="head">T6 — Контакти</div><div class="body">
+<ol>
+<li>Цілодобова підтримка (всі номери, Telegram-бот, Viber).</li>
+<li>Центри обслуговування (Стрийська 45; Скляна 11А) — адреси, години, карта.</li>
+<li>Бухгалтерія для юросіб (окремий блок). <span class="flag">(уточнити адресу/години)</span></li>
+<li>Форма «Передзвоніть мені» + месенджери + реквізити для листування.</li>
+</ol></div></div>
+
+<div class="tmpl"><div class="head">T7 — Про компанію</div><div class="body">
+<ol>
+<li>Місія/історія (дослівно §0) + інфраструктурний меседж.</li>
+<li>Цифри довіри (20+/45000+/власний ЦОД/власна оптомережа).</li>
+<li>П'ять напрямків як зона відповідальності.</li>
+<li>Документи/сертифікати (лінк на T9-документи), Вакансії, CTA.</li>
+</ol></div></div>
+
+<div class="tmpl"><div class="head">T8 — Підтримка / Інструкції</div><div class="body">
+<ol>
+<li>Пошук + категорії (Інтернет-налаштування · ТБ-налаштування · Оплата · Кабінет).</li>
+<li>Картки інструкцій → детальні сторінки з покроковими списками (дослівно §5).</li>
+<li>Оплата (методи §6), Призупинення/Кредит, Безпечний DNS.</li>
+<li>Контакт-центр + «не вдалося — напишіть нам».</li>
+</ol></div></div>
+
+<div class="tmpl"><div class="head">T9 — Новини (стрічка + стаття) · Документи</div><div class="body">
+<ol>
+<li>Стрічка новин (картки: дата · заголовок · лід), фільтр.</li>
+<li>Сторінка статті (дослівний текст + FAQ, напр. акція 2,5G).</li>
+<li>Документи: список PDF (Договір-оферта, Атестат, Показники якості, Витяги НКЕК…).</li>
+</ol></div></div>
+
+<!-- ============================================================ -->
+<h2 id="gaps">7. Прогалини контенту (перед публікацією)</h2>
+<div class="card">
+<ul>
+<li><b>NEW-тексти</b> (писати стримано, інфра-тон): зонтичні вступи /bezpeka та /merezhevi-rishennia; лендинг /biznes та підсторінки (за типом об'єкта, чому АСТРА); вступ /internet; хаби /tv, /hmara, /pidtrymka; підсторінки СКУД/шлагбауми/СКС-Wi-Fi/ВОЛЗ/NOC-обгортка.</li>
+<li><span class="flag">(уточнити) Astra Cloud VPS / Виділений сервер</span> — текст і прайс не зібрані; отримати від компанії (зараз детально лише колокація з прайсом).</li>
+<li><span class="flag">(уточнити) Кабельне «Просто ТБ» (DVB-C, 149 грн)</span> — лише в MD-брифі, окремої сторінки в харвесті немає.</li>
+<li><span class="flag">(уточнити) Ajax у B2B-портфелі</span> — зараз лише в shop, не в інфра-послузі; рішення про сторінку /bezpeka/ohoronni-systemy-ajax.</li>
+<li><span class="flag">(уточнити) Контакти бухгалтерії</span> — конфлікт адрес (Литвиненка 3 vs Керченська 8А) і годин центру на Скляній (9–18 vs 10–18).</li>
+<li><span class="flag">(уточнити) Числа</span> — каналів 150 vs 180; рік «з 2004» vs реєстрація ТзОВ 2013; поденні ціни гуртожитків (10 vs 11 грн, опис не оновлено); статус Бізнес-50 → Бізнес-100.</li>
+<li><b>Юр-реквізити</b> (ЄДРПОУ, адреса, керівник) з реєстрів — публікувати лише підтверджене компанією.</li>
+<li><b>Покриття</b> — потрібен механізм «перевірка адреси» (lead-gen); поточний сайт дає лише статичні переліки сіл/районів.</li>
+</ul>
+</div>
+
+<hr style="margin:40px 0;border:none;border-top:1px solid var(--line)">
+<p class="meta">Документ 05 — інформаційна архітектура. Узгоджено з зафіксованими рішеннями проєкту: аудиторна вісь ДІМ/БІЗНЕС, наскрізні напрямки, лише укр. мова, дослівне успадкування контенту, магазин — зовнішнє посилання.</p>
+
+</div>
+</body>
+</html>

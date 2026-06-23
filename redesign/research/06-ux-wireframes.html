@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АСТРА — UX-сценарії та wireframe-блюпринти (06-ux-wireframes)</title>
+<style>
+  :root{
+    --navy:#0d1b3e; --navy2:#16275a; --red:#d6263b; --blue:#2f74d0; --blue-bg:#e8f0fb;
+    --ink:#1b2233; --muted:#5d6577; --line:#dde3ee; --card:#ffffff; --bg:#f6f8fc;
+    --home:#2f74d0; --biz:#d6263b;
+  }
+  *{box-sizing:border-box}
+  body{font-family:Inter,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg);margin:0;line-height:1.55;font-size:15px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+  header.hero{background:linear-gradient(150deg,var(--navy),var(--navy2));color:#fff;padding:50px 0 40px}
+  .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:700;color:#7ea8e6;margin:0 0 12px}
+  h1{font-size:32px;margin:0 0 12px;font-weight:700;line-height:1.15}
+  header.hero p{color:#c5cee0;max-width:780px;margin:0;font-size:16px}
+  .redline{display:inline-block;width:56px;height:4px;background:var(--red);border-radius:2px;margin-top:20px}
+  h2{font-size:22px;margin:54px 0 6px;background:var(--navy);color:#fff;padding:10px 16px;border-radius:6px}
+  h3{font-size:18px;margin-top:30px;color:var(--navy);border-left:4px solid var(--red);padding-left:11px}
+  h4{font-size:15px;margin-top:22px;color:var(--navy2)}
+  .url{font-family:ui-monospace,monospace;font-size:12px;color:var(--blue);background:var(--blue-bg);padding:3px 7px;border-radius:3px;display:inline-block;margin:3px 0;word-break:break-all}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13px;background:#fff}
+  td,th{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:var(--navy);color:#fff;font-weight:600}
+  tr:nth-child(even) td{background:#fafbfe}
+  nav.toc{background:#fff;border:1px solid var(--line);padding:16px 22px;border-radius:8px;font-size:14px;columns:2;margin-top:20px}
+  nav.toc a{color:var(--blue);text-decoration:none;display:block;padding:2px 0}
+  nav.toc b{column-span:all}
+  .meta{color:var(--muted);font-size:13px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:14px 0}
+  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;padding:2px 9px;border-radius:99px;vertical-align:middle;margin-left:6px}
+  .home{background:var(--blue-bg);color:var(--blue)}
+  .biz{background:#fbe4e7;color:var(--red)}
+  .cross{background:#eef7ee;color:#1f7a3a}
+  .new{background:#fff3cd;color:#8a6400;border:1px solid #ecd9a0}
+  .flag{background:#fff3cd;border:1px solid #e0b000;color:#7a5b00;padding:2px 7px;border-radius:3px;font-size:12px;font-weight:600}
+  .legend{font-size:13px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+  .stack{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+  .chip{background:var(--blue-bg);color:var(--navy);border:1px solid #cfe0f5;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:600}
+  /* сценарій-флоу */
+  .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:14px 0}
+  .step{flex:1 1 150px;min-width:140px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 18px 6px 0;position:relative;font-size:13px}
+  .step:after{content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:var(--red);font-weight:700;font-size:16px}
+  .step:last-child:after{content:""}
+  .step b{display:block;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px}
+  .scn{background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px 20px 16px;margin:16px 0}
+  .scn .who{font-size:13px;color:var(--muted);margin:10px 0 0}
+  /* wireframe-блок */
+  .wf{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:18px 0;background:#fff}
+  .wf .wfhead{background:var(--navy);color:#fff;padding:10px 16px;font-weight:600;font-size:15px;display:flex;justify-content:space-between;align-items:center}
+  .wf .wfhead .url2{font-family:ui-monospace,monospace;font-size:11px;color:#aac4ee;font-weight:400}
+  .sec{border-bottom:1px dashed var(--line);padding:12px 16px}
+  .sec:last-child{border-bottom:none}
+  .sec .n{display:inline-block;background:var(--red);color:#fff;font-size:11px;font-weight:700;width:22px;height:22px;line-height:22px;text-align:center;border-radius:5px;margin-right:8px;vertical-align:top}
+  .sec .t{font-weight:700;color:var(--navy);font-size:14px}
+  .sec .d{font-size:13px;margin:6px 0 0 30px;color:var(--ink)}
+  .sec .d em{color:var(--muted);font-style:normal}
+  .cta{display:inline-block;background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;margin:2px 4px 2px 0}
+  .cta.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+  .cta.blue{background:var(--blue)}
+  .src{font-family:ui-monospace,monospace;font-size:11px;color:var(--blue);background:var(--blue-bg);padding:1px 5px;border-radius:3px}
+  .formbox{background:#f3f7fd;border:1px solid #cfe0f5;border-radius:8px;padding:12px 14px;margin:10px 0 10px 30px;font-size:13px}
+  .formbox b{color:var(--navy)}
+  .fields{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+  .field{background:#fff;border:1px solid #cfe0f5;border-radius:6px;padding:4px 10px;font-size:12px}
+  .states{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin:10px 0}
+  .state{border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12.5px;background:#fff}
+  .state b{display:block;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:.03em;border-bottom:2px solid var(--red);padding-bottom:5px;margin-bottom:6px}
+  @media(max-width:820px){nav.toc{columns:1}.step{margin-right:0}.step:after{display:none}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Документ 06 · UX-сценарії та wireframe-блюпринти</p>
+    <h1>АСТРА — ключові сценарії та поблоковий каркас сторінок</h1>
+    <p>Прямий бриф для фази верстки. Частина А — п'ять ключових user-flow (домашній тариф, бізнес/забудовник, ОСББ, хмара/ЦОД, наскрізні lead-форми та їх стани). Частина Б — поблокові wireframe-блюпринти для головної та кожного ключового шаблону: послідовність секцій зверху вниз, що в кожній (контент + дані з інвентаря 01 + CTA), де які форми. Контент успадковано дослівно (01-content-inventory); IA — за 05-information-architecture.</p>
+    <span class="redline"></span>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="legend">
+  <b>Позначення:</b>
+  <span class="pill home">ДІМ</span> контекст «Дім» ·
+  <span class="pill biz">БІЗНЕС</span> контекст «Бізнес» ·
+  <span class="pill cross">НАСКРІЗНЕ</span> ·
+  <span class="pill new">NEW</span> новий текст ·
+  <span class="cta">червона CTA</span>
+  <span class="cta ghost">ghost-CTA</span>
+  <span class="cta blue">вторинна CTA</span> ·
+  <span class="src">§</span> джерело в інвентарі 01 ·
+  <span class="flag">(уточнити)</span> звірити з компанією.
+</div>
+
+<nav class="toc">
+<b>Зміст:</b>
+<a href="#a">ЧАСТИНА А — Сценарії</a>
+<a href="#s1">A1. Мешканець обирає домашній тариф</a>
+<a href="#s2">A2. Бізнес/забудовник — інфраструктура + безпека</a>
+<a href="#s3">A3. ОСББ — домофонія / відеонагляд</a>
+<a href="#s4">A4. Запит на хмару / ЦОД</a>
+<a href="#s5">A5. Наскрізні CTA та lead-форма (поля + стани)</a>
+<a href="#b">ЧАСТИНА Б — Wireframe-блюпринти</a>
+<a href="#shell">B0. Спільний каркас (хедер / футер / форма)</a>
+<a href="#home">B1. Головна</a>
+<a href="#dim">B2. Лендинг ДІМ</a>
+<a href="#biz">B3. Лендинг БІЗНЕС</a>
+<a href="#napr">B4. Сторінка напрямку</a>
+<a href="#tar">B5. Тарифи (категорія)</a>
+<a href="#cont">B6. Контакти</a>
+<a href="#matrix">B7. Зведена матриця секцій</a>
+</nav>
+
+<!-- ============================================================ -->
+<h2 id="a">ЧАСТИНА А — Ключові сценарії (user-flow)</h2>
+<p class="meta">П'ять наскрізних шляхів. Кожен прив'язаний до конкретних сторінок IA-дерева (05) і даних інвентаря (01). Спільний знаменник усіх — наскрізна форма заявки (поля Ім'я / Телефон / Адреса / Промокод / Тариф) і «Передзвоніть мені», описані в A5.</p>
+
+<!-- A1 -->
+<h3 id="s1">A1. Мешканець обирає домашній тариф <span class="pill home">ДІМ</span></h3>
+<div class="scn">
+<p class="who"><b>Хто:</b> фізособа в квартирі / приватному будинку / гуртожитку. <b>Мета:</b> зрозуміти, чи є покриття, обрати тариф, залишити заявку. <b>Емоція входу:</b> порівнює провайдерів, чутливий до ціни та «чи працює без світла».</p>
+<div class="flow">
+  <div class="step"><b>Вхід</b>Головна (hero-хук «2,5 Гбіт за 255») або контекст ДІМ у хедері</div>
+  <div class="step"><b>Тип житла</b>Розвилка ДІМ → превʼю тарифів за типом (багатоквартирні / приватний / гуртожитки)</div>
+  <div class="step"><b>Тарифи</b>T5: перемикач категорії, тогл міс/рік, сітка карток <span class="src">§2.1–2.4</span></div>
+  <div class="step"><b>Покриття</b>«Перевірте покриття за адресою» — вводить адресу <span class="src">§7</span></div>
+  <div class="step"><b>Заявка</b>Форма: Ім'я/Телефон/Адреса/Промокод/Тариф (тариф підставлено)</div>
+  <div class="step"><b>Підтвердження</b>«Вашу заявку прийнято!» <span class="src">§0</span></div>
+</div>
+<p class="meta"><b>Точки тертя/рішення:</b> ① «понад 100 Мбіт потребує оптики/Cat5e 8 жил + гігабітний порт», заміна кабелю 1000 грн — показати у виносках картки, не ховати <span class="src">§2.1</span>. ② 2,5/10 Гбіт потребують перетворювача xg/xgs-pon з shop ↗ — лінк на магазин у складі тарифу. ③ Право на знижку (Астра Турбота 15%, Студент+, З нами вигідніше 25%) — банер «маєте право на знижку?» біля підходящих карток <span class="src">§3</span>. ④ Альтернатива формі — «Передзвоніть мені» та Telegram @astraispbot для тих, хто не хоче заповнювати поля.</p>
+</div>
+
+<!-- A2 -->
+<h3 id="s2">A2. Бізнес / забудовник замовляє інфраструктуру + безпеку <span class="pill biz">БІЗНЕС</span></h3>
+<div class="scn">
+<p class="who"><b>Хто:</b> забудовник, керівник ЖК, ритейл-мережа, склад/виробництво, готель. <b>Мета:</b> комплекс — інтернет із SLA + відеонагляд + СКУД/шлагбауми + СКС/Wi-Fi, можливо колокація. <b>Емоція входу:</b> шукає підрядника, якому можна довірити весь об'єкт; цінує референси та «єдине вікно».</p>
+<div class="flow">
+  <div class="step"><b>Вхід</b>БІЗНЕС у хедері / Головна → картка БІЗНЕС / прямий лінк /biznes</div>
+  <div class="step"><b>Розуміння</b>T3: hero «Створюємо інфраструктуру…», 3 суббренди ISP/INSTALL/CLOUD <span class="src">слайд 04</span></div>
+  <div class="step"><b>Самоідентифікація</b>«Рішення за типом об'єкта» (офіси/ЖК-ОСББ/ритейл/склади/готелі)</div>
+  <div class="step"><b>Болі→рішення</b>6 пар проблема→рішення + «Чому обирають АСТРА» <span class="src">слайди 03,10</span></div>
+  <div class="step"><b>Глибина</b>Напрямки: Бізнес-тарифи <span class="src">§2.3</span> · Безпека <span class="src">§1.3</span> · Мережі-NOC <span class="src">§1.4</span></div>
+  <div class="step"><b>Довіра</b>Логотипна стіна (Креатор-Буд, Леви Міста, Meest…) <span class="src">§1.3, слайд 11</span></div>
+  <div class="step"><b>Заявка</b>«Замовити консультацію» + закріплений менеджер</div>
+</div>
+<p class="meta"><b>Точки тертя/рішення:</b> ① B2B не обирає тариф з картки — йому потрібен прорахунок об'єкта, тож головна B2B-CTA = «Замовити консультацію / прорахунок», а не «Підключитися». ② Бізнес-тарифи показати з умовами SLA дослівно (симетричний резервований канал, постійна IP, пріоритет в день заявки, документи/акти) <span class="src">§2.3</span>. ③ Відеонагляд несе соціальний доказ дослівно (50+ ОСББ, бренди Dahua/Hikvision) — це головний конверсійний актив напрямку Безпека <span class="src">§1.3</span>. ④ Bґ-CTA дублюється контактом бухгалтерії для юросіб <span class="flag">(уточнити адресу/години)</span> <span class="src">§8</span>.</p>
+</div>
+
+<!-- A3 -->
+<h3 id="s3">A3. ОСББ — домофонія / відеонагляд <span class="pill biz">БІЗНЕС</span> <span class="pill home">ДІМ</span></h3>
+<div class="scn">
+<p class="who"><b>Хто:</b> голова/правління ОСББ, представник будинку. <b>Подвійна природа:</b> формально юрособа (B2B-флоу), але «продукт» торкається мешканців (домофон у смартфоні, камери у дворі). <b>Мета:</b> поставити в будинку відеонагляд + розумну домофонію, зрозуміти ціну для мешканців і процес.</p>
+<div class="flow">
+  <div class="step"><b>Вхід</b>БІЗНЕС→«ЖК/ОСББ» або напрямок Безпека / стаття-кейс із Новин</div>
+  <div class="step"><b>Напрямок Безпека</b>T4 /bezpeka: зонтичний вступ <span class="pill new">NEW</span> → картки Відеонагляд / Домофонія</div>
+  <div class="step"><b>Відеонагляд</b>/posluhy/astra-kamera: експертиза, бренди, «50+ ОСББ у Львові» <span class="src">§1.3</span></div>
+  <div class="step"><b>Домофонія</b>/posluhy/domofoniia: переваги, ціни 55/0 грн, «список адрес» <span class="src">§1.3</span></div>
+  <div class="step"><b>Перевірка</b>«Список адрес, де вже є домофонія» — чи є будинок у покритті</div>
+  <div class="step"><b>Заявка</b>«Заявка на консультацію» → відповідальний менеджер з напрямку</div>
+</div>
+<p class="meta"><b>Точки тертя/рішення:</b> ① Дві аудиторії на одній сторінці — блок «Для мешканця» (домофон у смартфоні, 0 грн у пакеті «Все включено»/«Найкращий») і «Для ОСББ/будинку» (проєкт, монтаж, єдиний рахунок) <span class="src">§1.3, §2.1</span>. ② Дослівна CTA-копія сторінки відеонагляду вже містить шлях: «Залишити заявку на консультацію можна через месенджери або цілодобові телефони… відповідальний менеджер з напрямку зв'яжеться» — використати 1:1. ③ Лінк «Список адрес» і «Політика конфіденційності додатку (Астра Домофон)» зберегти. ④ СКУД/шлагбауми (U-Prox, ZKTeco, BFT, Gant, Nice, Came, FAAC) — суміжні картки для ОСББ із в'їзною групою <span class="pill new">NEW</span> <span class="src">§1.3</span>.</p>
+</div>
+
+<!-- A4 -->
+<h3 id="s4">A4. Запит на хмару / ЦОД <span class="pill biz">БІЗНЕС</span></h3>
+<div class="scn">
+<p class="who"><b>Хто:</b> ІТ-фахівець / власник бізнесу, якому треба розмістити обладнання (колокація), орендувати VPS або виділений сервер. <b>Мета:</b> оцінити майданчик (надійність, автономність, ціна за юніт/кВт), порівняти ДЦ Львів 1 vs 2, залишити запит.</p>
+<div class="flow">
+  <div class="step"><b>Вхід</b>БІЗНЕС→«Хмара (ASTRA CLOUD)» або напрямок /hmara</div>
+  <div class="step"><b>Хаб Хмара</b>T4 /hmara: вступ <span class="pill new">NEW</span> → Колокація / VPS / Виділений сервер</div>
+  <div class="step"><b>Колокація</b>/hmara/kolokatsiia: опис автономності + повний прайс-таблиця <span class="src">§1.5</span></div>
+  <div class="step"><b>ДЦ 1 vs 2</b>Блок порівняння (ДЦ Львів 1 — бомбосховище; різні прайси/інсталяція)</div>
+  <div class="step"><b>Заявка</b>Форма запиту або прямий тел. 063&nbsp;636&nbsp;3448 / лінк cloud.astra.in.ua ↗</div>
+</div>
+<p class="meta"><b>Точки тертя/рішення:</b> ① Колокація має повний прайс дослівно (1U від 500 грн, живлення до 100Вт–5кВт, IP-блоки /30…/25, виклики спеціаліста) — таблиця переноситься 1:1 <span class="src">§1.5</span>. ② VPS і Виділений сервер — тексту/прайсу немає <span class="flag">(уточнити)</span>: показати картку-стаб з CTA «Запитати прайс» + лінк на cloud.astra.in.ua, не вигадувати ціни. ③ Окремий телефон напряму Cloud (063 636 3448) — винести як прямий канал. ④ Ключовий диференціатор у hero хабу — «бомбосховище / дві лінії живлення / дизель-генератори / 24/7/365» дослівно.</p>
+</div>
+
+<!-- A5 -->
+<h3 id="s5">A5. Наскрізні CTA «Передзвоніть мені» + форма заявки — поля та стани <span class="pill cross">НАСКРІЗНЕ</span></h3>
+<p class="meta">Це конверсійне ядро всього сайту. Доступне з будь-якої сторінки (модалка з хедера/липкої кнопки + блок у футері + вбудована форма на сторінках тарифів). Уся копія — дослівна <span class="src">§0</span>.</p>
+
+<h4>Два типи ліда</h4>
+<table>
+<tr><th>Тип</th><th>Поля</th><th>Контекст виклику</th><th>Дослівна копія</th></tr>
+<tr><td><b>Повна заявка</b> («Підключитися»)</td><td>Ім'я · Номер телефону +38 · Адреса · Промокод · Тариф</td><td>Сторінки тарифів, напрямків, hero CTA «ПІДКЛЮЧИТИСЬ»</td><td>«Залиште заявку і ми вам перетелефонуємо! (з 9.00 до 21.00. Ми поважаємо вашу приватність)»</td></tr>
+<tr><td><b>Швидкий передзвін</b> («Передзвоніть мені»)</td><td>Лише Номер телефону</td><td>Хедер, футер, липка кнопка на мобільному</td><td>«Передзвоніть мені. Введіть свій номер телефону та очікуйте на дзвінок оператора.»</td></tr>
+</table>
+
+<div class="formbox">
+<b>Поля повної форми (дослівно §0):</b>
+<div class="fields">
+  <span class="field">Ім'я</span>
+  <span class="field">Номер телефону <em style="color:#5d6577">+38</em></span>
+  <span class="field">Адреса</span>
+  <span class="field">Промокод</span>
+  <span class="field">Тариф <em style="color:#5d6577">(автопідстановка з картки)</em></span>
+</div>
+<b>Авто-поведінка:</b> поле «Тариф» передзаповнюється з картки, з якої натиснули CTA; «Адреса» переноситься з блоку «Перевірка покриття», якщо вже введена; для Wi-Fi Івентів у «Адресу» дослівно вписують «Wi-Fi Івент» <span class="src">§4</span>.
+</div>
+
+<h4>Стани форми</h4>
+<div class="states">
+  <div class="state"><b>1 · Початковий (idle)</b>Заголовок-копія за типом; кнопка «Надіслати заявку» / «Передзвоніть мені». Дрібним: години 9.00–21.00 + «Ми поважаємо вашу приватність».</div>
+  <div class="state"><b>2 · Фокус / введення</b>Маска телефону +38 (XXX) XXX-XX-XX. Підказки під полями. Тариф/Адреса видимі як передзаповнені.</div>
+  <div class="state"><b>3 · Помилка валідації</b>Підсвітити невалідний телефон (єдине обов'язкове поле для швидкого передзвону). Текст помилки нейтральний, без playful.</div>
+  <div class="state"><b>4 · Надсилання (loading)</b>Кнопка в стані спінера, поля заблоковані, повторне натискання вимкнене.</div>
+  <div class="state"><b>5 · Успіх (дослівно §0)</b>«Вашу заявку прийнято! Дякуємо за звернення! Вам перетелефонують одразу ж, як тільки з'явиться вільний оператор.» + альтернативні канали (Telegram @astraispbot, Viber «АСТРА», 0&nbsp;800-20-3838).</div>
+  <div class="state"><b>6 · Поза робочими годинами</b>Прийняти заявку, але додати, що оператори телефонують з 9.00 до 21.00; запропонувати Telegram-бот цілодобово.</div>
+  <div class="state"><b>7 · Помилка надсилання</b>«Не вдалося надіслати — спробуйте ще раз або зателефонуйте 0&nbsp;800-20-3838 / напишіть у Telegram». Дані форми зберігаються.</div>
+</div>
+<p class="meta"><b>Розміщення викликів:</b> (1) хедер — червона «Підключитися» + телефон 0&nbsp;800-20-3838; (2) липка мобільна панель — «Передзвоніть мені» + «Підключитися»; (3) lead-стрічка футера — «Перевірте покриття за адресою» + «Передзвоніть мені» <span class="src">05 §3</span>; (4) кінець кожного шаблону — CTA-блок; (5) вбудована форма в T5-тарифах. У B2B-контексті дефолтна CTA — «Замовити консультацію» (поле «Тариф» необов'язкове, додається «Тип об'єкта»).</p>
+
+<!-- ============================================================ -->
+<h2 id="b">ЧАСТИНА Б — Wireframe-блюпринти шаблонів</h2>
+<p class="meta">Для кожного — послідовність секцій зверху вниз із номером, назвою, вмістом (з прив'язкою до інвентаря) і CTA/формами. Спільні елементи (хедер, футер, форма) винесено в B0, далі не дублюються.</p>
+
+<!-- B0 SHELL -->
+<h3 id="shell">B0. Спільний каркас (хедер · футер · форма) <span class="pill cross">НАСКРІЗНЕ</span></h3>
+<div class="wf">
+  <div class="wfhead">Хедер (sticky) <span class="url2">на всіх сторінках</span></div>
+  <div class="sec"><span class="t">Зліва</span><div class="d">Логотип АСТРА → на Головну.</div></div>
+  <div class="sec"><span class="t">Центр</span><div class="d">Перемикач <span class="pill home">ДІМ</span>/<span class="pill biz">БІЗНЕС</span> (змінює акценти й дефолтні CTA/вкладки, напрямки не ховає) · пункти меню з мегадропами: ДІМ · БІЗНЕС · Напрямки · Підтримка · Про компанію · Новини · Контакти · Магазин ↗. <em>Структура мегаменю — за 05 §2.</em></div></div>
+  <div class="sec"><span class="t">Справа</span><div class="d">Телефон 0&nbsp;800-20-3838 · «Особистий кабінет ↗» (cabinet.astra.in.ua) · <span class="cta">Підключитися</span></div></div>
+  <div class="sec"><span class="t">Мобільний</span><div class="d">Бургер-меню + липка нижня панель: <span class="cta ghost">Передзвоніть мені</span> <span class="cta">Підключитися</span></div></div>
+</div>
+<div class="wf">
+  <div class="wfhead">Lead-стрічка + Футер <span class="url2">на всіх сторінках</span></div>
+  <div class="sec"><span class="n">L</span><span class="t">Lead-стрічка (над футером)</span><div class="d">«Перевірте покриття за адресою» + поле адреси + кнопка; поряд «Передзвоніть мені» (поле телефону). <span class="src">05 §3</span></div></div>
+  <div class="sec"><span class="n">1</span><span class="t">5 колонок посилань</span><div class="d">Напрямки · Тарифи · Послуги · Компанія · Сервіси↗. <em>Точний склад — 05 §3.</em></div></div>
+  <div class="sec"><span class="n">2</span><span class="t">Контактний блок</span><div class="d">0&nbsp;800-20-3838 · (093) 170-2977 · (097)/(095) 418-3838 · info@astra.in.ua · Telegram @astraispbot · Viber «АСТРА». Два центри: Стрийська 45; Скляна 11А. <span class="src">§8</span> <span class="flag">(уточнити години Скляна)</span></div></div>
+  <div class="sec"><span class="n">3</span><span class="t">Соцмережі</span><div class="d">TikTok · YouTube · Instagram · LinkedIn · Facebook · Telegram · Viber.</div></div>
+  <div class="sec"><span class="n">4</span><span class="t">Юр-низ</span><div class="d">ТзОВ «АСТРА-ЛЬВІВ» · © 2004–2026 · Договір-оферта · Показники якості · Політика конфіденційності · «Сузір'я цифрових послуг». <span class="flag">(уточнити юр-реквізити)</span> <span class="src">§9</span></div></div>
+</div>
+<p class="meta"><b>Наскрізна модалка-форма</b> (A5) викликається будь-якою CTA «Підключитися» / «Передзвоніть мені» / «Замовити консультацію». Далі в блюпринтах позначається лише місце виклику.</p>
+
+<!-- B1 HOME -->
+<h3 id="home">B1. Головна (T1) — хаб обох аудиторій <span class="pill cross">НАСКРІЗНЕ</span></h3>
+<div class="wf">
+  <div class="wfhead">Головна <span class="url2">/</span></div>
+  <div class="sec"><span class="n">1</span><span class="t">Hero</span><div class="d">Бренд-лінія «Сузір'я цифрових послуг» + дослівний меседж «Надшвидкий енергонезалежний 10 гБіт Інтернет з IPv6 / Телебачення… / Домофон в смартфоні / Хмарне відеоспостереження / Цілодобова жива підтримка». Хук-акція «2,5 Гбіт за 255 грн». <span class="src">§0, §2.1</span><br><span class="cta">Підключитися</span> <span class="cta blue">Перевірити покриття</span> + поле адреси.</div></div>
+  <div class="sec"><span class="n">2</span><span class="t">Розвилка ДІМ / БІЗНЕС</span><div class="d">Дві великі картки-входи. ДІМ → /dim («свій львівський провайдер»), БІЗНЕС → /biznes («Створюємо інфраструктуру зв'язку та безпеки з 2004» <span class="pill new">NEW</span>). <span class="src">05 §0, слайд 01</span></div></div>
+  <div class="sec"><span class="n">3</span><span class="t">П'ять напрямків</span><div class="d">Плитка-лінки: Інтернет · Телебачення · Безпека · Мережеві рішення · Хмара/ЦОД → відповідні T4.</div></div>
+  <div class="sec"><span class="n">4</span><span class="t">Trust-смуга</span><div class="d">«Понад 20 років досвіду» · «більше 45000 задоволених абонентів» · 24/7 жива підтримка · енергонезалежна мережа. <span class="src">§0</span> <span class="flag">(уточнити: «з 2004» vs реєстрація ТзОВ 2013)</span></div></div>
+  <div class="sec"><span class="n">5</span><span class="t">«Нам довіряють» (логотипна стіна)</span><div class="d">Креатор-Буд, ЖК «Леви Міста», «Люксембург», Meest Express, FM Logistic, мережі She coffee, BlackHoney та ін. <span class="src">§1.3, слайд 11</span></div></div>
+  <div class="sec"><span class="n">6</span><span class="t">Спецпропозиції (карусель 5 акцій)</span><div class="d">З нами вигідніше! · Друзі завжди разом · Перший у під'їзді! · Астра Турбота (15%) · Студент+ → /spetspropozytsii/*. <span class="src">§3</span></div></div>
+  <div class="sec"><span class="n">7</span><span class="t">Новини (3 останні)</span><div class="d">«АСТРА запускає 2,5 Гбіт/с за 255» (14.06.2026) · «Актуалізація бізнес-тарифів» (01.02.2026) · «Актуалізація тарифів 01.02.2026» (13.01.2026). <span class="src">§11</span></div></div>
+  <div class="sec"><span class="n">8</span><span class="t">CTA-блок</span><div class="d">Фінальний заклик + <span class="cta">Підключитися</span> <span class="cta ghost">Передзвоніть мені</span> → модалка A5.</div></div>
+</div>
+
+<!-- B2 DIM -->
+<h3 id="dim">B2. Лендинг ДІМ (T2) <span class="pill home">ДІМ</span></h3>
+<div class="wf">
+  <div class="wfhead">Лендинг аудиторії ДІМ <span class="url2">/dim · NEW-обгортка</span></div>
+  <div class="sec"><span class="n">1</span><span class="t">Hero ДІМ</span><div class="d">Тепло-впевнений тон, «свій львівський провайдер». Без mid-sentence font-swap. <span class="cta">Підключитися</span> <span class="cta blue">Перевірити покриття</span>.</div></div>
+  <div class="sec"><span class="n">2</span><span class="t">4 піллари ДІМ</span><div class="d">Швидкість (до 10 Гбіт, IPv6) · Працює без світла (енергонезалежна мережа) · Все в одному рахунку (інтернет+ТБ+домофон) · Місцева підтримка 24/7. <span class="src">§0, §1.1</span></div></div>
+  <div class="sec"><span class="n">3</span><span class="t">Тарифи-превʼю за типом житла</span><div class="d">Три картки: Багатоквартирні / Приватний сектор / Гуртожитки → T5. Показати по 1-2 «якірних» тарифи (Домашній ГІГ+ТБ, Два і П'ять За 255). <span class="src">§2.1–2.4</span></div></div>
+  <div class="sec"><span class="n">4</span><span class="t">ТБ + Домофон</span><div class="d">АСТРА TV (коло 150 каналів, відкладений перегляд, мультизвук) + партнери MEGOGO/Sweet.tv/youtv → /tv; «Домофон у смартфоні» (55/0 грн) → /posluhy/domofoniia. <span class="src">§1.2, §1.3</span></div></div>
+  <div class="sec"><span class="n">5</span><span class="t">Спецпропозиції для дому</span><div class="d">Картки 5 акцій із фокусом на фіз.осіб (Турбота 15%, Студент+, З нами вигідніше). <span class="src">§3</span></div></div>
+  <div class="sec"><span class="n">6</span><span class="t">Перевірка покриття + CTA</span><div class="d">Поле адреси <span class="src">§7</span> + вбудована форма заявки (A5) <span class="cta">Підключитися</span>.</div></div>
+</div>
+
+<!-- B3 BIZ -->
+<h3 id="biz">B3. Лендинг БІЗНЕС (T3) <span class="pill biz">БІЗНЕС</span> <span class="pill new">NEW</span></h3>
+<div class="wf">
+  <div class="wfhead">Лендинг аудиторії БІЗНЕС <span class="url2">/biznes · NEW B2B-лендинг</span></div>
+  <div class="sec"><span class="n">1</span><span class="t">Hero B2B</span><div class="d">«Цифрові рішення для бізнесу та сучасної нерухомості» / «Створюємо інфраструктуру зв'язку та безпеки з 2004». Серйозний дорослий тон. <span class="src">слайд 01 <span class="pill new">NEW</span></span> <span class="cta">Замовити консультацію</span></div></div>
+  <div class="sec"><span class="n">2</span><span class="t">Три суббренди</span><div class="d">ASTRA ISP (зв'язок) · ASTRA INSTALL (безпека+мережі) · ASTRA CLOUD (хмара) → лінки на напрямки. <span class="src">слайд 04</span></div></div>
+  <div class="sec"><span class="n">3</span><span class="t">Рішення за типом об'єкта</span><div class="d">Карткова сітка 5 сегментів: офіси/БЦ · ЖК/ОСББ · ритейл-HoReCa · склади-виробництва · готелі-коворкінги → /biznes/rishennia-za-typom-obiekta. <span class="src">слайд 02 <span class="pill new">NEW</span></span></div></div>
+  <div class="sec"><span class="n">4</span><span class="t">Болі інфраструктури → рішення</span><div class="d">6 пар «проблема → рішення». <span class="src">слайд 03 <span class="pill new">NEW</span></span></div></div>
+  <div class="sec"><span class="n">5</span><span class="t">Чому обирають АСТРА</span><div class="d">3 диференціатори (власна оптомережа, власний ЦОД, єдине вікно — інтернет+безпека+хмара). <span class="src">слайд 10 → /biznes/chomu-astra <span class="pill new">NEW</span></span></div></div>
+  <div class="sec"><span class="n">6</span><span class="t">Референси / логотипна стіна</span><div class="d">«50+ ОСББ», Креатор-Буд, ЖК «Леви Міста»/«Люксембург», Meest Express, FM Logistic, храми УГКЦ, Victoria`s Secret, Yves Rocher, Levis… <span class="src">§1.3, слайд 11</span></div></div>
+  <div class="sec"><span class="n">7</span><span class="t">B2B-CTA</span><div class="d"><span class="cta">Замовити консультацію</span> (форма A5 у B2B-режимі: Ім'я/Телефон/Тип об'єкта/Адреса) + закріплений менеджер + бухгалтерія для юросіб. <span class="src">§8</span></div></div>
+</div>
+
+<!-- B4 NAPRYAM -->
+<h3 id="napr">B4. Сторінка напрямку / послуги (T4) <span class="pill cross">НАСКРІЗНЕ</span></h3>
+<p class="meta">Один каркас для: <span class="chip">Інтернет</span><span class="chip">Телебачення</span><span class="chip">Безпека</span><span class="chip">Мережеві рішення</span><span class="chip">Хмара/ЦОД</span>. Нижче — каркас + примітки наповнення для кожного напрямку.</p>
+<div class="wf">
+  <div class="wfhead">Каркас напрямку <span class="url2">/internet · /tv · /bezpeka · /merezhevi-rishennia · /hmara</span></div>
+  <div class="sec"><span class="n">1</span><span class="t">Hero напрямку</span><div class="d">Зонтичний вступ. Для Безпеки/Мереж/Хмари/ТБ/Інтернету — частково <span class="pill new">NEW</span> (стримано). <span class="cta">Замовити консультацію</span> / <span class="cta">Підключитися</span> (за контекстом).</div></div>
+  <div class="sec"><span class="n">2</span><span class="t">Підпослуги (картки-лінки)</span><div class="d">Розкладка дочірніх сторінок напрямку.</div></div>
+  <div class="sec"><span class="n">3</span><span class="t">Блок «Для дому / Для бізнесу»</span><div class="d">Перемикач акцентів — два прочитання одного напрямку.</div></div>
+  <div class="sec"><span class="n">4</span><span class="t">Тех-специфікація / бренди</span><div class="d">Де є дослівні факти/бренди обладнання.</div></div>
+  <div class="sec"><span class="n">5</span><span class="t">Референси / сценарії</span><div class="d">Соц-доказ за сегментом.</div></div>
+  <div class="sec"><span class="n">6</span><span class="t">FAQ (дослівно) + CTA</span><div class="d">Часті запитання з інвентаря 1:1 + фінальна CTA → A5.</div></div>
+</div>
+<table>
+<tr><th>Напрямок</th><th>Підпослуги (картки)</th><th>Тех/бренди · референси · FAQ — дані з інвентаря</th></tr>
+<tr><td><b>Інтернет</b> /internet <span class="pill new">вступ NEW</span></td><td>Тарифи (4 категорії) · Постійна IP · IPv6 · Безпечний DNS · Спідтест↗</td><td>FTTB/PON/XGS-PON, лінійка 100→10000 Мбіт, IPv6 Dual-Stack, енергонезалежність, заміна кабелю 1000 грн. FAQ IPv6 дослівно. <span class="src">§1.1, §4</span></td></tr>
+<tr><td><b>Телебачення</b> /tv <span class="pill new">хаб NEW</span></td><td>АСТРА TV · MEGOGO · Sweet.tv · youtv · Просто ТБ (DVB-C) <span class="flag">(уточнити)</span></td><td>АСТРА TV дослівно (коло 150 каналів, відкладений перегляд, мультизвук, FullHD, додатки); пакети партнерів. <span class="src">§1.2</span> <span class="flag">(150 vs 180 каналів)</span></td></tr>
+<tr><td><b>Безпека</b> /bezpeka <span class="pill new">зонтик NEW</span></td><td>Відеонагляд (Астра Камера) · Домофонія · СКУД <span class="pill new">NEW</span> · Шлагбауми <span class="pill new">NEW</span> · Ajax <span class="flag">(уточнити)</span></td><td>Dahua/Hikvision; СКУД: U-Prox/Dahua/Hikvision/ZKTeco; шлагбауми: ZKTeco/BFT/Gant/Nice/Came/FAAC; 50+ ОСББ. Домофон 55/0 грн. <span class="src">§1.3</span></td></tr>
+<tr><td><b>Мережеві рішення</b> /merezhevi-rishennia <span class="pill new">вступ NEW</span></td><td>Піринг · Послуги NOC · СКС/Wi-Fi/Mesh <span class="pill new">NEW</span> · ВОЛЗ <span class="pill new">NEW</span></td><td>NOC дослівно (Firewall, dst-nat, CapsMan, Mesh, Dual-WAN, BGP/OSPF, VPN…), 500 грн/год. Піринг (публічний/приватний). <span class="src">§1.4, §4</span></td></tr>
+<tr><td><b>Хмара / ЦОД</b> /hmara <span class="pill new">хаб NEW</span></td><td>Колокація · VPS/VDS <span class="flag">(уточнити)</span> · Виділений сервер <span class="flag">(уточнити)</span> · cloud.astra.in.ua↗</td><td>Колокація: дві лінії живлення, дизель-генератори, 24/7/365, ДЦ Львів 1 (бомбосховище) vs 2 + повний прайс. Тел. 063 636 3448. <span class="src">§1.5</span></td></tr>
+</table>
+
+<!-- B5 TARIFY -->
+<h3 id="tar">B5. Тарифи — категорія (T5) <span class="pill home">ДІМ</span> <span class="pill biz">БІЗНЕС</span></h3>
+<div class="wf">
+  <div class="wfhead">Тарифи <span class="url2">/taryfy/dlia-bahatokvartyrnykh-budynkiv · -pryvatnoho-sektoru · -hurtozhytkiv · -biznesu</span></div>
+  <div class="sec"><span class="n">1</span><span class="t">Перемикач категорії</span><div class="d">Багатоквартирні · Приватний · Гуртожитки · Бізнес. Дефолтна вкладка залежить від контексту ДІМ/БІЗНЕС у хедері.</div></div>
+  <div class="sec"><span class="n">2</span><span class="t">Тогл ціни</span><div class="d">Щомісяця / За передоплати (рік). Перемикає відображувану ціну в картках. <span class="src">§2</span></div></div>
+  <div class="sec"><span class="n">3</span><span class="t">Сітка карток тарифів</span><div class="d">Назва · швидкість · склад · ціна (зі старою перекресленою). Дослівні дані: <em>Багатоквартирні</em> — Два і П'ять За 255, ДЕСЯТЬ ГІГ, Найкращий, Все включено, MEGOGO+ГІГ, Два і П'ять, Домашній ГІГ+ТБ, Домашній ГІГ, Домашній СТО+ТБ, Домашній СТО; <em>Приватний</em> — + Приватний ГІГ/+ТБ; <em>Бізнес</em> — Бізнес 100–10000 + базові безліми; <em>Гуртожитки</em> — Домашній СТО/+ТБ, Гуртожиток 100, поденні. <span class="src">§2.1–2.4</span> <span class="flag">(Бізнес-50→100; поденні 10/11 грн)</span><br>Кожна картка: <span class="cta">Підключитися</span> (підставляє назву тарифу у форму).</div></div>
+  <div class="sec"><span class="n">4</span><span class="t">Розгорнуті описи планів (дослівно)</span><div class="d">«Все включено», «MEGOGO+ГІГ», «Найкращий» — повні дослівні описи з виносками (* домофонія 0 грн, ** оренда 0 грн). <span class="src">§2.1</span></div></div>
+  <div class="sec"><span class="n">5</span><span class="t">Загальні умови / виноски (дослівно)</span><div class="d">Обов'язкова PON; перетворювач xg/xgs-pon у shop↗; швидкості >100 Мбіт → оптика/Cat5e 8 жил + гігабітний порт; заміна кабелю 1000 грн; списання 1-го числа; поріг відключення 0 грн. <span class="src">§2.1</span></div></div>
+  <div class="sec"><span class="n">6</span><span class="t">Покриття категорії + форма заявки</span><div class="d">Вкладки/перелік локацій <span class="src">§7</span> + вбудована форма A5: <b>Ім'я · Телефон +38 · Адреса · Промокод · Тариф</b>. <span class="cta">Підключитися</span></div>
+    <div class="formbox"><b>Форма заявки тут — основна точка конверсії шаблону.</b> Тариф передзаповнено з обраної картки; Адреса — з блоку покриття. Стани — за A5.</div>
+  </div>
+</div>
+<p class="meta"><b>Спецвипадок «Бізнес»:</b> картки супроводжуються дослівними умовами SLA (симетричний резервований канал, постійна IP без додаткової плати, пріоритет у день заявки, документи/акти, додзвін перед чергою) <span class="src">§2.3</span>; основна CTA — «Замовити консультацію» замість «Підключитися».</p>
+
+<!-- B6 CONTACTS -->
+<h3 id="cont">B6. Контакти (T6) <span class="pill cross">НАСКРІЗНЕ</span></h3>
+<div class="wf">
+  <div class="wfhead">Контакти <span class="url2">/informatsiia/kontakty</span></div>
+  <div class="sec"><span class="n">1</span><span class="t">Цілодобова підтримка</span><div class="d">(093) 170-2977 · (097) 418-3838 · (095) 418-3838 · (032) 232-8808 · 0&nbsp;800-20-3838 · Telegram @astraispbot · Viber «АСТРА». <span class="src">§8</span></div></div>
+  <div class="sec"><span class="n">2</span><span class="t">Центри обслуговування + карта</span><div class="d">Стрийська 45 (ТОЦ «Fabrik») Пн–Нд 10:00–20:00; Скляна 11А Пн–Пт 9:00–18:00 (обід 13–14), Сб–Нд вихідні. <span class="src">§8</span> <span class="flag">(уточнити години Скляна: 9–18 vs 10–18)</span></div></div>
+  <div class="sec"><span class="n">3</span><span class="t">Бухгалтерія для юросіб</span><div class="d">(032) 232-8802 · (093) 289-9815 · e-mail; адреса Литвиненка 3, Пн–Пт 9:00–18:00. <span class="src">§8</span> <span class="flag">(уточнити: Литвиненка 3 vs Керченська 8А)</span></div></div>
+  <div class="sec"><span class="n">4</span><span class="t">Форма «Передзвоніть мені» + месенджери + реквізити</span><div class="d">Швидка форма A5 (лише телефон) + месенджери + адреса для листування 79048, Львів, Литвиненка 3 · info@astra.in.ua. <span class="src">§8</span></div></div>
+</div>
+
+<!-- B7 MATRIX -->
+<h3 id="matrix">B7. Зведена матриця секцій (для верстальників)</h3>
+<table>
+<tr><th>Шаблон</th><th>Кількість секцій</th><th>Тип форми</th><th>Дефолтна CTA</th><th>Ключові дані інвентаря</th></tr>
+<tr><td>B0 Каркас (хедер+футер)</td><td>хедер 4 зони + футер 4 секції + lead-стрічка</td><td>модалка A5</td><td>Підключитися</td><td>§0, §8, §9</td></tr>
+<tr><td>B1 Головна (T1)</td><td>8</td><td>hero-поле покриття + CTA-модалка</td><td>Підключитися</td><td>§0, §1.3, §3, §11</td></tr>
+<tr><td>B2 Лендинг ДІМ (T2)</td><td>6</td><td>вбудована + покриття</td><td>Підключитися</td><td>§1.1, §1.2, §1.3, §2, §3</td></tr>
+<tr><td>B3 Лендинг БІЗНЕС (T3)</td><td>7</td><td>B2B-форма (Тип об'єкта)</td><td>Замовити консультацію</td><td>слайди 01–11, §1.3</td></tr>
+<tr><td>B4 Напрямок (T4)</td><td>6</td><td>CTA-модалка + FAQ</td><td>контекстна</td><td>§1.1–1.5, §4</td></tr>
+<tr><td>B5 Тарифи (T5)</td><td>6</td><td>вбудована повна форма (5 полів)</td><td>Підключитися / Консультація (Бізнес)</td><td>§2.1–2.4, §7</td></tr>
+<tr><td>B6 Контакти (T6)</td><td>4</td><td>швидка «Передзвоніть мені»</td><td>Передзвоніть мені</td><td>§8</td></tr>
+</table>
+
+<hr style="margin:40px 0;border:none;border-top:1px solid var(--line)">
+<p class="meta">Документ 06 — UX-сценарії та wireframe-блюпринти. Узгоджено з 05 (IA) та 01 (контент-інвентар). Усі текстові дані успадковуються дослівно; <span class="pill new">NEW</span>-зони — стримано, інфра-тон. Усі <span class="flag">(уточнити)</span> — звірити з компанією перед версткою фінального контенту.</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АСТРА — Промпти для генерації зображень (08)</title>
+<style>
+  :root{
+    --navy:#0e1b33;
+    --navy-2:#16294a;
+    --red:#d92434;
+    --blue:#22a6e6;
+    --ink:#1c2433;
+    --muted:#5a6678;
+    --line:#e2e7ef;
+    --bg:#f5f7fb;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.55;
+    font-size:15px;
+  }
+  .wrap{max-width:1020px;margin:0 auto;padding:0 24px}
+  header.page{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);
+    color:#fff;
+    padding:48px 0 40px;
+  }
+  .eyebrow{
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--blue);font-weight:600;margin:0 0 10px;
+  }
+  header.page h1{
+    font-family:"Wix Madefor Display","Inter",sans-serif;
+    font-weight:700;font-size:30px;line-height:1.2;margin:0 0 8px;
+  }
+  header.page p.lead{margin:0;color:#c4d0e2;max-width:720px}
+  section{padding:34px 0;border-bottom:1px solid var(--line)}
+  h2{
+    font-family:"Wix Madefor Display","Inter",sans-serif;
+    font-size:22px;font-weight:700;color:var(--navy);margin:0 0 4px;
+  }
+  h2 .num{color:var(--red);margin-right:10px}
+  .sub{color:var(--muted);margin:0 0 22px;font-size:14px}
+  .style-card{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:20px 22px;margin-bottom:8px;
+  }
+  .style-card h3{
+    font-family:"Wix Madefor Display","Inter",sans-serif;font-size:15px;
+    color:var(--navy);margin:18px 0 8px;
+  }
+  .style-card h3:first-child{margin-top:0}
+  .style-card ul{margin:0 0 4px;padding-left:20px}
+  .style-card li{margin:4px 0}
+  .swatches{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 4px}
+  .sw{display:flex;align-items:center;gap:7px;font-size:13px;font-variant-numeric:tabular-nums}
+  .chip{width:20px;height:20px;border-radius:5px;border:1px solid rgba(0,0,0,.12)}
+  code{background:#eef2f8;padding:1px 6px;border-radius:4px;font-size:12px;color:var(--navy)}
+  .prompt{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    overflow:hidden;margin-bottom:16px;
+  }
+  .prompt .head{
+    display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+    padding:12px 18px;background:var(--navy);color:#fff;flex-wrap:wrap;
+  }
+  .prompt .head .fn{
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-weight:600;font-size:14px;color:#fff;
+  }
+  .prompt .head .slot{font-size:12px;color:var(--blue);font-weight:600}
+  .prompt .head .dim{
+    font-size:12px;color:#c4d0e2;font-variant-numeric:tabular-nums;white-space:nowrap;
+  }
+  .prompt .body{padding:14px 18px}
+  .prompt .body p{margin:0;font-size:13.5px;line-height:1.6;color:var(--ink)}
+  .prompt .ar{
+    margin-top:10px;font-size:12px;color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+  .prompt .ar b{color:var(--navy)}
+  .note{
+    background:#eef2f8;border-left:3px solid var(--blue);
+    padding:14px 18px;border-radius:0 6px 6px 0;font-size:14px;margin:14px 0;
+  }
+  .note h3{
+    font-family:"Wix Madefor Display","Inter",sans-serif;font-size:15px;
+    color:var(--navy);margin:0 0 8px;
+  }
+  .note ul{margin:6px 0 0;padding-left:20px}
+  .note li{margin:5px 0}
+  footer{padding:28px 0;color:var(--muted);font-size:13px}
+  .meta-top{font-size:13px;color:var(--muted);margin:0 0 4px}
+</style>
+</head>
+<body>
+
+<header class="page">
+  <div class="wrap">
+    <p class="eyebrow">Редизайн astra.in.ua · Дослідження 08</p>
+    <h1>Промпти для генерації зображень</h1>
+    <p class="lead">Готовий до копіювання набір під GPT-генерацію. Зверху — єдиний візуальний код «ЗАГАЛЬНИЙ СТИЛЬ», далі по блоку на кожен з 23 плейсхолдерів manifest.json (назва файлу — розмір — англомовний промпт). Усі промпти підпорядковані одній естетиці: серйозна інфраструктура, navy-база, дозований червоний, технічний блакитний. Без playful, без стоковості, без тексту на зображенні.</p>
+  </div>
+</header>
+
+<!-- ===================== ЗАГАЛЬНИЙ СТИЛЬ ===================== -->
+<section>
+  <div class="wrap">
+    <h2><span class="num">A</span>ЗАГАЛЬНИЙ СТИЛЬ</h2>
+    <p class="sub">Цей блок діє на всі 17 промптів нижче. Якщо генеруєш по одному, додавай ці правила до кожного запиту. Англійський текст для копіювання в модель.</p>
+
+    <div class="style-card">
+      <h3>Master style block (paste into every prompt)</h3>
+      <p style="font-size:13.5px;line-height:1.65;margin:0">
+        Serious adult infrastructure-operator aesthetic for a telecom &amp; security company (internet, TV, surveillance, networks, cloud / data center). Photorealistic with restrained, tasteful 3D / CGI accents where noted. Deep navy base tone (#0e1b33) dominating the frame; cool steel and graphite mid-tones; technical cyan-blue (#22a6e6) used as the secondary accent on light glows, fiber light, screen reflections and indicator LEDs; a small disciplined dab of signal red (#d92434) only as a status / record / alert accent and never more than roughly 10% of the frame. Calm, confident, premium-engineering mood, never playful, never cartoon, never cheerful stock-photo vibe, no lens flare kitsch. Clean composition with clear focal subject and generous negative space for text overlay. Cinematic controlled lighting: soft directional key light, subtle rim light, gentle volumetric haze, cool color grade, mild navy duotone unity, deep but readable shadows, no blown highlights. Shot on a full-frame camera, 35mm or 50mm prime, shallow-to-medium depth of field, crisp micro-detail, low noise, high dynamic range. Strictly no text, no lettering, no logos, no watermark, no UI captions baked into the image, no warped hardware, realistic proportions and real-world plausible equipment.
+      </p>
+      <h3>Палітра (закладена у промпти)</h3>
+      <div class="swatches">
+        <div class="sw"><span class="chip" style="background:#0e1b33"></span>navy база <code>#0e1b33</code></div>
+        <div class="sw"><span class="chip" style="background:#16294a"></span>navy-2 <code>#16294a</code></div>
+        <div class="sw"><span class="chip" style="background:#22a6e6"></span>блакитний техн. <code>#22a6e6</code></div>
+        <div class="sw"><span class="chip" style="background:#d92434"></span>червоний акцент ≤10% <code>#d92434</code></div>
+      </div>
+      <h3>Універсальні правила</h3>
+      <ul>
+        <li>Жодного тексту/логотипів/вотермарок на зображенні (текст накладається версткою).</li>
+        <li>Червоний — лише точковий статус-акцент (LED запису, тривога, кнопка), не заливка.</li>
+        <li>Фотореалізм як основа; 3D/CGI лише там, де явно вказано (hero-абстракт, карта, OG, патерн).</li>
+        <li>Залишай «повітря» під заголовок (зазвичай зліва або знизу) для overlay-копірайтингу.</li>
+        <li>Холодний грейдинг, navy-duotone для єдності ряду; без теплої жовтизни і без глянцевого стоку.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HERO ===================== -->
+<section>
+  <div class="wrap">
+    <h2><span class="num">B</span>Hero-банери</h2>
+    <p class="sub">Три головні банери, 16:9, широкі. Найбільше «повітря» під заголовок і CTA.</p>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">hero-home.jpg</span>
+        <span class="slot">HERO · Головна</span>
+        <span class="dim">2400×1350 · 16:9</span>
+      </div>
+      <div class="body">
+        <p>Wide cinematic hero for a telecom operator landing page. Night aerial-to-eye-level view of the city of Lviv: dark navy skyline, rooftops and church towers in silhouette, faint warm window lights far below, deep #0e1b33 sky. Floating above the city, a restrained 3D constellation of glowing network nodes connected by thin luminous cyan-blue (#22a6e6) fiber lines, like a quiet star map of digital services hovering over the rooftops, subtle volumetric haze and bokeh, a single small red (#d92434) node-pulse as a discreet accent. The right two-thirds of the frame kept darker and uncluttered for headline overlay. Premium engineering mood, calm and confident, photoreal city plus tasteful CGI light network, cool navy grade. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 16:9</b> · 2400×1350 · negative space right/center for overlay</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">hero-dim.jpg</span>
+        <span class="slot">HERO · Дім</span>
+        <span class="dim">2400×1350 · 16:9</span>
+      </div>
+      <div class="body">
+        <p>Wide cinematic hero for the residential / home audience of a telecom provider. Warm-but-restrained modern living room interior in the evening: a wall-mounted smart TV softly glowing with cool cyan-blue (#22a6e6) screen light, a Wi-Fi router with calm blue indicator LEDs on a shelf, through the window a hint of a city evening, near the entrance a small IP intercom panel and a discreet security camera. Cozy yet adult and tidy, navy and graphite tones dominate (#0e1b33), warm lamp light kept subtle and never orange-heavy, a single tiny red status LED on the camera as the only red accent. Soft directional light, shallow depth of field, left side calmer for headline overlay. Photorealistic, serious infrastructure feel, not cheerful stock. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 16:9</b> · 2400×1350 · negative space left for overlay</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">hero-biz.jpg</span>
+        <span class="slot">HERO · Бізнес</span>
+        <span class="dim">2400×1350 · 16:9</span>
+      </div>
+      <div class="body">
+        <p>Wide cinematic hero for the B2B audience of an infrastructure operator. Corporate environment of a modern business center at dusk: a clean office-building entrance with an access-control reader and a turnstile, an automatic barrier gate at the parking entry, a slim server rack visible through a glass wall with cool blue indicator lights, a discreet dome surveillance camera under the canopy. Restrained, corporate, engineered, navy and steel palette (#0e1b33), cyan-blue (#22a6e6) accents on screens and LEDs, one small red status point. Wide-angle architectural composition, cool cinematic grade, low blown highlights, right side kept clean for headline overlay. Photorealistic, premium and serious, not playful. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 16:9</b> · 2400×1350 · negative space right for overlay</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== НАПРЯМКИ ===================== -->
+<section>
+  <div class="wrap">
+    <h2><span class="num">C</span>Напрямки (5 плиток)</h2>
+    <p class="sub">Картки п'яти напрямків, 4:3. Один чіткий фокус-сабджект на плитку, navy-фон.</p>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">dir-internet.jpg</span>
+        <span class="slot">Інтернет</span>
+        <span class="dim">1600×1200 · 4:3</span>
+      </div>
+      <div class="body">
+        <p>Macro photoreal image illustrating fiber-optic internet. A bundle of optical fibers fanning out of a connector, glowing tips emitting soft cyan-blue (#22a6e6) light, a fiber patch panel and a network switch slightly out of focus behind on a deep navy (#0e1b33) background. Cool blue light reflections, gentle volumetric glow inside the glass fibers, premium technical close-up, shallow depth of field, dark moody studio lighting. Serious engineering aesthetic, no playful graphics. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 4:3</b> · 1600×1200</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">dir-tv.jpg</span>
+        <span class="slot">Телебачення</span>
+        <span class="dim">1600×1200 · 4:3</span>
+      </div>
+      <div class="body">
+        <p>Photoreal image illustrating modern television / IPTV service. A large flat-screen TV on a clean wall in a tidy modern living room, the screen glowing with an abstract cool blue cinematic interface light (no readable UI, no text, soft blurred content), a slim remote control resting on a sofa armrest in the foreground. Evening ambient light, navy and graphite tones (#0e1b33), cyan-blue (#22a6e6) screen glow as the accent, restrained and adult, no cartoonish graphics, no on-screen lettering. Shallow depth of field, cinematic cool grade. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 4:3</b> · 1600×1200 · no readable UI on screen</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">dir-security.jpg</span>
+        <span class="slot">Безпека (парасоля)</span>
+        <span class="dim">1600×1200 · 4:3</span>
+      </div>
+      <div class="body">
+        <p>Composite hero image for an umbrella "Security" category of an infrastructure operator. A clean arrangement near a building entrance showing the three pillars of physical security together: a modern dome / bullet surveillance camera, an IP video intercom panel by the door, and a card access-control reader. Deep navy (#0e1b33) and steel environment, cyan-blue (#22a6e6) accent light, and one disciplined small red (#d92434) record / status LED as the only red note. Cool night-ish lighting, sharp technical detail, serious and reassuring, not threatening, not playful. Shallow depth of field, premium engineering mood. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 4:3</b> · 1600×1200 · допустимий дозований червоний (статус)</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">dir-network.jpg</span>
+        <span class="slot">Мережеві рішення</span>
+        <span class="dim">1600×1200 · 4:3</span>
+      </div>
+      <div class="body">
+        <p>Photoreal image illustrating structured network solutions and on-site integration. A neatly organized server / network rack with structured cabling, color-managed patch cords routed cleanly, a switch with cool blue link LEDs, and the hands of an engineer (no full face, focus on craft) connecting a cable. Deep navy and graphite tones (#0e1b33), cyan-blue (#22a6e6) indicator and cable-management accents, clean professional installation. Cool technical lighting, sharp detail on connectors, serious competent mood. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 4:3</b> · 1600×1200</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">dir-cloud.jpg</span>
+        <span class="slot">Хмара / ЦОД</span>
+        <span class="dim">1600×1200 · 4:3</span>
+      </div>
+      <div class="body">
+        <p>Photoreal image of a modern data center cold aisle. Two rows of tall black server racks forming a corridor receding into the frame, rows of cool blue (#22a6e6) status LEDs glowing down both sides, faint floor light, subtle haze giving depth, deep navy (#0e1b33) overall grade. Clean, powerful, premium infrastructure, no people needed, one or two tiny red status LEDs allowed as accents. Wide perspective down the aisle, cinematic cool lighting, high detail, serious engineering mood that echoes a real on-site data hall. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 4:3</b> · 1600×1200 · перегукується з реальним team-datacenter.jpg</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ПІДПОСЛУГИ БЕЗПЕКИ ===================== -->
+<section>
+  <div class="wrap">
+    <h2><span class="num">D</span>Підпослуги «Безпека»</h2>
+    <p class="sub">Чотири конкретні сценарії, 3:2. Реальне обладнання, впізнавана ситуація.</p>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">sub-videonagliad.jpg</span>
+        <span class="slot">Відеонагляд</span>
+        <span class="dim">1500×1000 · 3:2</span>
+      </div>
+      <div class="body">
+        <p>Photoreal close-up of a professional outdoor surveillance camera mounted on a building facade at night. A modern bullet / PTZ IP camera (Dahua / Hikvision style, generic, no branding) angled along the wall, fine weatherproof housing detail, a small red (#d92434) recording LED glowing as the only red accent, cool blue night ambience and faint streetlight bokeh behind. Deep navy (#0e1b33) night tone, crisp sensor-clear detail, low noise, serious protective mood, not menacing. Shallow depth of field, cinematic cool grade. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 3:2</b> · 1500×1000 · нічний режим, червоний LED запису</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">sub-domofon.jpg</span>
+        <span class="slot">Домофонія</span>
+        <span class="dim">1500×1000 · 3:2</span>
+      </div>
+      <div class="body">
+        <p>Photoreal scene of a modern IP video intercom by a residential building entrance, with a hand approaching the call button, and softly in the foreground a smartphone showing an incoming video-call from the door (screen glow only, no readable UI, no text). Evening light, deep navy and graphite tones (#0e1b33), cyan-blue (#22a6e6) panel and screen glow as accent, clean contemporary entryway. Shallow depth of field bridging panel and phone, calm reassuring mood, premium hardware. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 3:2</b> · 1500×1000 · виклик на смартфон (без читабельного UI)</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">sub-skud.jpg</span>
+        <span class="slot">СКУД</span>
+        <span class="dim">1500×1000 · 3:2</span>
+      </div>
+      <div class="body">
+        <p>Photoreal close-up of an access-control system in use: a hand holding a card / key fob up to a wall-mounted card reader beside a modern office glass door. The reader shows a small confirming cyan-blue (#22a6e6) indicator light. Deep navy and steel office interior (#0e1b33) softly blurred behind, cool corporate lighting, crisp detail on the reader and the card, shallow depth of field. Professional, secure, restrained mood, premium hardware, no branding. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 3:2</b> · 1500×1000 · рука підносить картку до зчитувача</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">sub-shlagbaum.jpg</span>
+        <span class="slot">Шлагбауми</span>
+        <span class="dim">1500×1000 · 3:2</span>
+      </div>
+      <div class="body">
+        <p>Photoreal scene of an automatic barrier gate at the entrance to a private courtyard / business-center parking. A clean modern boom barrier with its arm raised, a car waiting just before it, an access reader or LPR camera post beside the lane. Dusk lighting, deep navy and graphite environment (#0e1b33), cyan-blue (#22a6e6) accents on the barrier light strip, a single small red point allowed as a status accent. Corporate, controlled, engineered mood, wide steady composition, cool cinematic grade. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 3:2</b> · 1500×1000 · авто перед автоматичним шлагбаумом</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== БАНЕРИ / СТРІЧКИ ===================== -->
+<section>
+  <div class="wrap">
+    <h2><span class="num">E</span>Широкі банери, карта, мапа, OG</h2>
+    <p class="sub">Стрічки-роздільники й допоміжні слоти різних пропорцій.</p>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">about-city.jpg</span>
+        <span class="slot">Про компанію · місто</span>
+        <span class="dim">2800×1200 · 21:9</span>
+      </div>
+      <div class="body">
+        <p>Ultra-wide panoramic divider banner for an "About the company" page. Panorama of the city of Lviv at blue hour: recognizable skyline silhouette, soft city lights, deep navy (#0e1b33) sky. Overlaid in restrained 3D, thin luminous cyan-blue (#22a6e6) fiber-optic lines and connection nodes tracing across the rooftops, suggesting a connectivity network woven through the city, subtle and elegant, not busy. Calm volumetric haze, cinematic cool grade, ample dark sky area for headline overlay. Photoreal city plus tasteful CGI network lines, serious infrastructure mood. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 21:9</b> · 2800×1200 · широка стрічка-роздільник</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">support-banner.jpg</span>
+        <span class="slot">Підтримка</span>
+        <span class="dim">1800×600 · 3:1</span>
+      </div>
+      <div class="body">
+        <p>Wide thin banner for a support / instructions section. A field service engineer in a clean dark-navy work polo installing or adjusting network / TV equipment at a customer's home or building (cable, router, small ladder, professional tools), friendly and competent but serious, not cheesy. Deep navy and graphite environment (#0e1b33), cyan-blue (#22a6e6) equipment LEDs as accent, soft natural side light. Composition weighted to one side so the opposite side stays clean for headline overlay. Photoreal, reassuring, adult tone. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 3:1</b> · 1800×600 · інженер на виїзді, бік під overlay</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">contacts-banner.jpg</span>
+        <span class="slot">Контакти</span>
+        <span class="dim">1800×600 · 3:1</span>
+      </div>
+      <div class="body">
+        <p>Wide thin banner for a contacts page. A modern infrastructure-operator service point / front desk environment, clean and corporate, softly blurred, with an abstract navy depth and gentle cyan-blue (#22a6e6) accent glow, or alternatively an abstract calm navy connectivity background with faint flowing light lines. Deep #0e1b33 base, restrained, premium, plenty of clean dark space for contact-info overlay on one side. Cool cinematic lighting, photoreal with subtle CGI light, serious adult tone. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 3:1</b> · 1800×600 · бік під overlay контактів</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">coverage-map.jpg</span>
+        <span class="slot">Карта покриття</span>
+        <span class="dim">1500×1000 · 3:2</span>
+      </div>
+      <div class="body">
+        <p>Stylized network-coverage map illustration. A clean abstract map of the city of Lviv and surrounding districts rendered in deep navy (#0e1b33) with darker landmass and subtle street/district contours, glowing cyan-blue (#22a6e6) coverage zones and connection nodes pulsing softly across the map, thin light fiber lines linking the nodes, a few small accent points. Modern technical cartography look, premium dashboard aesthetic, soft glow, slight depth, not a literal Google-map screenshot, no readable place labels. Cool grade, serious infrastructure mood. No text, no logo, no watermark, no readable labels.</p>
+        <p class="ar"><b>aspect ratio 3:2</b> · 1500×1000 · стилізована мапа, без читабельних підписів</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">og-cover.jpg</span>
+        <span class="slot">OG · соцпрев'ю</span>
+        <span class="dim">1200×630 · 1.91:1</span>
+      </div>
+      <div class="body">
+        <p>Social-share Open Graph cover background for a telecom &amp; security operator. A premium navy gradient field (#0e1b33 to #16294a) with a restrained 3D constellation motif: glowing cyan-blue (#22a6e6) network nodes connected by thin luminous lines, like a quiet star map of digital services, drifting across the frame with soft bokeh and volumetric depth, one small red (#d92434) accent node. Centered clear area reserved for a logo and tagline to be added later in layout. Elegant, corporate, calm, not busy, plenty of empty space in the middle. Subtle CGI, cool cinematic grade. No text, no lettering, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 1.91:1</b> · 1200×630 · центр чистий під лого+слоган (додаються версткою)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== РЕАЛЬНІ ФОТО ===================== -->
+<section>
+  <div class="wrap">
+    <h2><span class="num">F</span>Реальні фото (НЕ генеруються)</h2>
+    <div class="note">
+      <h3>Три кадри з materials/team вже зняті — їх не треба генерувати</h3>
+      <ul>
+        <li><b>team-datacenter.jpg</b> (1536×1920) — реальні інженери у «гарячому коридорі» ЦОД, фірмові поло. Використання: напрям «Хмара/ЦОД», лендинг БІЗНЕС, «Про компанію → Інфраструктура». Пресет: холодний баланс білого, прибрати теплу жовтизну, легкий navy-teal навіс 10–15%, не перетемнювати обличчя.</li>
+        <li><b>team-flag.jpg</b> (960×720) — сімка співробітників з банером «Сузір'я цифрових послуг». Використання: «Про компанію → Команда / Культура», вставка біля бренд-лінії. Пресет: +контраст, відновити небо, холодний баланс, м'який navy-duotone 8–12%.</li>
+        <li><b>team-group.jpg</b> (1800×771) — велика групова (~50 осіб) з прапором АСТРА. Використання: «Про компанію» широка стрічка-роздільник під темним navy-оверлеєм 40–60% з текстом поверх. Пресет: +контраст, холодний баланс, прапор лишити читабельним.</li>
+      </ul>
+      <p style="margin:10px 0 0;font-size:13px;color:var(--muted)">Єдиний пресет кольорокорекції (холодний WB, +контраст, navy-duotone) зводить три кежуальні кадри в один серйозний дорослий ряд із генерованими зображеннями. Жодне з трьох не годиться як головний hero сайту — для цього генеруємо hero-home/dim/biz вище.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ДОДАТКОВІ СЛОТИ ===================== -->
+<section>
+  <div class="wrap">
+    <h2><span class="num">G</span>Додаткові слоти (TV + підпослуги напрямків)</h2>
+    <p class="sub">Шість нових кадрів під сторінки напрямків: інтерфейс АСТРА TV та п'ять інфраструктурних сценаріїв (NOC, СКС, ВОЛЗ, колокація, VPS). Той самий navy-ряд, реальне обладнання, без playful.</p>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">tv-astra.jpg</span>
+        <span class="slot">АСТРА TV</span>
+        <span class="dim">1600×1000 · 8:5</span>
+      </div>
+      <div class="body">
+        <p>Photoreal scene of an IPTV / smart-TV service in a tidy modern living room in the evening. A large wall-mounted flat-screen TV is the focal subject, its screen glowing with an abstract cool cyan-blue (#22a6e6) media-interface light suggesting a content grid and channel tiles, but deliberately soft-blurred and unreadable with no legible UI and no on-screen lettering. A slim remote control rests in a relaxed hand or on the sofa armrest in the soft foreground, a small set-top box with a calm blue LED on the console beneath the TV. Deep navy and graphite interior tones (#0e1b33), warm lamp light kept subtle and never orange-heavy, cyan-blue screen glow as the dominant accent, no red. Soft directional evening light, shallow depth of field, full-frame 50mm prime, cinematic cool grade, serious adult home-entertainment mood, not cheerful stock. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 8:5</b> · 1600×1000 · інтерфейс на екрані не читабельний (UI накладається версткою)</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">sub-noc.jpg</span>
+        <span class="slot">NOC / моніторинг</span>
+        <span class="dim">1500×1000 · 3:2</span>
+      </div>
+      <div class="body">
+        <p>Photoreal scene of a network operations center (NOC) of an infrastructure operator. Two or three operators seen mostly from behind / in profile (no full faces, focus on the room and the craft) seated at a long monitoring desk facing a wall of large dashboard screens showing abstract network topology graphs, status grids and cool cyan-blue (#22a6e6) telemetry glows, all deliberately soft-blurred with no readable text or UI. Deep navy and graphite control-room environment (#0e1b33), dim ambient lighting so the screens are the light source, a couple of small red (#d92434) alert indicators on the wall as the only disciplined red accents (well under 10% of the frame). Cool cinematic grade, subtle volumetric haze, sharp foreground detail on a desk and keyboards, calm competent 24/7 mood. Full-frame 35mm, medium depth of field. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 3:2</b> · 1500×1000 · оператори зі спини, екрани без читабельного UI, дозований червоний alert</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">sub-sks.jpg</span>
+        <span class="slot">СКС / Wi-Fi</span>
+        <span class="dim">1500×1000 · 3:2</span>
+      </div>
+      <div class="body">
+        <p>Photoreal close-up of a structured cabling system (SCS) installation inside an open server / network rack. Immaculately organized patch cords routed through horizontal and vertical cable managers, a patch panel and a switch with rows of cool blue (#22a6e6) link LEDs, the hands of an engineer (no face, focus on craft) seating a connector into a port. Deep navy and graphite tones (#0e1b33), cyan-blue indicator and cable-management accents, no red, clean professional workmanship with crisp micro-detail on RJ45 connectors and labeled cable bundles. Cool technical lighting, soft rim light along the rack rails, shallow-to-medium depth of field, full-frame 50mm prime, serious competent engineering mood. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 3:2</b> · 1500×1000 · акуратний монтаж у серверній шафі, руки інженера</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">sub-volz.jpg</span>
+        <span class="slot">ВОЛЗ / оптика</span>
+        <span class="dim">1500×1000 · 3:2</span>
+      </div>
+      <div class="body">
+        <p>Photoreal close-up of fiber-optic line construction and fusion splicing. The hands of an engineer (no face) operating a fusion splicer on a tripod, two bare optical fibers aligned in the splicer's V-grooves with a tiny bright arc-weld point, a coil of slim optical cable and a splice tray in the foreground, faint cyan-blue (#22a6e6) light glowing inside the stripped fiber tips. Outdoor / utility setting softly blurred behind in deep navy dusk tones (#0e1b33), cool graphite equipment, no red. Sharp macro detail on the splicer and fibers, shallow depth of field, full-frame macro lens, cool cinematic grade, precise and skilled engineering mood. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 3:2</b> · 1500×1000 · зварювання оптики, макро на сплайсер і волокна</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">sub-kolokatsiia.jpg</span>
+        <span class="slot">Колокація / ЦОД</span>
+        <span class="dim">1500×1000 · 3:2</span>
+      </div>
+      <div class="body">
+        <p>Photoreal scene of a colocation hall in a data center. Long rows of tall black server racks forming a clean cold-aisle corridor receding into the frame, perforated cabinet doors with rows of cool blue (#22a6e6) status LEDs glowing down both sides, structured overhead cable trays, faint floor light and subtle haze for depth, deep navy (#0e1b33) overall grade. No people needed, one or two tiny red status LEDs allowed as disciplined accents. Wide steady one-point perspective down the aisle, cool cinematic lighting, low blown highlights, high micro-detail, powerful premium infrastructure mood that echoes a real on-site data hall. Full-frame 35mm. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 3:2</b> · 1500×1000 · ряди стійок колокації, перегукується з dir-cloud / team-datacenter</p>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="head">
+        <span class="fn">sub-vps.jpg</span>
+        <span class="slot">VPS / сервери</span>
+        <span class="dim">1500×1000 · 3:2</span>
+      </div>
+      <div class="body">
+        <p>Restrained 3D / CGI abstraction of virtualization and cloud servers. Several semi-transparent glowing server / instance blocks floating and stacked in dark navy space (#0e1b33), connected by thin luminous cyan-blue (#22a6e6) data lines and orbiting nodes that suggest virtual machines partitioned from physical hardware, subtle hexagonal or grid micro-pattern, soft volumetric depth and bokeh, one small red (#d92434) accent node as a discreet status point. Elegant, calm, premium engineering aesthetic, not busy, plenty of dark negative space, no literal datacenter photo and no readable UI. Cool cinematic grade, tasteful CGI glow, high render quality. No text, no logo, no watermark.</p>
+        <p class="ar"><b>aspect ratio 3:2</b> · 1500×1000 · абстрактна віртуалізація, 3D/CGI, дозований червоний node</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">08-image-prompts.html · згенеровано для редизайну astra.in.ua · 23 промпти генерації + 3 реальні фото · палітра navy <code>#0e1b33</code> · red <code>#d92434</code> · blue <code>#22a6e6</code></div>
+</footer>
+
+</body>
+</html>

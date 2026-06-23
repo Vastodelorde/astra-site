@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Мережеві рішення для бізнесу — піринг, NOC, СКС, ВОЛЗ · АСТРА</title>
+<meta name="description" content="Мережеві рішення АСТРА для бізнесу та операторів зв'язку: піринг (публічний і приватний), послуги NOC (Firewall, Dual-WAN, BGP/OSPF, VPN), СКС, Wi-Fi, Mesh та ВОЛЗ. Інженерна експертиза з 2004 року.">
+<link rel="icon" href="assets/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Мережеві рішення для бізнесу — піринг, NOC, СКС, ВОЛЗ · АСТРА">
+<meta property="og:description" content="Піринг, послуги NOC, СКС / Wi-Fi / Mesh та ВОЛЗ для бізнесу й операторів зв'язку. Інженерна команда АСТРА.">
+<meta property="og:image" content="img/og-cover.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/astra.css">
+<style>
+/* page-merezhi — сторінко-специфічні дрібниці, scoped page-класом */
+.page-merezhi .net-feature{display:grid;grid-template-columns:0.9fr 1.1fr;gap:clamp(28px,4vw,56px);align-items:start}
+.page-merezhi .net-feature .grid{grid-template-columns:1fr;gap:14px}
+.page-merezhi .net-feature .net-media{position:sticky;top:118px}
+.page-merezhi .net-feature.flip .net-media{order:2}
+.page-merezhi .net-media{border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh-md);aspect-ratio:3/2;background:var(--navy-700)}
+.page-merezhi .net-media img{width:100%;height:100%;object-fit:cover}
+.page-merezhi .peer-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+.page-merezhi .peer-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px 24px}
+.page-merezhi .peer-card .tag{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--blue-700);margin-bottom:10px}
+.page-merezhi .peer-card h4{margin:0 0 8px}
+.page-merezhi .peer-card p{color:var(--muted);font-size:.95rem;margin:0}
+.page-merezhi .noc-list{columns:2;column-gap:32px;margin-top:6px}
+.page-merezhi .noc-list li{break-inside:avoid;margin-bottom:12px;padding-left:26px;position:relative;color:var(--muted);list-style:none}
+.page-merezhi .noc-list li::before{content:"";position:absolute;left:0;top:8px;width:10px;height:10px;border-radius:3px;background:var(--blue)}
+.page-merezhi .noc-list li b{color:var(--navy-900);font-weight:600}
+.page-merezhi .price-note{display:inline-flex;align-items:baseline;gap:10px;margin-top:22px;padding:14px 20px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface)}
+.page-merezhi .price-note .num{font-family:var(--font-display);font-weight:800;font-size:1.5rem;color:var(--navy-900)}
+.page-merezhi .price-note .lbl{color:var(--muted);font-size:.9rem}
+.page-merezhi .benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.page-merezhi .benefit{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:20px 18px}
+.page-merezhi .benefit b{display:block;font-family:var(--font-display);color:var(--navy-900);margin-bottom:4px}
+.page-merezhi .benefit span{font-size:.88rem;color:var(--muted)}
+.page-merezhi .scen{display:flex;flex-direction:column;gap:14px}
+.page-merezhi .scen .ic{width:46px;height:46px;border-radius:12px;background:var(--blue-050);color:var(--blue-700);display:flex;align-items:center;justify-content:center}
+.page-merezhi .scen .ic svg{width:24px;height:24px}
+@media(max-width:920px){.page-merezhi .net-feature{grid-template-columns:1fr}.page-merezhi .net-feature.flip .net-media{order:-1}.page-merezhi .net-media{aspect-ratio:16/9}}
+@media(max-width:760px){.page-merezhi .peer-grid{grid-template-columns:1fr}.page-merezhi .noc-list{columns:1}.page-merezhi .benefits{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body class="page-merezhi ctx-biz mode-biz">
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="container topbar">
+    <a class="brand" href="index.html" aria-label="АСТРА — на головну"><img class="brand-mark" src="assets/logo-mark.svg" alt=""><span class="brand-word">АСТРА</span></a>
+    <a class="t-phone" href="tel:+380800203838">0&nbsp;800&nbsp;20-38-38<small>цілодобова підтримка</small></a>
+    <a class="t-cab" href="https://cabinet.astra.in.ua" target="_blank" rel="noopener">Особистий кабінет&nbsp;↗</a>
+    <button class="btn btn--primary btn--sm" data-modal>Підключитися</button>
+    <button class="burger" aria-label="Меню" aria-expanded="false"><span></span></button>
+  </div>
+  <nav class="mainnav" aria-label="Головна навігація">
+    <div class="container">
+      <ul>
+        <li>
+          <a class="navlink" href="dim.html">Для дому <i class="chev"></i></a>
+          <div class="mega cols-4">
+            <div class="col"><b>Інтернет для дому</b>
+              <a href="taryfy-dim.html#bahatokvartyrni">Багатоквартирні будинки</a>
+              <a href="taryfy-dim.html#pryvatnyi">Приватний сектор</a>
+              <a href="taryfy-dim.html#hurtozhytky">Гуртожитки</a>
+              <a href="internet.html#dodatkovi">Постійна IP · IPv6</a>
+            </div>
+            <div class="col"><b>Телебачення</b>
+              <a href="tv.html#astra-tv">АСТРА TV</a>
+              <a href="tv.html#partners">MEGOGO · Sweet.tv · youtv</a>
+              <a href="tv.html#prosto-tb">Просто ТБ (DVB-C)</a>
+            </div>
+            <div class="col"><b>Безпека дому</b>
+              <a href="bezpeka.html#readings">Домофон у смартфоні</a>
+              <a href="bezpeka.html#subservices">Відеонагляд</a>
+            </div>
+            <div class="col"><b>Вигода</b>
+              <a href="spetspropozytsii.html">Спецпропозиції</a>
+              <a href="dim.html#coverage">Перевірити покриття</a>
+              <a href="taryfy-dim.html">Річні тарифи</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <a class="navlink" href="biznes.html">Для бізнесу <i class="chev"></i></a>
+          <div class="mega cols-4">
+            <div class="col"><b>Зв'язок · ASTRA ISP</b>
+              <a href="taryfy-biznes.html">Бізнес-інтернет 100–10000</a>
+              <a href="taryfy-biznes.html">Виділене оптоволокно / SLA</a>
+              <a href="merezhi.html#peering">Піринг</a>
+              <a href="merezhi.html#noc">Мережеві рішення / NOC</a>
+            </div>
+            <div class="col"><b>Безпека · ASTRA INSTALL</b>
+              <a href="bezpeka.html#subservices">Відеонагляд + аналітика</a>
+              <a href="bezpeka.html#subservices">СКУД / IP-домофонія</a>
+              <a href="bezpeka.html#subservices">Шлагбауми / в'їзні групи</a>
+              <a href="merezhi.html#sks">СКС · Wi-Fi · ВОЛЗ</a>
+            </div>
+            <div class="col"><b>Хмара · ASTRA CLOUD</b>
+              <a href="hmara.html#kolokatsiia">Колокація (ЦОД Львів)</a>
+              <a href="hmara.html#vps">VPS / VDS</a>
+              <a href="hmara.html#server">Виділений сервер</a>
+            </div>
+            <div class="col"><b>Рішення за об'єктом</b>
+              <a href="biznes.html#segments">Офіси · ЖК/ОСББ</a>
+              <a href="biznes.html#segments">Ритейл · Склади</a>
+              <a href="biznes.html#segments">Готелі · коворкінги</a>
+              <a href="biznes.html#chomu">Чому обирають АСТРА</a>
+            </div>
+          </div>
+        </li>
+        <li><a class="navlink" href="pidtrymka.html">Підтримка</a></li>
+        <li><a class="navlink" href="pro-kompaniiu.html">Про компанію</a></li>
+        <li><a class="navlink" href="novyny.html">Новини</a></li>
+        <li><a class="navlink" href="kontakty.html">Контакти</a></li>
+        <li><a class="navlink" href="https://shop.astra.in.ua" target="_blank" rel="noopener">Магазин&nbsp;↗</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- (1) HERO -->
+  <section class="hero">
+    <div class="hero-bg"><img src="img/dir-network.jpg" loading="eager" alt="Мережева інфраструктура: монтаж у серверній шафі, оптичні лінії"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <h1>Мережеві рішення та піринг</h1>
+        <p class="hero-sub">Проєктування й обслуговування мереж, NOC-моніторинг, СКС, Wi-Fi та оптичні лінії для вашого об’єкта.</p>
+        <div class="hero-cta"><button class="btn btn--primary btn--lg" data-modal data-mode="biz">Замовити консультацію</button></div>
+        <ul class="hero-trust"><li class="hl">NOC 24/7</li><li class="">публічний і приватний піринг</li><li class="">СКС та Wi-Fi</li><li class="">ВОЛЗ</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- (2) ПІРИНГ -->
+  <section class="section" id="peering">
+    <div class="container">
+      <div class="section-head">
+        <h2>Піринг</h2>
+        <p class="lead">Піринг (від англ. «peering») – це процес прямого обміну інтернет-трафіком між двома або більше мережами. Основною метою пірингу є оптимізація маршрутизації даних, зменшення затримок і підвищення швидкості передачі інформації. Інтернет-провайдери використовують піринг для зниження витрат на передачу даних через треті сторони, забезпечуючи при цьому більш якісне та стабільне з'єднання для своїх клієнтів.</p>
+      </div>
+
+      <p class="muted" style="max-width:72ch">Піринг відбувається на спеціальних платформах, відомих як піринг-пункти або інтернет-обмінні точки (IXPs). Існують два основних види пірингу:</p>
+
+      <div class="peer-grid">
+        <div class="peer-card">
+          <span class="tag">Публічний піринг</span>
+          <h4>На загальнодоступних платформах</h4>
+          <p>Багато провайдерів підключені до одного центрального комутатора.</p>
+        </div>
+        <div class="peer-card">
+          <span class="tag">Приватний піринг</span>
+          <h4>Прямі з'єднання</h4>
+          <p>Через прямі з'єднання між двома провайдерами, без використання загальнодоступних комутаторів. Дорожчий, але ефективніший.</p>
+        </div>
+      </div>
+
+      <div class="benefits">
+        <div class="benefit"><b>Зменшення затримок</b><span>Менша затримка для трафіку</span></div>
+        <div class="benefit"><b>Підвищення швидкості</b><span>Швидша передача інформації</span></div>
+        <div class="benefit"><b>Покращення стабільності</b><span>Стабільніше з'єднання</span></div>
+        <div class="benefit"><b>Зменшення витрат</b><span>Конкурентоспроможніші тарифи</span></div>
+      </div>
+
+      <p class="muted" style="max-width:72ch;margin-top:28px">Послуга піринг надається виключно юридичним особам та операторам зв'язку. Для подачі заявки на приватний піринг, пишіть на нашу пошту. Інформацію про наші піринг-пункти та про нашу АС можна подивитись на сайті.</p>
+      <p style="margin-top:18px"><button class="btn btn--blue" data-modal data-mode="biz">Подати заявку на піринг</button></p>
+    </div>
+  </section>
+
+  <!-- (3) ПОСЛУГИ NOC -->
+  <section class="section section--tint" id="noc">
+    <div class="container">
+      <div class="net-feature">
+        <div>
+          <div class="section-head" style="margin-bottom:18px">
+            <h2>Послуги NOC</h2>
+            <p class="lead">Налаштування та обслуговування мережевого обладнання нашими інженерами: маршрутизація, резервування каналів, захист периметра та віддалений доступ. Для бізнес-абонентів та корпоративних клієнтів.</p>
+          </div>
+          <ul class="noc-list">
+            <li><b>Firewall</b> на маршрутизаторі/сервері</li>
+            <li><b>dst-nat (port-forwarding)</b> на маршрутизаторі</li>
+            <li><b>CapsMan</b> — централізоване керування точками</li>
+            <li><b>Mesh</b> — безшовна бездротова мережа</li>
+            <li><b>Dual-WAN резервування</b> на маршрутизаторі/сервері</li>
+            <li><b>Dual-WAN балансування</b> на маршрутизаторі/сервері</li>
+            <li><b>BGP/OSPF</b> на маршрутизаторі/сервері</li>
+            <li><b>LACP/LAGG/BOND</b> балансування/резервування (за умови підтримки обладнанням протоколів агрегації)</li>
+            <li><b>IPv6</b> на маршрутизаторі/сервері</li>
+            <li><b>VPN-сервер</b> на маршрутизаторі/сервері</li>
+            <li><b>VPN-клієнти</b> на маршрутизаторі/сервері/ПК</li>
+            <li><b>Об'єднання офісів</b> та два одночасних підключення</li>
+          </ul>
+          <div class="price-note">
+            <span class="num">500 грн/год</span>
+            <span class="lbl">тарифікація додаткових мережевих налаштувань (юр.), не менше 1 год</span>
+          </div>
+        </div>
+        <div class="net-media">
+          <img src="img/sub-noc.jpg" alt="Центр мережевого моніторингу NOC — інженери біля стійки з обладнанням" loading="lazy" width="1500" height="1000">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- (4) СКС / Wi-Fi / Mesh -->
+  <section class="section" id="sks">
+    <div class="container">
+      <div class="net-feature flip">
+        <div class="net-media">
+          <img src="img/sub-sks.jpg" alt="Монтаж структурованої кабельної системи та точок Wi-Fi у приміщенні" loading="lazy" width="1500" height="1000">
+        </div>
+        <div>
+          <div class="section-head" style="margin-bottom:18px">
+            <h2>СКС · Wi-Fi · Mesh <span class="flag">NEW/уточнити</span></h2>
+            <p class="lead">Проєктування та монтаж структурованих кабельних систем, розгортання бездротових мереж Wi-Fi і безшовних Mesh-рішень для офісів, ЖК та об'єктів бізнесу.</p>
+          </div>
+          <div class="grid grid-3" style="gap:20px">
+            <div class="pillar">
+              <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg></div>
+              <div><h4>СКС</h4><p>Структуровані кабельні системи: проєктування траси, прокладання, маркування, патч-панелі та розетки.</p></div>
+            </div>
+            <div class="pillar">
+              <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1.4" fill="currentColor"/></svg></div>
+              <div><h4>Wi-Fi</h4><p>Розгортання бездротових мереж з покриттям під площу та кількість пристроїв, керування через CapsMan.</p></div>
+            </div>
+            <div class="pillar">
+              <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M8 7l8 0M7 8l4 8M17 8l-4 8"/></svg></div>
+              <div><h4>Mesh</h4><p>Безшовна бездротова мережа без розривів з'єднання під час переміщення між точками доступу.</p></div>
+            </div>
+          </div>
+          <p style="margin-top:24px"><button class="btn btn--ghost" data-modal data-mode="biz">Замовити консультацію</button></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- (5) ВОЛЗ / оптичні лінії -->
+  <section class="section section--tint" id="volz">
+    <div class="container">
+      <div class="net-feature">
+        <div>
+          <div class="section-head" style="margin-bottom:18px">
+            <h2>ВОЛЗ · оптичні лінії <span class="flag">NEW/уточнити</span></h2>
+            <p class="lead">Прокладання та обслуговування волоконно-оптичних ліній зв'язку для з'єднання об'єктів, підключення майданчиків та побудови магістральних сегментів мережі.</p>
+          </div>
+          <div class="grid grid-2" style="gap:18px">
+            <div class="card">
+              <h4 style="margin:0 0 8px">Проєктування траси</h4>
+              <p class="muted" style="margin:0">Розрахунок траси, вибір технології (FTTB / PON), узгодження з умовами об'єкта.</p>
+            </div>
+            <div class="card">
+              <h4 style="margin:0 0 8px">Монтаж та зварювання</h4>
+              <p class="muted" style="margin:0">Прокладання оптичного кабелю, зварювання волокон, монтаж кросів та оптичних боксів.</p>
+            </div>
+            <div class="card">
+              <h4 style="margin:0 0 8px">З'єднання майданчиків</h4>
+              <p class="muted" style="margin:0">Оптичні лінії між офісами, корпусами та виробничими майданчиками компанії.</p>
+            </div>
+            <div class="card">
+              <h4 style="margin:0 0 8px">Енергонезалежність</h4>
+              <p class="muted" style="margin:0">Інфраструктура з резервним живленням для роботи навіть під час відключень світла.</p>
+            </div>
+          </div>
+          <p style="margin-top:24px"><button class="btn btn--ghost" data-modal data-mode="biz">Замовити консультацію</button></p>
+        </div>
+        <div class="net-media">
+          <img src="img/sub-volz.jpg" alt="Прокладання та зварювання волоконно-оптичної лінії зв'язку" loading="lazy" width="1500" height="1000">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- (6) Сценарії для бізнесу / ОСББ -->
+  <section class="section" id="scenarii">
+    <div class="container">
+      <div class="section-head">
+        <h2>Сценарії для бізнесу та ОСББ</h2>
+        <p class="lead">Типові завдання, які наша інженерна команда вирішує для корпоративних клієнтів, ЖК та об'єднань співвласників.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="scen">
+          <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg></div>
+          <h4 style="margin:0">Об'єднання офісів</h4>
+          <p class="muted" style="margin:0">VPN між майданчиками, два одночасних підключення та резервування Dual-WAN для безперервної роботи.</p>
+        </div>
+        <div class="scen">
+          <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-6h6v6"/></svg></div>
+          <h4 style="margin:0">Мережа для ЖК та ОСББ</h4>
+          <p class="muted" style="margin:0">СКС у будинку, Wi-Fi у спільних зонах та оптична лінія до кожного під'їзду.</p>
+        </div>
+        <div class="scen">
+          <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M2.5 12h19M12 2.5c2.8 3 2.8 16 0 19M12 2.5c-2.8 3-2.8 16 0 19"/></svg></div>
+          <h4 style="margin:0">Піринг для операторів</h4>
+          <p class="muted" style="margin:0">Публічний та приватний піринг для операторів зв'язку: менша затримка, вища стабільність, нижчі витрати.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- (7) CTA-BAND -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-band">
+        <h2>Потрібне мережеве рішення під ваш об'єкт?</h2>
+        <p class="lead">Залиште заявку, і наш інженер з напрямку звʼяжеться з вами для уточнення задачі та підготовки пропозиції.</p>
+        <div class="row">
+          <button class="btn btn--primary btn--lg" data-modal data-mode="biz">Замовити консультацію</button>
+          <a class="btn btn--ghost btn--lg on-navy" href="tel:+380800203838"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>0&nbsp;800&nbsp;20-38-38</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="container footer-main">
+    <div class="footer-brand">
+      <img src="assets/logo.svg" alt="АСТРА">
+      <p>Сузір'я цифрових послуг. Створюємо інфраструктуру зв'язку та безпеки з 2004 року.</p>
+      <div class="socials">
+        <a href="https://t.me/astraisp" target="_blank" rel="noopener" aria-label="Telegram"><img src="assets/telegram.svg" alt=""></a>
+        <a href="https://www.youtube.com/@astra_in_ua" target="_blank" rel="noopener" aria-label="YouTube"><img src="assets/youtube-icon.png" alt=""></a>
+        <a href="https://instagram.com/astra_isp" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/instagram-icon.png" alt=""></a>
+        <a href="https://www.linkedin.com/company/astra-isp" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/linkedin.png" alt=""></a>
+        <a href="https://www.facebook.com/astraisp" target="_blank" rel="noopener" aria-label="Facebook"><img src="assets/facebook-letter-logo.svg" alt=""></a>
+      </div>
+    </div>
+    <div><h5>Напрямки</h5>
+      <a href="internet.html">Інтернет</a><a href="tv.html">Телебачення</a>
+      <a href="bezpeka.html">Безпека</a><a href="merezhi.html">Мережеві рішення</a>
+      <a href="hmara.html">Хмара / ЦОД</a>
+    </div>
+    <div><h5>Тарифи</h5>
+      <a href="taryfy-dim.html#bahatokvartyrni">Багатоквартирні</a><a href="taryfy-dim.html#pryvatnyi">Приватний сектор</a>
+      <a href="taryfy-dim.html#hurtozhytky">Гуртожитки</a><a href="taryfy-biznes.html">Бізнес</a>
+      <a href="spetspropozytsii.html">Спецпропозиції</a>
+    </div>
+    <div><h5>Компанія</h5>
+      <a href="pro-kompaniiu.html">Про компанію</a><a href="novyny.html">Новини</a>
+      <a href="dokumenty.html">Документи</a><a href="kontakty.html">Контакти</a>
+    </div>
+    <div><h5>Сервіси ↗</h5>
+      <a href="https://shop.astra.in.ua" target="_blank" rel="noopener">Магазин</a>
+      <a href="https://cabinet.astra.in.ua" target="_blank" rel="noopener">Особистий кабінет</a>
+      <a href="https://speed.astra.in.ua" target="_blank" rel="noopener">Спідтест</a>
+      <a href="https://cloud.astra.in.ua" target="_blank" rel="noopener">Astra Cloud</a>
+      <a href="pidtrymka.html">Підтримка / Інструкції</a>
+    </div>
+  </div>
+  <div class="container foot-bottom">
+    <span>© 2004–2026, компанія АСТРА · ТзОВ «АСТРА-ЛЬВІВ»</span>
+    <span>
+      <a href="dokumenty.html">Договір-оферта</a> ·
+      <a href="dokumenty.html">Показники якості</a> ·
+      <a href="dokumenty.html">Політика конфіденційності</a>
+    </span>
+  </div>
+</footer>
+
+<!-- ===================== LEAD MODAL ===================== -->
+<div class="modal" id="lead-modal" role="dialog" aria-modal="true" aria-label="Заявка на підключення">
+  <div class="backdrop" data-close></div>
+  <div class="panel">
+    <button class="x" data-close aria-label="Закрити">✕</button>
+    <h3 style="margin:8px 0 4px">Залиште заявку — ми вам перетелефонуємо</h3>
+    <p class="muted" style="font-size:.9rem;margin-bottom:18px">З 9.00 до 21.00. Ми поважаємо вашу приватність.</p>
+    <form data-lead style="display:flex;flex-direction:column;gap:14px">
+      <div class="field"><label>Ім'я</label><input type="text" name="name" placeholder="Ваше ім'я"></div>
+      <div class="field"><label>Номер телефону</label><input type="tel" data-phone name="phone" placeholder="+38 (0__) ___-__-__" required><span class="err"></span></div>
+      <div class="field"><label>Адреса</label><input type="text" name="address" placeholder="Вулиця, будинок"></div>
+      <div class="field"><label>Промокод</label><input type="text" name="promo" placeholder="Якщо є"></div>
+      <input type="hidden" name="tariff">
+      <button class="btn btn--primary btn--block" type="submit">Надіслати заявку</button>
+      <p class="form-note">Натискаючи кнопку, ви погоджуєтесь з обробкою даних згідно з політикою конфіденційності.</p>
+      <div data-success style="display:none">
+        <h4 style="color:var(--navy-900)">Вашу заявку прийнято!</h4>
+        <p class="muted" style="font-size:.92rem;margin-top:8px">Дякуємо за звернення! Вам перетелефонують одразу ж, як тільки звільниться оператор. Цілодобово також: Telegram <b>@astraispbot</b>, Viber «АСТРА», 0&nbsp;800&nbsp;20-38-38.</p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== MOBILE MENU + STICKY CTA ===================== -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mm-close" data-close-menu aria-label="Закрити меню">✕</button>
+  <nav aria-label="Мобільне меню">
+    <details class="mm-group">
+      <summary>Для дому</summary>
+      <a href="dim.html">Огляд розділу</a>
+      <a href="taryfy-dim.html#bahatokvartyrni">Багатоквартирні будинки</a>
+      <a href="taryfy-dim.html#pryvatnyi">Приватний сектор</a>
+      <a href="taryfy-dim.html#hurtozhytky">Гуртожитки</a>
+      <a href="tv.html">Телебачення</a>
+      <a href="bezpeka.html#readings">Домофон і відеонагляд</a>
+      <a href="internet.html#dodatkovi">Постійна IP · IPv6</a>
+      <a href="spetspropozytsii.html">Спецпропозиції</a>
+    </details>
+    <details class="mm-group">
+      <summary>Для бізнесу</summary>
+      <a href="biznes.html">Огляд розділу</a>
+      <a href="taryfy-biznes.html#biznes">Тарифи для бізнесу</a>
+      <a href="bezpeka.html#subservices">Безпека · ASTRA INSTALL</a>
+      <a href="merezhi.html">Мережі · ASTRA ISP</a>
+      <a href="hmara.html">Хмара · ASTRA CLOUD</a>
+      <a href="biznes.html#segments">Рішення за об'єктом</a>
+    </details>
+    <a class="mm-top" href="pidtrymka.html">Підтримка</a>
+    <a class="mm-top" href="pro-kompaniiu.html">Про компанію</a>
+    <a class="mm-top" href="novyny.html">Новини</a>
+    <a class="mm-top" href="kontakty.html">Контакти</a>
+    <a class="mm-top" href="https://shop.astra.in.ua" target="_blank" rel="noopener">Магазин ↗</a>
+  </nav>
+</div>
+<div class="mobile-cta">
+  <button class="btn btn--ghost on-navy" data-modal data-mode="callback">Передзвоніть мені</button>
+  <button class="btn btn--primary" data-modal>Підключитися</button>
+</div>
+
+<script src="js/astra.js" defer></script>
+</body>
+</html>

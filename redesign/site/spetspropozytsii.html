@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Спецпропозиції та акції — АСТРА</title>
+<meta name="description" content="Усі акції АСТРА в одному місці: «З нами вигідніше!» (−25% за перепідключення), «Друзі завжди разом» (+500 грн), «Перший у під'їзді!» (6 місяців бонусу), «Астра Турбота» (−15% соціальна знижка) та «Студент+» (роутер за 100 грн). Повні умови кожної пропозиції.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Спецпропозиції та акції — АСТРА">
+<meta property="og:description" content="Перепідключення зі знижкою 25%, бонуси за друзів, 6 місяців подарунка першому в під'їзді, соціальна знижка 15% та Wi-Fi у гуртожитку за 100 грн.">
+<meta property="og:image" content="img/og-cover.jpg">
+<meta property="og:locale" content="uk_UA">
+
+<link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/astra.css">
+
+<style>
+/* ---- scoped to .page-spec (Спецпропозиції) ------------------------------- */
+.page-spec .spec-hero h1{max-width:18ch}
+.page-spec .spec-hero .lead{max-width:60ch}
+
+/* anchor jump-nav under hero */
+.page-spec .spec-nav{display:flex;flex-wrap:wrap;gap:10px}
+.page-spec .spec-nav a{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--surface);border:1px solid var(--line-strong);
+  border-radius:var(--r-pill);padding:9px 16px;
+  font-weight:600;font-size:0.9rem;color:var(--navy-900);
+  transition:.2s var(--ease);
+}
+.page-spec .spec-nav a:hover{border-color:var(--navy-900);transform:translateY(-1px)}
+.page-spec .spec-nav a .no{
+  font-family:var(--font-display);font-weight:800;color:var(--red);
+}
+
+/* offer block */
+.page-spec .offer-block{scroll-margin-top:96px}
+.page-spec .offer-grid{
+  display:grid;grid-template-columns:0.85fr 1.15fr;
+  gap:clamp(28px,4vw,56px);align-items:start;
+}
+.page-spec .offer-grid.flip{grid-template-columns:1.15fr 0.85fr}
+.page-spec .offer-aside{position:sticky;top:96px}
+.page-spec .offer-kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-display);font-weight:800;font-size:0.82rem;
+  letter-spacing:.04em;text-transform:uppercase;
+  color:var(--red);margin-bottom:14px;
+}
+.page-spec .offer-kicker .no{
+  width:30px;height:30px;border-radius:8px;
+  background:var(--red);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.95rem;
+}
+.page-spec .offer-aside h2{margin:0 0 12px}
+.page-spec .offer-claim{
+  font-size:clamp(1.05rem,0.95rem+0.5vw,1.3rem);
+  font-weight:600;color:var(--navy-900);line-height:1.45;
+}
+.page-spec .section--navy .offer-claim{color:#fff}
+.page-spec .offer-aside .btn{margin-top:24px}
+
+/* body copy column */
+.page-spec .offer-body > * + *{margin-top:16px}
+.page-spec .offer-body p{color:var(--ink);line-height:1.65;max-width:68ch}
+.page-spec .section--navy .offer-body p{color:var(--on-navy-dim)}
+.page-spec .offer-h{
+  font-family:var(--font-display);font-weight:700;
+  font-size:1.05rem;color:var(--navy-900);margin-top:28px;
+}
+.page-spec .section--navy .offer-h{color:#fff}
+
+/* conditions list with check / cross markers */
+.page-spec .cond{list-style:none;display:flex;flex-direction:column;gap:12px;margin:0}
+.page-spec .cond li{
+  position:relative;padding-left:34px;
+  color:var(--ink);line-height:1.6;font-size:0.96rem;
+}
+.page-spec .section--navy .cond li{color:var(--on-navy-dim)}
+.page-spec .cond li::before{
+  content:"";position:absolute;left:0;top:2px;
+  width:22px;height:22px;border-radius:6px;
+  background:var(--blue-050);
+}
+.page-spec .cond li::after{
+  content:"";position:absolute;left:6px;top:7px;
+  width:10px;height:6px;
+  border-left:2px solid var(--blue-700);border-bottom:2px solid var(--blue-700);
+  transform:rotate(-45deg);
+}
+.page-spec .section--navy .cond li::before{background:oklch(1 0 0 /.12)}
+.page-spec .section--navy .cond li::after{border-color:var(--blue)}
+.page-spec .cond.no li::before{background:oklch(0.95 0.045 25)}
+.page-spec .cond.no li::after{
+  content:"";left:8px;top:6px;width:9px;height:9px;
+  border:0;transform:none;
+  background:
+    linear-gradient(var(--red),var(--red)) center/9px 2px no-repeat,
+    linear-gradient(var(--red),var(--red)) center/2px 9px no-repeat;
+}
+.page-spec .section--navy .cond.no li::before{background:oklch(0.4 0.09 25 /.5)}
+
+.page-spec .fineprint{
+  font-size:0.84rem;color:var(--faint);line-height:1.6;
+  border-top:1px solid var(--line);padding-top:16px;
+}
+.page-spec .section--navy .fineprint{color:var(--on-navy-dim);border-top-color:oklch(1 0 0 /.14)}
+
+.page-spec .offer-faq{margin-top:8px}
+.page-spec .section--navy .offer-faq summary{color:#fff}
+.page-spec .section--navy .offer-faq details{border-bottom-color:oklch(1 0 0 /.14)}
+.page-spec .section--navy .offer-faq p{color:var(--on-navy-dim)}
+
+@media(max-width:900px){
+  .page-spec .offer-grid,
+  .page-spec .offer-grid.flip{grid-template-columns:1fr}
+  .page-spec .offer-aside{position:static}
+}
+</style>
+</head>
+<body class="page-spec ctx-dim mode-dim">
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="container topbar">
+    <a class="brand" href="index.html" aria-label="АСТРА — на головну"><img class="brand-mark" src="assets/logo-mark.svg" alt=""><span class="brand-word">АСТРА</span></a>
+    <a class="t-phone" href="tel:+380800203838">0&nbsp;800&nbsp;20-38-38<small>цілодобова підтримка</small></a>
+    <a class="t-cab" href="https://cabinet.astra.in.ua" target="_blank" rel="noopener">Особистий кабінет&nbsp;↗</a>
+    <button class="btn btn--primary btn--sm" data-modal>Підключитися</button>
+    <button class="burger" aria-label="Меню" aria-expanded="false"><span></span></button>
+  </div>
+  <nav class="mainnav" aria-label="Головна навігація">
+    <div class="container">
+      <ul>
+        <li>
+          <a class="navlink" href="dim.html">Для дому <i class="chev"></i></a>
+          <div class="mega cols-4">
+            <div class="col"><b>Інтернет для дому</b>
+              <a href="taryfy-dim.html#bahatokvartyrni">Багатоквартирні будинки</a>
+              <a href="taryfy-dim.html#pryvatnyi">Приватний сектор</a>
+              <a href="taryfy-dim.html#hurtozhytky">Гуртожитки</a>
+              <a href="internet.html#dodatkovi">Постійна IP · IPv6</a>
+            </div>
+            <div class="col"><b>Телебачення</b>
+              <a href="tv.html#astra-tv">АСТРА TV</a>
+              <a href="tv.html#partners">MEGOGO · Sweet.tv · youtv</a>
+              <a href="tv.html#prosto-tb">Просто ТБ (DVB-C)</a>
+            </div>
+            <div class="col"><b>Безпека дому</b>
+              <a href="bezpeka.html#readings">Домофон у смартфоні</a>
+              <a href="bezpeka.html#subservices">Відеонагляд</a>
+            </div>
+            <div class="col"><b>Вигода</b>
+              <a href="spetspropozytsii.html">Спецпропозиції</a>
+              <a href="dim.html#coverage">Перевірити покриття</a>
+              <a href="taryfy-dim.html">Річні тарифи</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <a class="navlink" href="biznes.html">Для бізнесу <i class="chev"></i></a>
+          <div class="mega cols-4">
+            <div class="col"><b>Зв'язок · ASTRA ISP</b>
+              <a href="taryfy-biznes.html">Бізнес-інтернет 100–10000</a>
+              <a href="taryfy-biznes.html">Виділене оптоволокно / SLA</a>
+              <a href="merezhi.html#peering">Піринг</a>
+              <a href="merezhi.html#noc">Мережеві рішення / NOC</a>
+            </div>
+            <div class="col"><b>Безпека · ASTRA INSTALL</b>
+              <a href="bezpeka.html#subservices">Відеонагляд + аналітика</a>
+              <a href="bezpeka.html#subservices">СКУД / IP-домофонія</a>
+              <a href="bezpeka.html#subservices">Шлагбауми / в'їзні групи</a>
+              <a href="merezhi.html#sks">СКС · Wi-Fi · ВОЛЗ</a>
+            </div>
+            <div class="col"><b>Хмара · ASTRA CLOUD</b>
+              <a href="hmara.html#kolokatsiia">Колокація (ЦОД Львів)</a>
+              <a href="hmara.html#vps">VPS / VDS</a>
+              <a href="hmara.html#server">Виділений сервер</a>
+            </div>
+            <div class="col"><b>Рішення за об'єктом</b>
+              <a href="biznes.html#segments">Офіси · ЖК/ОСББ</a>
+              <a href="biznes.html#segments">Ритейл · Склади</a>
+              <a href="biznes.html#segments">Готелі · коворкінги</a>
+              <a href="biznes.html#chomu">Чому обирають АСТРА</a>
+            </div>
+          </div>
+        </li>
+        <li><a class="navlink" href="pidtrymka.html">Підтримка</a></li>
+        <li><a class="navlink" href="pro-kompaniiu.html">Про компанію</a></li>
+        <li><a class="navlink" href="novyny.html">Новини</a></li>
+        <li><a class="navlink" href="kontakty.html">Контакти</a></li>
+        <li><a class="navlink" href="https://shop.astra.in.ua" target="_blank" rel="noopener">Магазин&nbsp;↗</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero spec-hero">
+    <div class="hero-bg"><img src="img/dir-network.jpg" loading="eager" alt="Спецпропозиції АСТРА"></div>
+    <div class="container">
+      <h1>Спецпропозиції та акції АСТРА</h1>
+      <p class="lead">Усі чинні акції та програми лояльності в одному місці. Перепідключення зі знижкою, бонуси за друзів, подарунок першому в під'їзді, соціальна підтримка та вигода для студентів. Оберіть пропозицію і залиште заявку, ми все порахуємо й активуємо.</p>
+      <div class="hero-cta">
+        <button class="btn btn--primary btn--lg" data-modal>Підключитися<span class="ar">→</span></button>
+        <a class="btn btn--ghost btn--lg on-navy" href="taryfy-dim.html">Переглянути тарифи</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== JUMP NAV ===================== -->
+  <section class="section tight section--tint">
+    <div class="container">
+      <nav class="spec-nav" aria-label="Перелік акцій">
+        <a href="#z-namy-vyhidnishe"><span class="no">1</span> З нами вигідніше!</a>
+        <a href="#druzi"><span class="no">2</span> Друзі завжди разом</a>
+        <a href="#pershyi"><span class="no">3</span> Перший у під'їзді!</a>
+        <a href="#turbota"><span class="no">4</span> Астра Турбота</a>
+        <a href="#student"><span class="no">5</span> Студент+</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ===================== 1. З НАМИ ВИГІДНІШЕ ===================== -->
+  <section class="section offer-block" id="z-namy-vyhidnishe">
+    <div class="container">
+      <div class="offer-grid">
+        <div class="offer-aside">
+          <span class="offer-kicker"><span class="no">1</span> Перепідключення</span>
+          <h2>З нами вигідніше!</h2>
+          <p class="offer-claim">Перепідключіться до нас від іншого провайдера та отримайте знижку 25% на користування послугами!</p>
+          <button class="btn btn--primary btn--lg" data-modal>Підключитися<span class="ar">→</span></button>
+        </div>
+        <div class="offer-body">
+          <p>Для того, щоб стати учасником акції, необхідно в день підключення в бланку наряду, який видає технік, вписати назву попереднього інтернет-провайдера, а також пред'явити документ, що підтверджує користування послугами останнього. Таким документом може бути угода, або квитанція на оплату послуг за останній місяць від попереднього інтернет-провайдера. Угода від попереднього інтернет-провайдера має бути діючою, або розірваною не давніше, ніж за один календарний місяць від дати перепідключення. Для активації акції необхідно, щоб адреса підключення до Астри співпадала з адресою відключення від іншого провайдера. Знижка встановлюється після внесення першого авансового платежу на особистий рахунок абонента.</p>
+
+          <h3 class="offer-h">Умови акції</h3>
+          <ul class="cond">
+            <li>Термін дії знижки складає 12 календарних місяців.</li>
+            <li>Участь у акції можуть брати виключно нові абоненти — фізичні особи.</li>
+          </ul>
+
+          <h3 class="offer-h">Обмеження</h3>
+          <ul class="cond no">
+            <li>Акція не розповсюджується на абонентів, які перепідключаються від інтернет-провайдерів безпровідного зв'язку (технології Wi-Fi, 4G, 3G, CDMA, тощо).</li>
+            <li>Акція не розповсюджується на абонентів-юридичних осіб.</li>
+            <li>Заявки на участь в акції «З нами вигідніше» заднім числом не приймаються.</li>
+            <li>Спецпропозиція не розповсюджується на тарифний план «Мегого+Гіг», «Все включено» та «Найкращий».</li>
+          </ul>
+
+          <h3 class="offer-h">Часті запитання</h3>
+          <div class="faq offer-faq">
+            <details>
+              <summary>Чи можна поєднувати цю акцію з іншими акціями від Астри?</summary>
+              <p>Не поєднується з такими спецпропозиціями: «Перший у під'їзді»; «Астра Турбота».</p>
+            </details>
+            <details>
+              <summary>Чи можна поєднувати цю акцію з тарифом «Весняний»?</summary>
+              <p>Ні, не можна.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 2. ДРУЗІ ЗАВЖДИ РАЗОМ ===================== -->
+  <section class="section section--navy offer-block" id="druzi">
+    <div class="container">
+      <div class="offer-grid flip">
+        <div class="offer-body">
+          <p>Порадьте нас своїм друзям чи сусідам та отримайте по 500 гривень на свої особові рахунки.</p>
+          <p>Щоб акція запрацювала потрібно щоб ми були повідомлені про це. Зробити повідомлення дуже просто: Ви подаєте заявку на підключення друга і кажете, що берете участь у акції «Друзі завжди разом». Або, якщо друг подає заявку на підключення, то інформує нас про те, що йому порадили підключитися до нас Ви. Вашим Ідентифікатором може бути або Ваш логін; або Ваші прізвище, ім'я по батькові повністю; або ваша адреса, де Ви вже є нашим абонентом. Все. Підключайте друзів — збирайте бонуси!</p>
+
+          <h3 class="offer-h">Обмеження</h3>
+          <ul class="cond no">
+            <li>Заявки на участь в акції «Друзі завжди разом» заднім числом не приймаються.</li>
+            <li>Акція не розповсюджується на абонентів, що підключаються в гуртожитках.</li>
+            <li>Акція не розповсюджується на бізнес абонентів.</li>
+          </ul>
+        </div>
+        <div class="offer-aside">
+          <span class="offer-kicker"><span class="no">2</span> Програма лояльності</span>
+          <h2>Друзі завжди разом</h2>
+          <p class="offer-claim">Підключіть друга та отримайте по 500 грн кожен!</p>
+          <button class="btn btn--primary btn--lg" data-modal>Підключитися<span class="ar">→</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 3. ПЕРШИЙ У ПІД'ЇЗДІ ===================== -->
+  <section class="section offer-block" id="pershyi">
+    <div class="container">
+      <div class="offer-grid">
+        <div class="offer-aside">
+          <span class="offer-kicker"><span class="no">3</span> Бонус новосілам</span>
+          <h2>Перший у під'їзді!</h2>
+          <p class="offer-claim">Отримайте 6 місяців бонусу, якщо Ви перші підключилися у під'їзді!</p>
+          <button class="btn btn--primary btn--lg" data-modal>Підключитися<span class="ar">→</span></button>
+        </div>
+        <div class="offer-body">
+          <p>Якщо Ви проживаєте у багатоквартирному будинку, який був вперше підключений до телекомунікаційної мережі АСТРА, то у Вас є унікальна можливість отримати бонус — 6 місяців безкоштовного користування інтернетом за обраним Вами тарифним планом. Для отримання бонусу потрібно встигнути першим у своєму під'їзді подати заявку та здійснити раніше від інших підключення.</p>
+          <p>Підключення здійснюється на загальних умовах із обов'язковим внесенням авансового платежу.</p>
+
+          <ul class="cond no">
+            <li>Заявки на участь в акції заднім числом не приймаються.</li>
+          </ul>
+
+          <h3 class="offer-h">Часті запитання</h3>
+          <div class="faq offer-faq">
+            <details>
+              <summary>Чи діє акція для юридичних осіб (фірми, бізнес)?</summary>
+              <p>Ні, не діє. Акція лише для фізичних осіб.</p>
+            </details>
+            <details>
+              <summary>Чи діє акція в гуртожитку?</summary>
+              <p>Ні, не діє.</p>
+            </details>
+            <details>
+              <summary>Чи акція працює зі всіма пропозиціями, які є на сайті?</summary>
+              <p>Акція працює з більшістю пропозицій, крім «Мегого+Гіг», «Все включено», «Найкращий» та «Весняний».</p>
+            </details>
+            <details>
+              <summary>Чи можна цю акцію поєднати з іншими доступними на сайті?</summary>
+              <p>Так, можна з більшістю, крім «З нами вигідніше!» та «Астра Турбота». Проте останню радимо активувати одразу по закінченню терміну дії «Перший в підїзді».</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 4. АСТРА ТУРБОТА ===================== -->
+  <section class="section section--tint offer-block" id="turbota">
+    <div class="container">
+      <div class="offer-grid flip">
+        <div class="offer-body">
+          <p>Це наша соціальна ініціатива — 15% знижка на послугу доступу до Інтернету та телебачення для окремих категорій людей:</p>
+
+          <h3 class="offer-h">Кому надається знижка</h3>
+          <ul class="cond">
+            <li><b>УБД (учасники бойових дій)</b> — ми шануємо наших захисників і схиляємо голови перед їхньою мужністю. Ваш внесок в перемогу над окупантом неоціненний. Ми ж Вам пропонуємо знижку на наші послуги при наданні документа, який підтверджує ваш статус.</li>
+            <li><b>ВПО (вимушено переміщені особи)</b> — своєю ініціативою ми хочемо вас трошки підтримати та зробити наші послуги доступнішими. Вам варто лише надати документ, який підтверджує ваш статус.</li>
+            <li><b>Люди з обмеженими можливостями</b> — це наша невеличка підтримка вам. Вам варто лише надати документ, який підтверджує ваш статус. Для того, щоб отримати цю знижку чинним абонентам достатньо надіслати нам на електронну скриньку копію посвідчення про інвалідність.</li>
+            <li><b>Пенсіонери</b> — ми дуже любимо та шануємо наших дідусів і бабусь, а також старших батьків. Тому як невеличку приємність надаємо вам додаткову знижку на наші послуги. Для того, щоб отримати цю знижку чинним абонентам достатньо надіслати нам на електронну скриньку або ж один з офіційних месенджерів Компанії копію пенсійного посвідчення.</li>
+          </ul>
+
+          <p>Власником облікового запису має бути саме та особа, посвідчення якої надається. Також абоненти з категорії 3 та 4 мають бути зареєстровані в помешканні, за адресою якого бажають отримувати знижку. Для цього додатково потрібно надати фото сторінки паспорта з реєстрацією. Нові абоненти під час підключення мають надати відповідне посвідчення техніку, про що останній здійснить відповідний запис в наряді на підключення.</p>
+
+          <h3 class="offer-h">Часті питання</h3>
+          <div class="faq offer-faq">
+            <details>
+              <summary>Ваша знижка 15% діє на всі ваші пропозиції?</summary>
+              <p>Лише на «ДОМАШНІЙ ГІГ», «ДОМАШНІЙ ГІГ+ТБ», «ПРИВАТНИЙ ГІГ», «ПРИВАТНИЙ ГІГ+ТБ».</p>
+            </details>
+            <details>
+              <summary>Якщо я підпадаю під декілька категорій, я можу отримати сумарну знижку (15%+15%=30%)?</summary>
+              <p>Ні. Ви можете обрати знижку лише по одній категорії. Наприклад тільки по ВПО і отримаєте 15%.</p>
+            </details>
+            <details>
+              <summary>Чи поєднується з іншими спецпропозиціями («З нами вигідніше» тощо)?</summary>
+              <p>Працює окремо і не поєднується з іншими. Ви самостійно обираєте найвигіднішу.</p>
+            </details>
+            <details>
+              <summary>Чи має термін дії знижка?</summary>
+              <p>Так, на 12 календарних місяців від дня активації. Для продовження потрібно повторно надати підтверджуючі документи.</p>
+            </details>
+          </div>
+        </div>
+        <div class="offer-aside">
+          <span class="offer-kicker"><span class="no">4</span> Соціальна ініціатива</span>
+          <h2>Астра Турбота</h2>
+          <p class="offer-claim">Соціальна ініціатива — 15% знижка для УБД, ВПО, людей з інвалідністю та пенсіонерів.</p>
+          <button class="btn btn--primary btn--lg" data-modal>Підключитися<span class="ar">→</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 5. СТУДЕНТ+ ===================== -->
+  <section class="section offer-block" id="student">
+    <div class="container">
+      <div class="offer-grid">
+        <div class="offer-aside">
+          <span class="offer-kicker"><span class="no">5</span> Гуртожитки</span>
+          <h2>Студент+</h2>
+          <p class="offer-claim">WiFi для друзів у кімнаті!</p>
+          <button class="btn btn--primary btn--lg" data-modal>Підключитися<span class="ar">→</span></button>
+        </div>
+        <div class="offer-body">
+          <p>Це ексклюзивна спецпропозиція від нас для мешканців гуртожитків — підключайтесь або перепідключайтесь до нас і отримуйте 100 мБітний роутер на кімнату всього за 100 грн. З ним ви зможете комфортно користуватися Інтернетом з друзями по кімнаті.</p>
+
+          <h3 class="offer-h">Часті питання</h3>
+          <div class="faq offer-faq">
+            <details>
+              <summary>Чи діє ця акція в багатоквартирних будинках?</summary>
+              <p>Ні, це ексклюзивна спецпропозиція, яка надається виключно в студентських гуртожитках.</p>
+            </details>
+            <details>
+              <summary>Чи поєднувана ця спецпропозиція з іншими?</summary>
+              <p>Ні, це унікальна спецпропозиція і вона не поєднується з іншими.</p>
+            </details>
+            <details>
+              <summary>Мені надали вживаний роутер, то так має бути?</summary>
+              <p>Ми надаємо будь-які роутери, які маємо на складі, не важливо чи він користований, чи ні. Головне — ви отримуєте перевірений та справний пристрій.</p>
+            </details>
+            <details>
+              <summary>Чи є гарантія на роутер?</summary>
+              <p>Так є гарантія — 30 днів з дня встановлення.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA BAND ===================== -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-band">
+        <h2>Не визначилися, яка пропозиція ваша?</h2>
+        <p class="lead">Залиште заявку, ми перевіримо покриття за вашою адресою, підберемо тариф і застосуємо найвигіднішу для вас акцію. Цілодобова жива підтримка.</p>
+        <div class="row">
+          <button class="btn btn--primary btn--lg" data-modal>Підключитися<span class="ar">→</span></button>
+          <a class="btn btn--ghost btn--lg on-navy" href="taryfy-dim.html">Усі тарифи</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="container footer-main">
+    <div class="footer-brand">
+      <img src="assets/logo.svg" alt="АСТРА">
+      <p>Сузір'я цифрових послуг. Створюємо інфраструктуру зв'язку та безпеки з 2004 року.</p>
+      <div class="socials">
+        <a href="https://t.me/astraisp" target="_blank" rel="noopener" aria-label="Telegram"><img src="assets/telegram.svg" alt=""></a>
+        <a href="https://www.youtube.com/@astra_in_ua" target="_blank" rel="noopener" aria-label="YouTube"><img src="assets/youtube-icon.png" alt=""></a>
+        <a href="https://instagram.com/astra_isp" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/instagram-icon.png" alt=""></a>
+        <a href="https://www.linkedin.com/company/astra-isp" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/linkedin.png" alt=""></a>
+        <a href="https://www.facebook.com/astraisp" target="_blank" rel="noopener" aria-label="Facebook"><img src="assets/facebook-letter-logo.svg" alt=""></a>
+      </div>
+    </div>
+    <div><h5>Напрямки</h5>
+      <a href="internet.html">Інтернет</a><a href="tv.html">Телебачення</a>
+      <a href="bezpeka.html">Безпека</a><a href="merezhi.html">Мережеві рішення</a>
+      <a href="hmara.html">Хмара / ЦОД</a>
+    </div>
+    <div><h5>Тарифи</h5>
+      <a href="taryfy-dim.html#bahatokvartyrni">Багатоквартирні</a><a href="taryfy-dim.html#pryvatnyi">Приватний сектор</a>
+      <a href="taryfy-dim.html#hurtozhytky">Гуртожитки</a><a href="taryfy-biznes.html">Бізнес</a>
+      <a href="spetspropozytsii.html">Спецпропозиції</a>
+    </div>
+    <div><h5>Компанія</h5>
+      <a href="pro-kompaniiu.html">Про компанію</a><a href="novyny.html">Новини</a>
+      <a href="dokumenty.html">Документи</a><a href="kontakty.html">Контакти</a>
+    </div>
+    <div><h5>Сервіси ↗</h5>
+      <a href="https://shop.astra.in.ua" target="_blank" rel="noopener">Магазин</a>
+      <a href="https://cabinet.astra.in.ua" target="_blank" rel="noopener">Особистий кабінет</a>
+      <a href="https://speed.astra.in.ua" target="_blank" rel="noopener">Спідтест</a>
+      <a href="https://cloud.astra.in.ua" target="_blank" rel="noopener">Astra Cloud</a>
+      <a href="pidtrymka.html">Підтримка / Інструкції</a>
+    </div>
+  </div>
+  <div class="container foot-bottom">
+    <span>© 2004–2026, компанія АСТРА · ТзОВ «АСТРА-ЛЬВІВ»</span>
+    <span>
+      <a href="dokumenty.html">Договір-оферта</a> ·
+      <a href="dokumenty.html">Показники якості</a> ·
+      <a href="dokumenty.html">Політика конфіденційності</a>
+    </span>
+  </div>
+</footer>
+
+<!-- ===================== LEAD MODAL ===================== -->
+<div class="modal" id="lead-modal" role="dialog" aria-modal="true" aria-label="Заявка на підключення">
+  <div class="backdrop" data-close></div>
+  <div class="panel">
+    <button class="x" data-close aria-label="Закрити">✕</button>
+    <h3 style="margin:8px 0 4px">Залиште заявку — ми вам перетелефонуємо</h3>
+    <p class="muted" style="font-size:.9rem;margin-bottom:18px">З 9.00 до 21.00. Ми поважаємо вашу приватність.</p>
+    <form data-lead style="display:flex;flex-direction:column;gap:14px">
+      <div class="field"><label>Ім'я</label><input type="text" name="name" placeholder="Ваше ім'я"></div>
+      <div class="field"><label>Номер телефону</label><input type="tel" data-phone name="phone" placeholder="+38 (0__) ___-__-__" required><span class="err"></span></div>
+      <div class="field"><label>Адреса</label><input type="text" name="address" placeholder="Вулиця, будинок"></div>
+      <div class="field"><label>Промокод</label><input type="text" name="promo" placeholder="Якщо є"></div>
+      <input type="hidden" name="tariff">
+      <button class="btn btn--primary btn--block" type="submit">Надіслати заявку</button>
+      <p class="form-note">Натискаючи кнопку, ви погоджуєтесь з обробкою даних згідно з політикою конфіденційності.</p>
+      <div data-success style="display:none">
+        <h4 style="color:var(--navy-900)">Вашу заявку прийнято!</h4>
+        <p class="muted" style="font-size:.92rem;margin-top:8px">Дякуємо за звернення! Вам перетелефонують одразу ж, як тільки звільниться оператор. Цілодобово також: Telegram <b>@astraispbot</b>, Viber «АСТРА», 0&nbsp;800&nbsp;20-38-38.</p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== MOBILE MENU + STICKY CTA ===================== -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mm-close" data-close-menu aria-label="Закрити меню">✕</button>
+  <nav aria-label="Мобільне меню">
+    <details class="mm-group">
+      <summary>Для дому</summary>
+      <a href="dim.html">Огляд розділу</a>
+      <a href="taryfy-dim.html#bahatokvartyrni">Багатоквартирні будинки</a>
+      <a href="taryfy-dim.html#pryvatnyi">Приватний сектор</a>
+      <a href="taryfy-dim.html#hurtozhytky">Гуртожитки</a>
+      <a href="tv.html">Телебачення</a>
+      <a href="bezpeka.html#readings">Домофон і відеонагляд</a>
+      <a href="internet.html#dodatkovi">Постійна IP · IPv6</a>
+      <a href="spetspropozytsii.html">Спецпропозиції</a>
+    </details>
+    <details class="mm-group">
+      <summary>Для бізнесу</summary>
+      <a href="biznes.html">Огляд розділу</a>
+      <a href="taryfy-biznes.html#biznes">Тарифи для бізнесу</a>
+      <a href="bezpeka.html#subservices">Безпека · ASTRA INSTALL</a>
+      <a href="merezhi.html">Мережі · ASTRA ISP</a>
+      <a href="hmara.html">Хмара · ASTRA CLOUD</a>
+      <a href="biznes.html#segments">Рішення за об'єктом</a>
+    </details>
+    <a class="mm-top" href="pidtrymka.html">Підтримка</a>
+    <a class="mm-top" href="pro-kompaniiu.html">Про компанію</a>
+    <a class="mm-top" href="novyny.html">Новини</a>
+    <a class="mm-top" href="kontakty.html">Контакти</a>
+    <a class="mm-top" href="https://shop.astra.in.ua" target="_blank" rel="noopener">Магазин ↗</a>
+  </nav>
+</div>
+<div class="mobile-cta">
+  <button class="btn btn--ghost on-navy" data-modal data-mode="callback">Передзвоніть мені</button>
+  <button class="btn btn--primary" data-modal>Підключитися</button>
+</div>
+
+<script src="js/astra.js" defer></script>
+</body>
+</html>
