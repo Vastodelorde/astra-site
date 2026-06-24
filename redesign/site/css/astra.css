@@ -399,14 +399,15 @@ strong{font-weight:600}
 /* ----------------------------------------------------------------- FORM / MODAL */
 .field{display:flex;flex-direction:column;gap:6px}
 .field label{font-size:0.82rem;font-weight:600;color:var(--navy-700)}
-.field input,.field select{padding:13px 15px;border:1px solid var(--line-strong);border-radius:var(--r-md);background:#fff;font-size:0.95rem;transition:.15s}
-.field input:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-050);outline:none}
+.field input,.field select,.field textarea{padding:13px 15px;border:1px solid var(--line-strong);border-radius:var(--r-md);background:#fff;font-size:0.95rem;font-family:inherit;transition:.15s}
+.field textarea{resize:vertical;min-height:84px;line-height:1.45}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-050);outline:none}
 .field .err{font-size:0.78rem;color:var(--red-600)}
 .form-note{font-size:0.78rem;color:var(--faint)}
 /* forms & headings on navy sections (keep contrast when reused on dark bg) */
 .section--navy .field label{color:var(--on-navy-dim)}
 .section--navy .form-note{color:var(--on-navy-faint)}
-.section--navy .field input,.section--navy .field select{border-color:transparent}
+.section--navy .field input,.section--navy .field select,.section--navy .field textarea{border-color:transparent}
 /* a light card/panel inside a navy section keeps dark headings */
 .section--navy .card h2,.section--navy .card h3,.section--navy .card h4,
 .section--navy .panel h2,.section--navy .panel h3,.section--navy .panel h4{color:var(--navy-900)}
