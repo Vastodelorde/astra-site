@@ -173,6 +173,10 @@ strong{font-weight:600}
 .t-phone small{display:block;font-family:var(--font-body);font-weight:500;font-size:0.7rem;color:var(--on-navy-faint);letter-spacing:.04em}
 .t-cab{display:inline-flex;align-items:center;gap:7px;font-size:0.88rem;color:var(--on-navy-dim)}
 .t-cab:hover{color:#fff}
+.t-msgs{display:inline-flex;align-items:center;gap:8px}
+.t-msg{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:oklch(1 0 0 /.08);transition:background .15s}
+.t-msg:hover{background:oklch(1 0 0 /.18)}
+.t-msg img{width:19px;height:19px;display:block;filter:brightness(0) invert(1)}
 
 /* audience switch */
 .aud-switch{display:inline-flex;background:var(--navy-700);border-radius:var(--r-pill);padding:3px;gap:2px}
@@ -215,7 +219,7 @@ strong{font-weight:600}
 .burger span::before{position:absolute;top:-6px}.burger span::after{position:absolute;top:6px}
 
 @media(max-width:1080px){
-  .mainnav,.aud-switch.in-bar,.t-cab,.topbar .btn--primary{display:none}
+  .mainnav,.aud-switch.in-bar,.t-cab,.t-msgs,.topbar .btn--primary{display:none}
   .burger{display:inline-flex}
   .topbar{gap:14px}
 }
