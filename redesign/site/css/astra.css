@@ -414,7 +414,19 @@ strong{font-weight:600}
 .section--navy .field input,.section--navy .field select,.section--navy .field textarea{border-color:transparent}
 /* a light card/panel inside a navy section keeps dark headings */
 .section--navy .card h2,.section--navy .card h3,.section--navy .card h4,
+.section--navy .lead-card h2,.section--navy .lead-card h3,.section--navy .lead-card h4,
 .section--navy .panel h2,.section--navy .panel h3,.section--navy .panel h4{color:var(--navy-900)}
+
+/* light form card on a navy section (e.g. coverage form) — restore light-theme form */
+.lead-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);padding:clamp(22px,2.4vw,32px);box-shadow:var(--sh-md)}
+.section--navy .lead-card .field label{color:var(--navy-700)}
+.section--navy .lead-card .field input,.section--navy .lead-card .field select,.section--navy .lead-card .field textarea{border-color:var(--line-strong)}
+.section--navy .lead-card .muted{color:var(--muted)}
+.section--navy .lead-card .form-note{color:var(--faint)}
+
+/* coverage locality list on navy */
+.cov-list{color:var(--on-navy-dim);line-height:1.7}
+.cov-list b{color:#fff;font-weight:700}
 
 .modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
 .modal[open],.modal.open{display:flex}
