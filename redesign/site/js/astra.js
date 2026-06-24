@@ -15,8 +15,8 @@
      landing pages. Highlight whichever matches the current page. ---- */
   (function () {
     var path = location.pathname.split("/").pop() || "index.html";
-    var biz = ["biznes.html", "bezpeka.html", "merezhi.html", "hmara.html"];
-    var dim = ["dim.html", "internet.html", "tv.html", "taryfy.html", "spetspropozytsii.html"];
+    var biz = ["biznes.html", "bezpeka-biznes.html", "merezhi.html", "hmara.html"];
+    var dim = ["dim.html", "bezpeka-dim.html", "internet.html", "tv.html", "taryfy.html", "spetspropozytsii.html"];
     var aud = biz.indexOf(path) > -1 ? "biz" : (dim.indexOf(path) > -1 ? "dim" : null);
     doc.querySelectorAll(".aud-switch a").forEach(function (a) {
       a.classList.toggle("active", a.dataset.aud === aud);

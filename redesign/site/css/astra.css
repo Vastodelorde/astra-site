@@ -313,8 +313,8 @@ strong{font-weight:600}
 .dir-tile .link-arrow{margin-top:auto;font-size:0.9rem}
 
 /* segment cards (b2b objects) */
-.seg-card{position:relative;border-radius:var(--r-lg);overflow:hidden;min-height:200px;display:flex;align-items:flex-end;padding:22px;color:#fff;isolation:isolate}
-.seg-card::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),var(--navy-700)}
+.seg-card{position:relative;border-radius:var(--r-lg);overflow:hidden;min-height:230px;display:flex;align-items:flex-end;padding:22px;color:#fff;isolation:isolate;background-color:var(--navy-700);background-size:cover;background-position:center}
+.seg-card::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 28%,oklch(0.14 0.04 264 /.55) 64%,oklch(0.12 0.04 264 /.92))}
 .seg-card h4{color:#fff}
 
 /* ----------------------------------------------------------------- TRUST BAR */
