@@ -353,21 +353,43 @@ strong{font-weight:600}
 .tabs button{padding:12px 18px;font-family:var(--font-display);font-weight:600;font-size:0.95rem;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.2s}
 .tabs button[aria-selected="true"]{color:var(--navy-900);border-color:var(--red)}
 
-.tariff{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;transition:.25s var(--ease)}
-.tariff:hover{box-shadow:var(--sh-md);transform:translateY(-3px)}
-.tariff.featured{border-color:var(--red);box-shadow:0 0 0 1px var(--red)}
-.tariff .head{padding:16px 22px;font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:0.82rem;color:#fff;background:var(--navy-800)}
+/* ── Tariff cards ─────────────────────────────────────────────── */
+.tariff{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s var(--ease)}
+.tariff:hover{box-shadow:var(--sh-lg);transform:translateY(-4px);border-color:var(--line-strong)}
+.tariff.featured{border-color:var(--red);box-shadow:0 0 0 1px var(--red),0 20px 44px -26px oklch(0.55 0.2 25 /.55)}
+.tariff.featured:hover{box-shadow:0 0 0 1px var(--red),0 28px 54px -22px oklch(0.55 0.2 25 /.65)}
+
+/* plan-name bar */
+.tariff .head{display:flex;align-items:center;gap:9px;padding:15px 22px;font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:0.8rem;color:#fff;background:var(--navy-800)}
 .tariff.featured .head{background:var(--red)}
-.tariff .body{padding:24px 22px;display:flex;flex-direction:column;gap:16px;flex:1}
-.tariff .speed{font-family:var(--font-display);font-weight:800;font-size:1.9rem;color:var(--navy-900);line-height:1}
-.tariff .speed small{font-size:0.9rem;font-weight:600;color:var(--muted)}
-.tariff .incl{font-size:0.9rem;color:var(--muted);line-height:1.5;display:flex;flex-direction:column;gap:6px}
-.tariff .incl li{padding-left:22px;position:relative}
-.tariff .incl li::before{content:"";position:absolute;left:0;top:7px;width:12px;height:7px;border-left:2px solid var(--blue);border-bottom:2px solid var(--blue);transform:rotate(-45deg)}
-.tariff .price{margin-top:auto;font-family:var(--font-display);font-weight:800;font-size:1.55rem;color:var(--navy-900)}
-.tariff .price .per{font-size:0.8rem;font-weight:600;color:var(--muted)}
-.tariff .price .old{display:inline-block;font-size:0.9rem;font-weight:500;color:var(--faint);text-decoration:line-through;margin-left:8px}
+.tariff.featured .head::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px oklch(1 0 0 /.28)}
+
+.tariff .body{display:flex;flex-direction:column;gap:18px;padding:26px 24px;flex:1}
+
+/* price — hero, reordered above the speed/features */
+.tariff .price{order:1;display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px;font-family:var(--font-display);font-weight:800;font-size:2.4rem;color:var(--navy-900);line-height:1}
 .tariff.featured .price{color:var(--red)}
+.tariff .price .per{font-family:var(--font-body);font-size:0.82rem;font-weight:600;color:var(--muted)}
+.tariff .price .old{font-family:var(--font-body);font-size:0.92rem;font-weight:500;color:var(--faint);text-decoration:line-through;margin-left:auto;align-self:center}
+
+/* speed line + divider */
+.tariff .speed{order:2;display:flex;flex-direction:column;gap:3px;padding-bottom:18px;border-bottom:1px solid var(--line);font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--navy-700);line-height:1.15}
+.tariff .speed small{font-family:var(--font-body);font-size:0.8rem;font-weight:500;color:var(--muted)}
+
+/* equal-height cards: price + speed top-aligned, CTAs aligned across the row */
+.tariff-grid{align-items:stretch}
+.tariff .incl{order:3;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px;font-size:0.92rem;color:var(--ink);line-height:1.45}
+.tariff .incl li{position:relative;padding-left:27px}
+.tariff .incl li::before{content:"";position:absolute;left:0;top:1px;width:17px;height:17px;border-radius:50%;background:var(--blue-050)}
+.tariff .incl li::after{content:"";position:absolute;left:5px;top:6px;width:6px;height:3px;border-left:2px solid var(--blue-700);border-bottom:2px solid var(--blue-700);transform:rotate(-45deg)}
+
+/* shared-benefits footer — fills sparse cards so they reach equal height */
+.tariff .perks{order:4;margin-top:auto;padding-top:16px;border-top:1px dashed var(--line-strong);display:flex;flex-direction:column;gap:7px}
+.tariff .perks b{font-family:var(--font-display);font-weight:700;font-size:0.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:2px}
+.tariff .perks span{position:relative;padding-left:18px;font-size:0.86rem;color:var(--muted);line-height:1.35}
+.tariff .perks span::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--blue)}
+
+.tariff .body .btn{order:5;margin-top:16px}
 
 /* ----------------------------------------------------------------- OFFERS / NEWS */
 .offer{position:relative;border-radius:var(--r-lg);overflow:hidden;min-height:230px;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;color:#fff;isolation:isolate}
