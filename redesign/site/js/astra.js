@@ -137,17 +137,24 @@
     });
   })();
 
-  /* deep-link: activate the tab/panel named in the URL hash and scroll to it
-     (e.g. taryfy-dim.html#pryvatnyi opened from the menu on any page) */
+  /* deep-link: activate the tab named in the URL hash and scroll to the tabs
+     bar (not the panel below — scrolling to the content crops the tabs off the
+     top). Runs on load AND on in-page hash changes, e.g. clicking a menu item
+     (taryfy-dim.html#pryvatnyi) while already on the tariffs page. */
   (function () {
-    var h = decodeURIComponent(location.hash.slice(1));
-    if (!h) return;
-    var btn = doc.querySelector('.tabs button[data-tab="' + h + '"]');
-    var panel = doc.querySelector('[data-panel="' + h + '"]') || doc.getElementById(h);
-    if (btn) btn.click();
-    if (panel) setTimeout(function () {
-      window.scrollTo({ top: panel.getBoundingClientRect().top + window.scrollY - 118, behavior: "auto" });
-    }, 80);
+    function apply(smooth) {
+      var h = decodeURIComponent(location.hash.slice(1));
+      if (!h) return;
+      var btn = doc.querySelector('.tabs button[data-tab="' + h + '"]');
+      if (!btn) return;
+      btn.click();
+      var bar = btn.closest(".tariffs-bar") || btn.closest("[data-tabwrap]") || btn;
+      setTimeout(function () {
+        window.scrollTo({ top: bar.getBoundingClientRect().top + window.scrollY - 128, behavior: smooth ? "smooth" : "auto" });
+      }, 60);
+    }
+    apply(false);
+    window.addEventListener("hashchange", function () { apply(true); });
   })();
 
   /* hero carousel — fade slides, auto-advance, dots, arrows, pause on hover */

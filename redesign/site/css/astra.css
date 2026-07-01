@@ -371,6 +371,9 @@ strong{font-weight:600}
 .tariff.featured .price{color:var(--red)}
 .tariff .price .per{font-family:var(--font-body);font-size:0.82rem;font-weight:600;color:var(--muted)}
 .tariff .price .old{font-family:var(--font-body);font-size:0.92rem;font-weight:500;color:var(--faint);text-decoration:line-through;margin-left:auto;align-self:center}
+/* second (annual-prepay) price, shown only on tariffs where it differs */
+.tariff .prepay{order:1;margin-top:-9px;font-size:0.82rem;font-weight:500;color:var(--blue-700)}
+.tariff .prepay b{font-weight:700}
 
 /* speed line + divider */
 .tariff .speed{order:2;display:flex;flex-direction:column;gap:3px;padding-bottom:18px;border-bottom:1px solid var(--line);font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--navy-700);line-height:1.15}
