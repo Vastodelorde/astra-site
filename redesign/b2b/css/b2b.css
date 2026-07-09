@@ -72,25 +72,17 @@
 .page-b2b .breadcrumb a{color:var(--on-navy-dim)}
 .page-b2b .breadcrumb a:hover{color:#fff}
 
-/* personal account-manager — single featured card with a vertical person cutout */
-.page-b2b .mgr-solo{display:grid;grid-template-columns:minmax(200px,258px) 1fr;gap:clamp(24px,3.2vw,46px);align-items:stretch;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;max-width:780px}
-.page-b2b .mgr-photo{position:relative;background:linear-gradient(168deg,var(--blue-050),var(--blue-100));display:flex;align-items:flex-end;justify-content:center;min-height:300px}
-.page-b2b .mgr-photo .mgr-img{display:block;width:100%;height:auto;max-height:460px;object-fit:contain;object-position:bottom center}
-.page-b2b .mgr-photo .mgr-silhouette{width:116px;height:116px;margin-bottom:30px;fill:none;stroke:var(--blue-700);stroke-width:1.2;opacity:.42}
-.page-b2b .mgr-body{align-self:center;padding:clamp(26px,2.8vw,40px) clamp(26px,2.8vw,40px) clamp(26px,2.8vw,40px) 0}
-.page-b2b .mgr-body .mgr-name{display:block;font-family:var(--font-display);font-weight:800;font-size:1.35rem;color:var(--navy-900);line-height:1.15}
-.page-b2b .mgr-body .mgr-role{display:block;font-size:.9rem;color:var(--blue-700);font-weight:600;margin:5px 0 14px}
-.page-b2b .mgr-body .mgr-desc{font-size:.96rem;color:var(--muted);line-height:1.55;margin:0 0 16px}
-.page-b2b .mgr-points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
-.page-b2b .mgr-points li{position:relative;padding-left:26px;font-size:.92rem;color:var(--ink);line-height:1.4}
-.page-b2b .mgr-points li::before{content:"";position:absolute;left:0;top:1px;width:16px;height:16px;border-radius:50%;background:var(--blue-050)}
-.page-b2b .mgr-points li::after{content:"";position:absolute;left:5px;top:6px;width:6px;height:3px;border-left:2px solid var(--blue-700);border-bottom:2px solid var(--blue-700);transform:rotate(-45deg)}
-@media(max-width:640px){
-  .page-b2b .mgr-solo{grid-template-columns:1fr;max-width:420px}
-  .page-b2b .mgr-photo{min-height:0;padding-top:22px}
-  .page-b2b .mgr-photo .mgr-img{max-height:320px;width:auto}
-  .page-b2b .mgr-body{align-self:auto;padding:22px 24px 26px}
-}
+/* account managers — large horizontal cards (~half-width), big photo + name/role/note */
+.page-b2b .mgr-grid{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:clamp(18px,2.2vw,28px)}
+.page-b2b .mgr{flex:1 1 440px;max-width:540px;display:flex;align-items:stretch;margin:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s var(--ease)}
+.page-b2b .mgr:hover{transform:translateY(-4px);box-shadow:var(--sh-lg);border-color:var(--blue)}
+.page-b2b .mgr-photo{flex:none;width:clamp(180px,22vw,240px);aspect-ratio:4/5;background:linear-gradient(168deg,var(--blue-050),var(--blue-100));display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.page-b2b .mgr-photo .mgr-img{height:100%;width:auto;max-width:100%;object-fit:contain;object-position:bottom center;display:block}
+.page-b2b .mgr-cap{flex:1;padding:clamp(22px,2.6vw,34px);display:flex;flex-direction:column;justify-content:center}
+.page-b2b .mgr-cap .mgr-name{display:block;font-family:var(--font-display);font-weight:800;font-size:clamp(1.3rem, 1.1rem + .6vw, 1.55rem);color:var(--navy-900);line-height:1.15}
+.page-b2b .mgr-cap .mgr-role{display:block;font-size:.9rem;color:var(--blue-700);font-weight:600;margin-top:6px}
+.page-b2b .mgr-cap .mgr-note{font-size:.96rem;color:var(--muted);line-height:1.55;margin:14px 0 0}
+@media(max-width:520px){.page-b2b .mgr{flex-basis:100%}.page-b2b .mgr-photo{width:132px}}
 
 /* services catalog cards (poslugy.html + relevant-service cards on segment pages) */
 .page-b2b .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.8vw,22px)}
