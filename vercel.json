@@ -1,5 +1,10 @@
 {
+  "redirects": [
+    { "source": "/b2b", "destination": "/b2b/", "permanent": false }
+  ],
   "rewrites": [
+    { "source": "/b2b/", "destination": "/redesign/b2b/index.html" },
+    { "source": "/b2b/(.*)", "destination": "/redesign/b2b/$1" },
     { "source": "/", "destination": "/redesign/site/index.html" },
     { "source": "/(.*)", "destination": "/redesign/site/$1" }
   ]
