@@ -1,0 +1,167 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { maliy } from '../data/maliy.ts';
+import { seredniy } from '../data/seredniy.ts';
+import { velykyi } from '../data/velykyi.ts';
+import { getSegmentPage } from '../lib/sanity.ts';
+
+export function getStaticPaths() {
+  return [
+    { params: { segment: 'maliy' }, props: { local: maliy } },
+    { params: { segment: 'seredniy' }, props: { local: seredniy } },
+    { params: { segment: 'velykyi' }, props: { local: velykyi } },
+  ];
+}
+
+const { segment } = Astro.params;
+const { local } = Astro.props as { local: any };
+
+// Prefer Sanity; fall back to the local file per page.
+let d: any = local;
+try {
+  const cms = await getSegmentPage(segment!);
+  if (cms) {
+    d = {
+      seo: cms.seo ?? local.seo,
+      hero: { ...local.hero, ...cms.hero },
+      tariffs: { heading: cms.tariffsHeading, lead: cms.tariffsLead, items: cms.tariffs ?? [] },
+      managers: (cms.managers?.length)
+        ? { heading: cms.managersHeading, lead: cms.managersLead, items: cms.managers }
+        : null,
+      details: { heading: cms.detailsHeading, lead: cms.detailsLead, items: cms.diffs ?? [] },
+      services: { heading: cms.servicesHeading, lead: cms.servicesLead, items: cms.services ?? [] },
+      contact: { heading: cms.contactHeading, lead: cms.contactLead },
+    };
+  }
+} catch (err) {
+  console.warn('[sanity] fetch failed for', segment, '— using local content:', (err as Error)?.message);
+}
+
+const detailsCols = (d.details?.items?.length ?? 0) >= 3 ? 'grid grid-3' : 'grid grid-2';
+---
+<Layout
+  title={d.seo.title}
+  description={d.seo.description}
+  canonical={d.seo.canonical}
+  ogTitle={d.seo.ogTitle}
+  ogDescription={d.seo.ogDescription}
+>
+  <!-- 1 · HERO -->
+  <section class="hero">
+    <div class="hero-bg"><img src={d.hero.image} loading="eager" alt={d.hero.imageAlt}></div>
+    <div class="container">
+      <div class="hero-inner">
+        <p class="breadcrumb"><a href={d.hero.breadcrumbHref}>{d.hero.breadcrumbParent}</a> / {d.hero.breadcrumbLabel}</p>
+        <h1>{d.hero.h1}</h1>
+        <p class="hero-sub">{d.hero.sub}</p>
+        <div class="hero-cta">
+          <button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button>
+          <a class="btn btn--ghost btn--lg on-navy" href={d.hero.ctaSecondaryHref}>{d.hero.ctaSecondaryLabel}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · ТАРИФИ -->
+  <section class="section" id="taryfy">
+    <div class="container">
+      <div class="section-head">
+        <h2>{d.tariffs.heading}</h2>
+        <p class="lead">{d.tariffs.lead}</p>
+      </div>
+      <div class="tariff-list">
+        {d.tariffs.items.map((t: any) => (
+          <article class="trow">
+            <div class="sp"><span class="plan">{t.plan}</span><span class="val">{t.speed}<small>{t.unit}</small></span>{t.guar && <span class="guar">{t.guar}</span>}</div>
+            <ul class="svc-list">{t.features.map((f: string) => <li>{f}</li>)}</ul>
+            <div class="buy"><span class="price">{t.price} <span class="per">{t.per}</span></span><button class="btn btn--primary" data-modal data-mode="callback" data-tariff={t.tag}>Замовити консультацію</button></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {d.managers && (
+    <section class="section section--tint" id="manager">
+      <div class="container">
+        <div class="section-head">
+          <h2>{d.managers.heading}</h2>
+          <p class="lead">{d.managers.lead}</p>
+        </div>
+        <div class="mgr-grid">
+          {d.managers.items.map((m: any) => (
+            <figure class="mgr">
+              <div class="mgr-photo"><img class="mgr-img" src={m.photo} alt={m.alt} loading="lazy"></div>
+              <figcaption class="mgr-cap"><b class="mgr-name">{m.name}</b><span class="mgr-role">{m.role}</span><p class="mgr-note">{m.note}</p></figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 4 · ЩО ВАРТО ЗНАТИ -->
+  <section class="section section--tint" id="details">
+    <div class="container">
+      <div class="section-head">
+        <h2>{d.details.heading}</h2>
+        <p class="lead">{d.details.lead}</p>
+      </div>
+      <div class={detailsCols}>
+        {d.details.items.map((it: any) => (
+          <article class="diff">
+            <h4>{it.title}</h4>
+            <p>{it.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · РЕЛЕВАНТНІ ПОСЛУГИ -->
+  <section class="section section--tint" id="services">
+    <div class="container">
+      <div class="section-head">
+        <h2>{d.services.heading}</h2>
+        <p class="lead">{d.services.lead}</p>
+      </div>
+      <div class="svc-grid">
+        {d.services.items.map((s: any) => (
+          <article class={s.all ? 'svc all' : 'svc'}>
+            <h4>{s.title}</h4>
+            <p>{s.body}</p>
+            {s.all
+              ? <a class="link-arrow" href={s.href}>{s.label}</a>
+              : <a class="link-arrow" href={s.href}>{s.label} <span class="ar" aria-hidden="true">→</span></a>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · КОНТАКТНА ФОРМА -->
+  <section class="section section--navy" id="contact">
+    <div class="container">
+      <div class="section-head">
+        <h2>{d.contact.heading}</h2>
+        <p class="lead">{d.contact.lead}</p>
+      </div>
+      <div class="lead-card" style="max-width:640px;margin-inline:auto">
+        <form data-lead style="display:flex;flex-direction:column;gap:14px">
+          <input type="hidden" name="mode" value="consult">
+          <div class="field"><label>Ім'я / компанія</label><input type="text" name="name" placeholder="Ваше ім'я або назва компанії"></div>
+          <div class="field"><label>Номер телефону</label><input type="tel" data-phone name="phone" placeholder="+38 (0__) ___-__-__" required><span class="err"></span></div>
+          <div class="field"><label>Адреса об'єкта</label><input type="text" name="address" placeholder="Місто, вулиця, будинок"></div>
+          <div class="field"><label>Опишіть деталі вашого звернення</label><textarea name="message" rows="3" placeholder="Тип об'єкта, потрібні послуги, орієнтовний масштаб"></textarea></div>
+          <input type="hidden" name="tariff">
+          <button class="btn btn--primary btn--block" type="submit">Надіслати заявку</button>
+          <p class="form-note">Натискаючи кнопку, ви погоджуєтесь з обробкою даних згідно з політикою конфіденційності.</p>
+          <div data-success style="display:none">
+            <h4 style="color:var(--navy-900)">Вашу заявку прийнято!</h4>
+            <p class="muted" style="font-size:.92rem;margin-top:8px">Дякуємо! Наш менеджер зв'яжеться з вами найближчим часом. Цілодобово також: Telegram <b>@astraispbot</b>, Viber «АСТРА», 0&nbsp;800&nbsp;20-38-38.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>

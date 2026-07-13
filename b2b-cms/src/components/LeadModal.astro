@@ -1,0 +1,21 @@
+<div class="modal" id="lead-modal" role="dialog" aria-modal="true" aria-label="Замовити консультацію">
+  <div class="backdrop" data-close></div>
+  <div class="panel">
+    <button class="x" data-close aria-label="Закрити">✕</button>
+    <h3 style="margin:8px 0 4px">Замовити консультацію</h3>
+    <p class="muted" style="font-size:.9rem;margin-bottom:18px">Закріплений менеджер зв'яжеться з вами, підбере рішення та підготує пропозицію.</p>
+    <form data-lead style="display:flex;flex-direction:column;gap:14px">
+      <div class="field"><label>Ім'я / компанія</label><input type="text" name="name" placeholder="Ваше ім'я або назва компанії"></div>
+      <div class="field"><label>Номер телефону</label><input type="tel" data-phone name="phone" placeholder="+38 (0__) ___-__-__" required><span class="err"></span></div>
+      <div class="field"><label>Адреса об'єкта</label><input type="text" name="address" placeholder="Місто, вулиця, будинок"></div>
+      <div class="field"><label>Опишіть деталі вашого звернення</label><textarea name="message" rows="3" placeholder="Тип об'єкта, потрібні послуги, орієнтовний масштаб"></textarea></div>
+      <input type="hidden" name="tariff">
+      <button class="btn btn--primary btn--block" type="submit">Надіслати заявку</button>
+      <p class="form-note">Натискаючи кнопку, ви погоджуєтесь з обробкою даних згідно з політикою конфіденційності.</p>
+      <div data-success style="display:none">
+        <h4 style="color:var(--navy-900)">Вашу заявку прийнято!</h4>
+        <p class="muted" style="font-size:.92rem;margin-top:8px">Дякуємо! Наш менеджер зв'яжеться з вами найближчим часом. Цілодобово також: Telegram <b>@astraispbot</b>, Viber «АСТРА», 0&nbsp;800&nbsp;20-38-38.</p>
+      </div>
+    </form>
+  </div>
+</div>
