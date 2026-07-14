@@ -148,9 +148,9 @@
     var hasTop = topHrefs.indexOf(path) > -1;
     doc.querySelectorAll(".mega .col").forEach(function (col) {
       var hit = [].some.call(col.querySelectorAll("a"), function (a) { return b(a.getAttribute("href")) === path; });
-      if (hit) {
+      if (hit && !hasTop) {
         var bl = col.querySelector("b"); if (bl) bl.classList.add("current");
-        if (!hasTop) { var li = col.closest("li"); if (li) { var nl = li.querySelector(".navlink"); if (nl) nl.classList.add("current"); } }
+        var li = col.closest("li"); if (li) { var nl = li.querySelector(".navlink"); if (nl) nl.classList.add("current"); }
       }
     });
     doc.querySelectorAll(".mobile-menu a").forEach(function (a) {
