@@ -19,8 +19,8 @@ import Layout from '../layouts/Layout.astro';
 .page-b2b .phone-list a:hover{color:var(--blue-700)}
 .page-b2b .phone-list .ico{width:17px;height:17px;flex:none;align-self:center;color:var(--red)}
 .page-b2b .phone-list .tag{font-family:var(--font-body);font-weight:600;font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;color:var(--blue-700);align-self:center}
-.page-b2b .msg-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
-.page-b2b .msg-btn{display:inline-flex;align-items:center;gap:9px;padding:11px 16px;border-radius:var(--r-pill);border:1px solid var(--line-strong);background:var(--surface);font-weight:600;font-size:.92rem;color:var(--navy-900);transition:.2s var(--ease)}
+.page-b2b .msg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.page-b2b .msg-btn{display:flex;align-items:center;justify-content:center;gap:9px;padding:11px 16px;border-radius:var(--r-pill);border:1px solid var(--line-strong);background:var(--surface);font-weight:600;font-size:.92rem;color:var(--navy-900);transition:.2s var(--ease)}
 .page-b2b .msg-btn:hover{border-color:var(--blue);color:var(--blue-700)}
 .page-b2b .msg-btn .ic{width:18px;height:18px;flex:none;-webkit-mask:center/contain no-repeat;mask:center/contain no-repeat}
 .page-b2b .msg-btn .ic--tg{background-color:#229ED9;-webkit-mask-image:url(assets/telegram.svg);mask-image:url(assets/telegram.svg)}
@@ -44,7 +44,6 @@ import Layout from '../layouts/Layout.astro';
         <p class="hero-sub">Цілодобова технічна підтримка, месенджери та окрема бухгалтерія для юридичних осіб. Залиште заявку — закріплений менеджер зв'яжеться з вами і підбере рішення під ваш об'єкт.</p>
         <div class="hero-cta">
           <button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button>
-          <button class="btn btn--ghost btn--lg on-navy" data-modal data-mode="callback">Передзвоніть мені</button>
         </div>
       </div>
     </div>
@@ -78,10 +77,10 @@ import Layout from '../layouts/Layout.astro';
           <p class="sub">Напишіть нам — відповідаємо цілодобово.</p>
           <div class="msg-row">
             <a class="msg-btn" href="https://t.me/astraispbot" target="_blank" rel="noopener">
-              <span class="ic ic--tg" aria-hidden="true"></span>Telegram @astraispbot
+              <span class="ic ic--tg" aria-hidden="true"></span>Telegram
             </a>
             <a class="msg-btn" href="viber://chat?number=%2B380800203838" target="_blank" rel="noopener">
-              <span class="ic ic--viber" aria-hidden="true"></span>Viber «АСТРА»
+              <span class="ic ic--viber" aria-hidden="true"></span>Viber
             </a>
           </div>
           <p class="sub" style="margin:22px 0 0">Потрібен дзвінок? Залиште номер у формі нижче — менеджер передзвонить.</p>
@@ -126,10 +125,10 @@ import Layout from '../layouts/Layout.astro';
             <h3 style="color:#fff;margin-top:26px">Або напишіть у месенджери</h3>
             <div class="msg-row" style="margin-top:14px">
               <a class="msg-btn" href="https://t.me/astraispbot" target="_blank" rel="noopener">
-                <span class="ic ic--tg" aria-hidden="true"></span>Telegram @astraispbot
+                <span class="ic ic--tg" aria-hidden="true"></span>Telegram
               </a>
               <a class="msg-btn" href="viber://chat?number=%2B380800203838" target="_blank" rel="noopener">
-                <span class="ic ic--viber" aria-hidden="true"></span>Viber «АСТРА»
+                <span class="ic ic--viber" aria-hidden="true"></span>Viber
               </a>
             </div>
             <p class="lead" style="margin-top:20px">Цілодобова підтримка: <a href="tel:+380800203838" style="color:#fff;font-weight:600">0&nbsp;800&nbsp;20-38-38</a></p>
@@ -164,7 +163,6 @@ import Layout from '../layouts/Layout.astro';
         <p class="lead">Залиште заявку — закріплений менеджер підбере рішення під ваш масштаб і підготує комерційну пропозицію.</p>
         <div class="row">
           <button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button>
-          <button class="btn btn--ghost btn--lg on-navy" data-modal data-mode="callback">Передзвоніть мені</button>
         </div>
       </div>
     </div>

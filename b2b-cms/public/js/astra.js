@@ -48,7 +48,12 @@
     modal.classList.add("open");
     doc.body.style.overflow = "hidden";
     var tf = modal.querySelector('[name="tariff"]');
-    if (tf && tariff) tf.value = tariff;
+    if (tf) tf.value = tariff || "";
+    var tl = modal.querySelector(".modal-tariff");
+    if (tl) {
+      if (tariff) { var tb = tl.querySelector("b"); if (tb) tb.textContent = tariff; tl.hidden = false; }
+      else { tl.hidden = true; }
+    }
     if (mode) modal.setAttribute("data-mode", mode);
     var first = modal.querySelector("input");
     if (first) setTimeout(function () { first.focus(); }, 50);
@@ -63,6 +68,19 @@
     if (e.target.closest("[data-close]") || e.target.classList.contains("backdrop")) closeModal();
   });
   doc.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
+
+  /* image lightbox — click any [data-zoom] image to view it enlarged */
+  var lightbox = doc.querySelector(".lightbox");
+  if (lightbox) {
+    var lbImg = lightbox.querySelector("img");
+    var closeLb = function () { lightbox.classList.remove("open"); doc.body.style.overflow = ""; };
+    doc.addEventListener("click", function (e) {
+      var z = e.target.closest("[data-zoom]");
+      if (z && z.tagName === "IMG") { lbImg.src = z.currentSrc || z.src; lbImg.alt = z.alt || ""; lightbox.classList.add("open"); doc.body.style.overflow = "hidden"; return; }
+      if (e.target.closest(".lightbox")) closeLb();
+    });
+    doc.addEventListener("keydown", function (e) { if (e.key === "Escape" && lightbox.classList.contains("open")) closeLb(); });
+  }
 
   /* phone mask +38 (0XX) XXX-XX-XX */
   doc.querySelectorAll('input[data-phone]').forEach(function (inp) {
@@ -125,11 +143,14 @@
     doc.querySelectorAll(".navlink").forEach(function (a) {
       if (b(a.getAttribute("href")) === path) a.classList.add("current");
     });
+    // pages that have their own top-level item must not also light up "Напрямки"
+    var topHrefs = [].map.call(doc.querySelectorAll(".mainnav .navlink"), function (a) { return b(a.getAttribute("href")); });
+    var hasTop = topHrefs.indexOf(path) > -1;
     doc.querySelectorAll(".mega .col").forEach(function (col) {
       var hit = [].some.call(col.querySelectorAll("a"), function (a) { return b(a.getAttribute("href")) === path; });
       if (hit) {
         var bl = col.querySelector("b"); if (bl) bl.classList.add("current");
-        var li = col.closest("li"); if (li) { var nl = li.querySelector(".navlink"); if (nl) nl.classList.add("current"); }
+        if (!hasTop) { var li = col.closest("li"); if (li) { var nl = li.querySelector(".navlink"); if (nl) nl.classList.add("current"); } }
       }
     });
     doc.querySelectorAll(".mobile-menu a").forEach(function (a) {
