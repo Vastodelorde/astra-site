@@ -15,6 +15,12 @@ export const tariffType = defineType({
     defineField({ name: 'speed', title: 'Швидкість (число)', type: 'string', description: 'Напр. «250»' }),
     defineField({ name: 'unit', title: 'Одиниця', type: 'string', initialValue: 'Мбіт/с' }),
     defineField({
+      name: 'guar',
+      title: 'Гарантована швидкість',
+      type: 'string',
+      description: 'Необовʼязково. Напр. «мін. гарант. 2.5 GIGABIT». Показується під швидкістю.',
+    }),
+    defineField({
       name: 'features',
       title: 'Що входить у тариф',
       type: 'array',
