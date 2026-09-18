@@ -1,8 +1,10 @@
 {
   "framework": "astro",
   "buildCommand": "npm run build",
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true }
+  ],
   "rewrites": [
-    { "source": "/index.html", "destination": "/" },
     { "source": "/maliy.html", "destination": "/maliy/" },
     { "source": "/seredniy.html", "destination": "/seredniy/" },
     { "source": "/velykyi.html", "destination": "/velykyi/" },

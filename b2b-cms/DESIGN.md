@@ -161,7 +161,7 @@ OKLCH; нейтралі тоновані в navy-відтінок (hue 264). HEX
 
 ### 6.1 Каркас (у `Layout.astro`, на кожній сторінці)
 - **`.site-header`**: sticky, `--navy-900`. Після скролу >8px отримує `.scrolled` (тінь).
-  - `.topbar`: `.brand` (`logo-mark.svg` + слово «АСТРА», Display 800) · `.t-msgs` (круглі кнопки 34px, іконки білі через `filter: brightness(0) invert(1)`) · `.t-phone` (номер + `<small>` «цілодобова підтримка» окремим рядком) · `.btn--primary.btn--sm` · `.burger`.
+  - `.topbar`: `.brand` (`logo-mark.svg` + «АСТРА» українською / `ASTRA` англійською, Display 800) · `.t-msgs` (круглі кнопки 34px, іконки білі через `filter: brightness(0) invert(1)`) · `.t-phone` (номер + `<small>` «цілодобова підтримка» окремим рядком) · `.btn--primary.btn--sm` · `.burger`.
   - `.mainnav`: `.navlink` (Display 600, `--on-navy-dim`; `.current` біла з червоною 2px-рискою знизу).
   - `.mega.cols-4`: біла панель **фіксованої ширини 700px**, вирівняна по правому краю контейнера, відкривається на `:hover` і `:focus-within`. Заголовок колонки `<b>`: uppercase, 0.74rem, червоне підкреслення 2px. Довгі одиниці загорнуті в `nowrap`.
 - **`.mobile-menu`**: виїжджає справа (`min(86vw, 360px)`), navy. Групи зроблені через `<details class="mm-group">` з «+ / –».

@@ -182,7 +182,7 @@ Worker опубліковано за адресою `https://astra-b2b-leads.vas
 astra-site/                  ← git root (у main лише цей проєкт)
 └── b2b-cms/                 ← корінь Astro-проєкту і Vercel-проєкту сайту
     ├── astro.config.mjs     ← site: https://astra.in.ua, build.format: 'file'
-    ├── vercel.json          ← framework astro, output dist/
+    ├── vercel.json          ← framework astro, редирект index.html на / і rewrites для старих .html URL
     ├── .env                 ← PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET, SANITY_TOKEN (не в git)
     ├── public/              ← віддається як є, НЕ проходить через Vite
     │   ├── css/astra.css    ← спільна дизайн-система (токени + компоненти)
@@ -262,7 +262,7 @@ Node ≥ 22.12 (`engines`). `seed.ts` запускається нативно ч
 3. **CTA:** «Замовити консультацію». Не «Підключитися», не «Передзвоніть мені».
 4. **Числа з тисячами** через нерозривний пробіл: `1 000`, `10 000`, `0&nbsp;800&nbsp;20-38-38`. Одиниці не відриваються від числа (`<span style="white-space:nowrap">10 Гбіт/с</span>` у мега-меню).
 5. **Без вигаданих цифр і цін.** Лише з інвентаря, презентації або від замовника.
-6. **Назви суббрендів:** `ASTRA ISP`, `ASTRA INSTALL`, `ASTRA CLOUD` (латиницею, великими). Компанія в тексті: `АСТРА` (кирилицею).
+6. **Назви суббрендів:** `ASTRA ISP`, `ASTRA INSTALL`, `ASTRA CLOUD` (латиницею, великими). Компанія в українському тексті: `АСТРА` (кирилицею); у хедері англійської версії: `ASTRA`.
 7. **Апостроф:** у сторінках `.astro` використовується `'`, у `src/data/*.ts` `ʼ` (U+02BC). Нові тексти пишіть у стилі файлу, який редагуєте. Уніфікація відкладена.
 
 ---
