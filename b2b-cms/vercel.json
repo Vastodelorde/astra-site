@@ -1,18 +1,5 @@
 {
   "framework": "astro",
   "buildCommand": "npm run build",
-  "rewrites": [
-    { "source": "/index.html", "destination": "/" },
-    { "source": "/maliy.html", "destination": "/maliy/" },
-    { "source": "/seredniy.html", "destination": "/seredniy/" },
-    { "source": "/velykyi.html", "destination": "/velykyi/" },
-    { "source": "/operators.html", "destination": "/operators/" },
-    { "source": "/isp.html", "destination": "/isp/" },
-    { "source": "/install.html", "destination": "/install/" },
-    { "source": "/cloud.html", "destination": "/cloud/" },
-    { "source": "/poslugy.html", "destination": "/poslugy/" },
-    { "source": "/taryfy.html", "destination": "/taryfy/" },
-    { "source": "/pro.html", "destination": "/pro/" },
-    { "source": "/kontakty.html", "destination": "/kontakty/" }
-  ]
+  "outputDirectory": "dist"
 }

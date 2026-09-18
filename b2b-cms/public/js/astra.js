@@ -256,10 +256,6 @@
   (function () {
     var path = location.pathname.split("/").pop() || "index.html";
     var b = function (h) { return (h || "").split("#")[0]; };
-    if (/\/blog(?:\/|$)/.test(location.pathname)) {
-      doc.querySelectorAll('.navlink[href$="blog/"], .mobile-menu a[href$="blog/"]').forEach(function (a) { a.classList.add("current"); });
-      return;
-    }
     doc.querySelectorAll(".navlink").forEach(function (a) {
       if (b(a.getAttribute("href")) === path) a.classList.add("current");
     });

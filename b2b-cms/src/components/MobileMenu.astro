@@ -1,22 +1,18 @@
----
-const { pathPrefix = '' } = Astro.props;
----
 <div class="mobile-menu" id="mobile-menu">
   <button class="mm-close" data-close-menu aria-label="Закрити меню">✕</button>
   <nav aria-label="Мобільне меню">
-    <a class="mm-top" href={`${pathPrefix}index.html`}>Астра B2B</a>
-    <a class="mm-top" href={`${pathPrefix}maliy.html`}>Малий бізнес</a>
-    <a class="mm-top" href={`${pathPrefix}seredniy.html`}>Середній бізнес</a>
-    <a class="mm-top" href={`${pathPrefix}velykyi.html`}>Великий бізнес</a>
-    <a class="mm-top" href={`${pathPrefix}operators.html`}>Оператори</a>
+    <a class="mm-top" href="index.html">Астра B2B</a>
+    <a class="mm-top" href="maliy.html">Малий бізнес</a>
+    <a class="mm-top" href="seredniy.html">Середній бізнес</a>
+    <a class="mm-top" href="velykyi.html">Великий бізнес</a>
+    <a class="mm-top" href="operators.html">Оператори</a>
     <details class="mm-group">
       <summary>Напрямки</summary>
-      <a href={`${pathPrefix}isp.html`}>ASTRA ISP, інтернет</a>
-      <a href={`${pathPrefix}install.html`}>ASTRA INSTALL, безпека та мережі</a>
-      <a href={`${pathPrefix}cloud.html`}>ASTRA CLOUD, хмара</a>
+      <a href="isp.html">ASTRA ISP, інтернет</a>
+      <a href="install.html">ASTRA INSTALL, безпека та мережі</a>
+      <a href="cloud.html">ASTRA CLOUD, хмара</a>
     </details>
-    <a class="mm-top" href={`${pathPrefix}blog/`}>Блог</a>
-    <a class="mm-top" href={`${pathPrefix}pro.html`}>Про нас</a>
-    <a class="mm-top" href={`${pathPrefix}kontakty.html`}>Контакти</a>
+    <a class="mm-top" href="pro.html">Про нас</a>
+    <a class="mm-top" href="kontakty.html">Контакти</a>
   </nav>
 </div>
