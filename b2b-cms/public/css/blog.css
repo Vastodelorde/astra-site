@@ -63,3 +63,13 @@
 @media(max-width:900px){.page-b2b .blog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.page-b2b .blog-listing .blog-grid{grid-template-columns:1fr}.page-b2b .blog-pagination{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:320px;margin-inline:auto}.page-b2b .blog-pagination__pages{grid-column:1/-1;grid-row:1;justify-content:center}.page-b2b .blog-pagination__step{grid-row:2;min-width:0}}
 @media(max-width:620px){.page-b2b .blog-feature__head{align-items:start;flex-direction:column}.page-b2b .blog-grid,.page-b2b .blog-related .blog-grid{grid-template-columns:1fr}.page-b2b .blog-listing .blog-grid{row-gap:46px}}
+
+.page-b2b .reading-progress{position:fixed;inset:0 auto auto 0;width:100%;height:3px;z-index:61;background:var(--red);transform:scaleX(0);transform-origin:left center;pointer-events:none}
+@media(prefers-reduced-motion:no-preference){
+  .page-b2b .blog-heading h1,
+  .page-b2b .blog-heading .lead,
+  .page-b2b .blog-article__heading > *{animation:b2b-enter .65s var(--ease) both}
+  .page-b2b .blog-heading .lead,
+  .page-b2b .blog-article__heading > h1{animation-delay:75ms}
+  .page-b2b .blog-article__heading > .blog-article__intro{animation-delay:150ms}
+}

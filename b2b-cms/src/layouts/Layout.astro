@@ -33,10 +33,16 @@ const {
 const leadEndpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 const path = Astro.url.pathname.replace(/^\/b2b\//, '/');
-const equivalentPath = alternatePath ?? (locale === 'en' ? path.replace(/^\/en\//, '/') : path === '/' || path === '/index.html' ? '/en/' : `/en${path}`);
-const ukPath = locale === 'uk' ? path : equivalentPath;
-const enPath = locale === 'en' ? path : equivalentPath;
+// Vercel rewrites these .html URLs to directory routes before Astro sees them.
+const flatPages = new Set(['maliy', 'seredniy', 'velykyi', 'operators', 'isp', 'install', 'cloud', 'poslugy', 'taryfy', 'pro', 'kontakty']);
+const directoryPage = path.match(/^\/([^/]+)\/$/);
+const pagePath = directoryPage && flatPages.has(directoryPage[1]) ? `/${directoryPage[1]}.html` : path;
+const equivalentPath = alternatePath ?? (locale === 'en' ? pagePath.replace(/^\/en\//, '/') : pagePath === '/' || pagePath === '/index.html' ? '/en/' : `/en${pagePath}`);
+const ukPath = locale === 'uk' ? pagePath : equivalentPath;
+const enPath = locale === 'en' ? pagePath : equivalentPath;
 const sitePrefix = `${pathPrefix}${locale === 'en' ? 'en/' : ''}`;
+const mountPath = Astro.url.pathname.startsWith('/b2b/') ? '/b2b' : '';
+const languageHref = `${mountPath}${equivalentPath}`;
 ---
 <!DOCTYPE html>
 <html lang={locale}>
@@ -65,14 +71,15 @@ const sitePrefix = `${pathPrefix}${locale === 'en' ? 'en/' : ''}`;
 <slot name="head" />
 </head>
 <body class={bodyClass} data-lead-source={leadSource} data-lead-endpoint={leadEndpoint} data-turnstile-sitekey={turnstileSiteKey}>
-<Header pathPrefix={pathPrefix} sitePrefix={sitePrefix} locale={locale} alternateHref={`${pathPrefix}${equivalentPath.slice(1)}`} />
+<Header pathPrefix={pathPrefix} sitePrefix={sitePrefix} locale={locale} alternateHref={languageHref} />
 <main>
   <slot />
 </main>
 <Footer pathPrefix={pathPrefix} sitePrefix={sitePrefix} locale={locale} />
 <LeadModal locale={locale} />
-<MobileMenu sitePrefix={sitePrefix} locale={locale} alternateHref={`${pathPrefix}${equivalentPath.slice(1)}`} />
+<MobileMenu sitePrefix={sitePrefix} locale={locale} alternateHref={languageHref} />
 <div class="lightbox" aria-hidden="true"><img src="" alt=""></div>
 <script src={`${pathPrefix}js/astra.js`} defer is:inline></script>
+<script src={`${pathPrefix}js/motion.js`} defer is:inline></script>
 </body>
 </html>

@@ -3,7 +3,8 @@ const { sitePrefix = '', locale = 'uk', alternateHref = '#' } = Astro.props;
 const en = locale === 'en';
 const link = (page: string) => `${sitePrefix}${page}`;
 ---
-<div class="mobile-menu" id="mobile-menu">
+<div class="mobile-menu-scrim" aria-hidden="true"></div>
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true" inert aria-label={en ? 'Mobile navigation' : 'Мобільне меню'}>
   <button class="mm-close" data-close-menu aria-label={en ? 'Close menu' : 'Закрити меню'}>✕</button>
   <nav aria-label={en ? 'Mobile navigation' : 'Мобільне меню'}>
     <a class="mm-top" href={link(en ? '' : 'index.html')}>ASTRA B2B</a>

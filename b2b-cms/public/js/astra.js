@@ -28,25 +28,41 @@
   /* mobile menu */
   var burger = doc.querySelector(".burger");
   var mobile = doc.querySelector(".mobile-menu");
+  var menuScrim = doc.querySelector(".mobile-menu-scrim");
   if (burger && mobile) {
-    burger.addEventListener("click", function () {
-      var open = mobile.classList.toggle("open");
-      burger.setAttribute("aria-expanded", String(open));
-      doc.body.style.overflow = open ? "hidden" : "";
-    });
-    var closeMenu = function () {
+    var closeMenu = function (restoreFocus) {
       mobile.classList.remove("open"); doc.body.style.overflow = "";
+      if (menuScrim) menuScrim.classList.remove("open");
+      mobile.inert = true;
+      mobile.setAttribute("aria-hidden", "true");
       burger.setAttribute("aria-expanded", "false");
+      if (restoreFocus) burger.focus();
     };
-    mobile.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", closeMenu); });
+    burger.addEventListener("click", function () {
+      if (mobile.classList.contains("open")) { closeMenu(true); return; }
+      mobile.inert = false;
+      mobile.setAttribute("aria-hidden", "false");
+      mobile.classList.add("open");
+      if (menuScrim) menuScrim.classList.add("open");
+      burger.setAttribute("aria-expanded", "true");
+      doc.body.style.overflow = "hidden";
+      var close = mobile.querySelector("[data-close-menu]");
+      if (close) close.focus();
+    });
+    mobile.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", function () { closeMenu(false); }); });
     var mc = mobile.querySelector("[data-close-menu]");
-    if (mc) mc.addEventListener("click", closeMenu);
+    if (mc) mc.addEventListener("click", function () { closeMenu(true); });
+    if (menuScrim) menuScrim.addEventListener("click", function () { closeMenu(true); });
+    doc.addEventListener("keydown", function (e) { if (e.key === "Escape" && mobile.classList.contains("open")) closeMenu(true); });
   }
 
   /* lead modal — show the selected tariff or the source page */
   var modal = doc.querySelector("#lead-modal");
+  var modalTrigger = null;
   function openModal(tariff, mode, source) {
     if (!modal) return;
+    modal.inert = false;
+    modal.setAttribute("aria-hidden", "false");
     modal.classList.add("open");
     doc.body.style.overflow = "hidden";
     var tf = modal.querySelector('[name="tariff"]');
@@ -64,15 +80,18 @@
     if (mode) modal.setAttribute("data-mode", mode);
     mountTurnstile(modal.querySelector("form[data-lead]"));
     var first = modal.querySelector("input");
-    if (first) setTimeout(function () { first.focus(); }, 50);
+    if (first) setTimeout(function () { if (modal.classList.contains("open")) first.focus(); }, 50);
   }
   function closeModal() {
-    if (!modal) return;
+    if (!modal || !modal.classList.contains("open")) return;
     modal.classList.remove("open"); doc.body.style.overflow = "";
+    modal.inert = true;
+    modal.setAttribute("aria-hidden", "true");
+    if (modalTrigger && modalTrigger.isConnected) modalTrigger.focus();
   }
   doc.addEventListener("click", function (e) {
     var t = e.target.closest("[data-modal]");
-    if (t) { e.preventDefault(); openModal(t.dataset.tariff || "", t.dataset.mode || "", t.dataset.leadSource || doc.body.dataset.leadSource || ""); }
+    if (t) { e.preventDefault(); modalTrigger = t; openModal(t.dataset.tariff || "", t.dataset.mode || "", t.dataset.leadSource || doc.body.dataset.leadSource || ""); }
     if (e.target.closest("[data-close]") || e.target.classList.contains("backdrop")) closeModal();
   });
   doc.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
@@ -81,10 +100,10 @@
   var lightbox = doc.querySelector(".lightbox");
   if (lightbox) {
     var lbImg = lightbox.querySelector("img");
-    var closeLb = function () { lightbox.classList.remove("open"); doc.body.style.overflow = ""; };
+    var closeLb = function () { lightbox.classList.remove("open"); lightbox.setAttribute("aria-hidden", "true"); doc.body.style.overflow = ""; };
     doc.addEventListener("click", function (e) {
       var z = e.target.closest("[data-zoom]");
-      if (z && z.tagName === "IMG") { lbImg.src = z.currentSrc || z.src; lbImg.alt = z.alt || ""; lightbox.classList.add("open"); doc.body.style.overflow = "hidden"; return; }
+      if (z && z.tagName === "IMG") { lbImg.src = z.currentSrc || z.src; lbImg.alt = z.alt || ""; lightbox.setAttribute("aria-hidden", "false"); lightbox.classList.add("open"); doc.body.style.overflow = "hidden"; return; }
       if (e.target.closest(".lightbox")) closeLb();
     });
     doc.addEventListener("keydown", function (e) { if (e.key === "Escape" && lightbox.classList.contains("open")) closeLb(); });
@@ -330,13 +349,4 @@
     start();
   });
 
-  /* reveal on scroll */
-  if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
-    }, { threshold: 0.12 });
-    doc.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
-  } else {
-    doc.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
-  }
 })();

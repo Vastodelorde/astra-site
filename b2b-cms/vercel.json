@@ -2,7 +2,18 @@
   "framework": "astro",
   "buildCommand": "npm run build",
   "redirects": [
-    { "source": "/index.html", "destination": "/", "permanent": true }
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/en/maliy/", "destination": "/en/maliy.html", "permanent": true },
+    { "source": "/en/seredniy/", "destination": "/en/seredniy.html", "permanent": true },
+    { "source": "/en/velykyi/", "destination": "/en/velykyi.html", "permanent": true },
+    { "source": "/en/operators/", "destination": "/en/operators.html", "permanent": true },
+    { "source": "/en/isp/", "destination": "/en/isp.html", "permanent": true },
+    { "source": "/en/install/", "destination": "/en/install.html", "permanent": true },
+    { "source": "/en/cloud/", "destination": "/en/cloud.html", "permanent": true },
+    { "source": "/en/poslugy/", "destination": "/en/poslugy.html", "permanent": true },
+    { "source": "/en/taryfy/", "destination": "/en/taryfy.html", "permanent": true },
+    { "source": "/en/pro/", "destination": "/en/pro.html", "permanent": true },
+    { "source": "/en/kontakty/", "destination": "/en/kontakty.html", "permanent": true }
   ],
   "rewrites": [
     { "source": "/maliy.html", "destination": "/maliy/" },

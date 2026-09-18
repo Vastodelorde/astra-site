@@ -2,7 +2,7 @@
 const { locale = 'uk' } = Astro.props;
 const en = locale === 'en';
 ---
-<div class="modal" id="lead-modal" role="dialog" aria-modal="true" aria-label={en ? 'Request a consultation' : 'Замовити консультацію'}>
+<div class="modal" id="lead-modal" role="dialog" aria-modal="true" aria-hidden="true" inert aria-label={en ? 'Request a consultation' : 'Замовити консультацію'}>
   <div class="backdrop" data-close></div>
   <div class="panel">
     <button class="x" data-close aria-label={en ? 'Close' : 'Закрити'}>✕</button>
