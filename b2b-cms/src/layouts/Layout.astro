@@ -13,6 +13,7 @@ export interface Props {
   ogImage?: string;
   bodyClass?: string;
   leadSource?: string;
+  pathPrefix?: string;
 }
 const {
   title,
@@ -23,6 +24,7 @@ const {
   ogImage = 'https://astra.in.ua/img/og-cover.jpg',
   bodyClass = 'page-b2b ctx-biz mode-biz',
   leadSource,
+  pathPrefix = '',
 } = Astro.props;
 const leadEndpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
@@ -35,7 +37,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 <title>{title}</title>
 <meta name="description" content={description}>
 <link rel="canonical" href={canonical}>
-<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" href={`${pathPrefix}assets/favicon.ico`} sizes="any">
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="uk_UA">
@@ -46,19 +48,20 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 <meta name="twitter:card" content="summary_large_image">
 
 <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/astra.css">
-<link rel="stylesheet" href="css/b2b.css">
+<link rel="stylesheet" href={`${pathPrefix}css/astra.css`}>
+<link rel="stylesheet" href={`${pathPrefix}css/b2b.css`}>
+<link rel="stylesheet" href={`${pathPrefix}css/blog.css`}>
 <slot name="head" />
 </head>
 <body class={bodyClass} data-lead-source={leadSource} data-lead-endpoint={leadEndpoint} data-turnstile-sitekey={turnstileSiteKey}>
-<Header />
+<Header pathPrefix={pathPrefix} />
 <main>
   <slot />
 </main>
-<Footer />
+<Footer pathPrefix={pathPrefix} />
 <LeadModal />
-<MobileMenu />
+<MobileMenu pathPrefix={pathPrefix} />
 <div class="lightbox" aria-hidden="true"><img src="" alt=""></div>
-<script src="js/astra.js" defer is:inline></script>
+<script src={`${pathPrefix}js/astra.js`} defer is:inline></script>
 </body>
 </html>

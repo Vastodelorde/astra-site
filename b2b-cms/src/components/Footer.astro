@@ -1,28 +1,31 @@
+---
+const { pathPrefix = '' } = Astro.props;
+---
 <footer class="site-footer">
   <div class="container footer-main">
     <div class="footer-brand">
-      <img src="assets/logo.svg" alt="АСТРА">
+      <img src={`${pathPrefix}assets/logo.svg`} alt="АСТРА">
       <p>Сузір'я цифрових послуг. Створюємо інфраструктуру зв'язку та безпеки з 2004 року.</p>
       <div class="socials">
-        <a href="https://t.me/astraisp" target="_blank" rel="noopener" aria-label="Telegram"><img src="assets/soc-telegram.svg" alt=""></a>
-        <a href="https://www.youtube.com/@astra_in_ua" target="_blank" rel="noopener" aria-label="YouTube"><img src="assets/soc-youtube.svg" alt=""></a>
-        <a href="https://instagram.com/astra_isp" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/soc-instagram.svg" alt=""></a>
-        <a href="https://www.linkedin.com/company/astra-isp" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/soc-linkedin.svg" alt=""></a>
-        <a href="https://www.facebook.com/astraisp" target="_blank" rel="noopener" aria-label="Facebook"><img src="assets/soc-facebook.svg" alt=""></a>
+        <a href="https://t.me/astraisp" target="_blank" rel="noopener" aria-label="Telegram"><img src={`${pathPrefix}assets/soc-telegram.svg`} alt=""></a>
+        <a href="https://www.youtube.com/@astra_in_ua" target="_blank" rel="noopener" aria-label="YouTube"><img src={`${pathPrefix}assets/soc-youtube.svg`} alt=""></a>
+        <a href="https://instagram.com/astra_isp" target="_blank" rel="noopener" aria-label="Instagram"><img src={`${pathPrefix}assets/soc-instagram.svg`} alt=""></a>
+        <a href="https://www.linkedin.com/company/astra-isp" target="_blank" rel="noopener" aria-label="LinkedIn"><img src={`${pathPrefix}assets/soc-linkedin.svg`} alt=""></a>
+        <a href="https://www.facebook.com/astraisp" target="_blank" rel="noopener" aria-label="Facebook"><img src={`${pathPrefix}assets/soc-facebook.svg`} alt=""></a>
       </div>
     </div>
     <div><h5>Напрямки</h5>
-      <a href="isp.html">ASTRA ISP, інтернет</a><a href="install.html">ASTRA INSTALL, безпека та мережі</a>
-      <a href="cloud.html">ASTRA CLOUD, хмара та ЦОД</a><a href="operators.html">Для операторів</a>
-      <a href="poslugy.html">Усі послуги</a>
+      <a href={`${pathPrefix}isp.html`}>ASTRA ISP, інтернет</a><a href={`${pathPrefix}install.html`}>ASTRA INSTALL, безпека та мережі</a>
+      <a href={`${pathPrefix}cloud.html`}>ASTRA CLOUD, хмара та ЦОД</a><a href={`${pathPrefix}operators.html`}>Для операторів</a>
+      <a href={`${pathPrefix}poslugy.html`}>Усі послуги</a>
     </div>
     <div><h5>Рішення</h5>
-      <a href="maliy.html">Малий бізнес</a><a href="seredniy.html">Середній бізнес</a>
-      <a href="velykyi.html">Великий бізнес</a><a href="operators.html">Оператори</a>
-      <a href="taryfy.html">Усі тарифи</a>
+      <a href={`${pathPrefix}maliy.html`}>Малий бізнес</a><a href={`${pathPrefix}seredniy.html`}>Середній бізнес</a>
+      <a href={`${pathPrefix}velykyi.html`}>Великий бізнес</a><a href={`${pathPrefix}operators.html`}>Оператори</a>
+      <a href={`${pathPrefix}taryfy.html`}>Усі тарифи</a>
     </div>
     <div><h5>Компанія</h5>
-      <a href="pro.html">Про нас</a><a href="kontakty.html">Контакти</a>
+      <a href={`${pathPrefix}pro.html`}>Про нас</a><a href={`${pathPrefix}blog/`}>Блог</a><a href={`${pathPrefix}kontakty.html`}>Контакти</a>
       <a href="https://astra.in.ua" target="_blank" rel="noopener">Приватним клієнтам ↗</a>
     </div>
     <div><h5>Сервіси ↗</h5>

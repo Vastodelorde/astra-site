@@ -1,0 +1,15 @@
+---
+import type { BlogPost } from '../data/blog';
+const { post, pathPrefix = '' } = Astro.props as { post: BlogPost; pathPrefix?: string };
+const date = new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(post.publishedAt));
+const image = post.image.startsWith('https://cdn.sanity.io/') ? `${post.image}?w=900&auto=format&q=82` : `${pathPrefix}${post.image}`;
+---
+<article class="blog-card">
+  <a class="blog-card__media" href={`${pathPrefix}blog/${post.slug}/`} aria-label={post.title}>
+    <img src={image} alt={post.imageAlt} loading="lazy" width="1536" height="864">
+  </a>
+  <div class="blog-card__meta"><span>{post.category}</span><time datetime={post.publishedAt}>{date}</time></div>
+  <h3><a href={`${pathPrefix}blog/${post.slug}/`}>{post.title}</a></h3>
+  <p>{post.excerpt}</p>
+  <div class="blog-card__tags" aria-label="Теми">{post.tags?.map((tag) => <span>{tag}</span>)}</div>
+</article>

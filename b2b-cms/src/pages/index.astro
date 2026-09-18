@@ -1,5 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import BlogCard from '../components/BlogCard.astro';
+import { getBlogPosts } from '../lib/sanity';
+
+export const prerender = false;
+const latestPosts = (await getBlogPosts()).slice(0, 3);
 ---
 <Layout
   title="АСТРА для бізнесу: цифрові рішення для бізнесу та сучасної нерухомості"
@@ -204,7 +209,15 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 8 · CTA ===================== -->
+  <!-- ===================== 8 · БЛОГ ===================== -->
+  {latestPosts.length > 0 && <section class="section section--navy blog-feature" id="blog">
+    <div class="container">
+      <div class="blog-feature__head"><h2>Поради та матеріали АСТРА</h2><a class="blog-all" href="blog/">Усі статті <span aria-hidden="true">→</span></a></div>
+      <div class="blog-grid">{latestPosts.map((post) => <BlogCard post={post} />)}</div>
+    </div>
+  </section>}
+
+  <!-- ===================== 9 · CTA ===================== -->
   <section class="section tight">
     <div class="container">
       <div class="cta-band">

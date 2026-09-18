@@ -1,0 +1,16 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getBlogPosts } from '../../lib/sanity';
+
+export const prerender = false;
+const posts = await getBlogPosts();
+---
+<Layout title="Блог АСТРА: інтернет, безпека та хмара для бізнесу" description="Практичні матеріали АСТРА про зв'язок, мережі, безпеку та серверну інфраструктуру для бізнесу." canonical="https://astra.in.ua/b2b/blog/" pathPrefix="../" bodyClass="page-b2b page-blog ctx-biz mode-biz">
+  <section class="section blog-listing">
+    <div class="container">
+      <div class="blog-heading"><div><h1>Блог АСТРА</h1><p class="lead">Пояснюємо інфраструктурні рішення для щоденної роботи бізнесу.</p></div></div>
+      {posts.length ? <div class="blog-grid">{posts.map((post) => <BlogCard post={post} pathPrefix="../" />)}</div> : <p class="blog-empty">Статті готуються до публікації.</p>}
+    </div>
+  </section>
+</Layout>

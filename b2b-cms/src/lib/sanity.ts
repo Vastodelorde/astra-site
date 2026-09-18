@@ -1,4 +1,5 @@
 import { createClient } from '@sanity/client';
+import { starterPosts, type BlogPost } from '../data/blog';
 
 // SANITY_TOKEN is server-only (never shipped to the client). When present the
 // build reads directly (works with a private dataset); otherwise it uses the
@@ -29,4 +30,22 @@ const segmentPageQuery = `*[_type == "segmentPage" && slug.current == $slug][0]{
 
 export async function getSegmentPage(slug: string) {
   return client.fetch(segmentPageQuery, { slug });
+}
+
+const blogFields = `title, "slug": slug.current, publishedAt, category, tags, excerpt,
+  "image": cover.asset->url, "imageAlt": cover.alt, body`;
+
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  if (!import.meta.env.PUBLIC_SANITY_PROJECT_ID) return starterPosts;
+  return client.withConfig({ useCdn: false }).fetch(
+    `*[_type == "blogPost" && defined(slug.current) && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc) { ${blogFields} }`,
+  );
+}
+
+export async function getBlogPost(slug: string): Promise<BlogPost | null> {
+  if (!import.meta.env.PUBLIC_SANITY_PROJECT_ID) return starterPosts.find((post) => post.slug === slug) ?? null;
+  return client.withConfig({ useCdn: false }).fetch(
+    `*[_type == "blogPost" && slug.current == $slug && defined(publishedAt) && publishedAt <= now()][0] { ${blogFields} }`,
+    { slug },
+  );
 }
