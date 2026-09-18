@@ -1,22 +1,26 @@
-<div class="modal" id="lead-modal" role="dialog" aria-modal="true" aria-label="Замовити консультацію">
+---
+const { locale = 'uk' } = Astro.props;
+const en = locale === 'en';
+---
+<div class="modal" id="lead-modal" role="dialog" aria-modal="true" aria-label={en ? 'Request a consultation' : 'Замовити консультацію'}>
   <div class="backdrop" data-close></div>
   <div class="panel">
-    <button class="x" data-close aria-label="Закрити">✕</button>
-    <h3 style="margin:8px 0 4px">Замовити консультацію</h3>
+    <button class="x" data-close aria-label={en ? 'Close' : 'Закрити'}>✕</button>
+    <h3 style="margin:8px 0 4px">{en ? 'Request a consultation' : 'Замовити консультацію'}</h3>
     <p class="modal-context" data-context-line hidden><span data-context-label></span> <b></b></p>
-    <p class="muted" style="font-size:.9rem;margin-bottom:18px">Закріплений менеджер зв'яжеться з вами, підбере рішення та підготує пропозицію.</p>
+    <p class="muted" style="font-size:.9rem;margin-bottom:18px">{en ? 'Your account manager will contact you, recommend a solution, and prepare a proposal.' : "Закріплений менеджер зв'яжеться з вами, підбере рішення та підготує пропозицію."}</p>
     <form data-lead style="display:flex;flex-direction:column;gap:14px">
-      <div class="field"><label>Ім'я / компанія</label><input type="text" name="name" placeholder="Ваше ім'я або назва компанії"></div>
-      <div class="field"><label>Номер телефону</label><input type="tel" data-phone name="phone" placeholder="+38 (0__) ___-__-__" required><span class="err"></span></div>
-      <div class="field"><label>Адреса об'єкта</label><input type="text" name="address" placeholder="Місто, вулиця, будинок"></div>
-      <div class="field"><label>Опишіть деталі вашого звернення</label><textarea name="message" rows="3" placeholder="Тип об'єкта, потрібні послуги, орієнтовний масштаб"></textarea></div>
+      <div class="field"><label>{en ? 'Name / company' : "Ім'я / компанія"}</label><input type="text" name="name" placeholder={en ? 'Your name or company' : "Ваше ім'я або назва компанії"}></div>
+      <div class="field"><label>{en ? 'Phone number' : 'Номер телефону'}</label><input type="tel" data-phone name="phone" placeholder="+38 (0__) ___-__-__" required><span class="err"></span></div>
+      <div class="field"><label>{en ? 'Site address' : "Адреса об'єкта"}</label><input type="text" name="address" placeholder={en ? 'City, street, building' : 'Місто, вулиця, будинок'}></div>
+      <div class="field"><label>{en ? 'Tell us what you need' : 'Опишіть деталі вашого звернення'}</label><textarea name="message" rows="3" placeholder={en ? 'Site type, services needed, approximate scale' : "Тип об'єкта, потрібні послуги, орієнтовний масштаб"}></textarea></div>
       <input type="hidden" name="tariff">
       <input type="hidden" name="source">
-      <button class="btn btn--primary btn--block" type="submit">Надіслати заявку</button>
-      <p class="form-note">Натискаючи кнопку, ви погоджуєтесь з обробкою даних згідно з політикою конфіденційності.</p>
+      <button class="btn btn--primary btn--block" type="submit">{en ? 'Send request' : 'Надіслати заявку'}</button>
+      <p class="form-note">{en ? 'By submitting this form, you agree to the processing of your data under our privacy policy.' : 'Натискаючи кнопку, ви погоджуєтесь з обробкою даних згідно з політикою конфіденційності.'}</p>
       <div data-success style="display:none">
-        <h4 style="color:var(--navy-900)">Вашу заявку прийнято!</h4>
-        <p class="muted" style="font-size:.92rem;margin-top:8px">Дякуємо! Наш менеджер зв'яжеться з вами найближчим часом. Цілодобово також: Telegram <b>@astraispbot</b>, Viber «АСТРА», 0&nbsp;800&nbsp;20-38-38.</p>
+        <h4 style="color:var(--navy-900)">{en ? 'Request received!' : 'Вашу заявку прийнято!'}</h4>
+        <p class="muted" style="font-size:.92rem;margin-top:8px">{en ? 'Thank you! Our manager will contact you shortly. You can also reach us 24/7 on Telegram @astraispbot, Viber ASTRA, or 0 800 20-38-38.' : "Дякуємо! Наш менеджер зв'яжеться з вами найближчим часом. Цілодобово також: Telegram @astraispbot, Viber «АСТРА», 0 800 20-38-38."}</p>
       </div>
     </form>
   </div>

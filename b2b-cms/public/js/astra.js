@@ -2,6 +2,8 @@
 (function () {
   "use strict";
   var doc = document;
+  var en = doc.documentElement.lang === 'en';
+  var tr = function (uk, english) { return en ? english : uk; };
 
   /* sticky header shadow */
   var header = doc.querySelector(".site-header");
@@ -55,7 +57,7 @@
     if (context) {
       context.hidden = !tariff && !source;
       if (!context.hidden) {
-        context.querySelector("[data-context-label]").textContent = tariff ? "Обраний тариф:" : "Сторінка:";
+        context.querySelector("[data-context-label]").textContent = tariff ? tr("Обраний тариф:", "Selected plan:") : tr("Сторінка:", "Page:");
         context.querySelector("b").textContent = tariff || source;
       }
     }
@@ -135,7 +137,7 @@
         callback: function (token) { sendLead(form, token); },
         "error-callback": function () {
           unlockForm(form);
-          formError(form, "Не вдалося перевірити заявку. Спробуйте ще раз.");
+          formError(form, tr("Не вдалося перевірити заявку. Спробуйте ще раз.", "We could not verify your request. Please try again."));
         },
       });
     } catch {
@@ -157,7 +159,7 @@
           address: values.get("address") || "",
           message: values.get("message") || "",
           tariff: values.get("tariff") || "",
-          source: values.get("source") || doc.body.dataset.leadSource || "Головна",
+          source: values.get("source") || doc.body.dataset.leadSource || tr("Головна", "Home"),
           turnstileToken: token,
         }),
       });
@@ -169,7 +171,7 @@
       var done = form.querySelector("[data-success]");
       if (done) done.style.display = "block";
     } catch {
-      formError(form, "Не вдалося надіслати заявку. Спробуйте ще раз або зателефонуйте 0 800 20-38-38.");
+      formError(form, tr("Не вдалося надіслати заявку. Спробуйте ще раз або зателефонуйте 0 800 20-38-38.", "We could not send your request. Please try again or call 0 800 20-38-38."));
       unlockForm(form);
       if (form._turnstileId != null && window.turnstile) window.turnstile.reset(form._turnstileId);
     } finally {
@@ -188,29 +190,29 @@
       if (phoneError) phoneError.textContent = "";
       formError(form, "");
       if (!/^380\d{9}$/.test(digits)) {
-        if (phoneError) phoneError.textContent = "Введіть коректний номер телефону";
+        if (phoneError) phoneError.textContent = tr("Введіть коректний номер телефону", "Enter a valid Ukrainian phone number");
         if (phone) phone.focus();
         return;
       }
       if (!leadEndpoint || !siteKey) {
-        formError(form, "Заявки тимчасово недоступні. Зателефонуйте 0 800 20-38-38.");
+        formError(form, tr("Заявки тимчасово недоступні. Зателефонуйте 0 800 20-38-38.", "Requests are temporarily unavailable. Please call 0 800 20-38-38."));
         return;
       }
       mountTurnstile(form);
       if (form._turnstileId == null) {
         formError(form, window.turnstile
-          ? "Не вдалося запустити перевірку заявки. Спробуйте пізніше."
-          : "Перевірка заявки ще завантажується. Спробуйте за мить.");
+          ? tr("Не вдалося запустити перевірку заявки. Спробуйте пізніше.", "Verification could not start. Please try again later.")
+          : tr("Перевірка заявки ще завантажується. Спробуйте за мить.", "Verification is still loading. Please try again in a moment."));
         return;
       }
       form._sending = true;
       button.disabled = true;
-      button.textContent = "Надсилаємо заявку...";
+      button.textContent = tr("Надсилаємо заявку...", "Sending request...");
       try {
         window.turnstile.execute(form._turnstileId);
       } catch {
         unlockForm(form);
-        formError(form, "Не вдалося перевірити заявку. Спробуйте ще раз.");
+        formError(form, tr("Не вдалося перевірити заявку. Спробуйте ще раз.", "We could not verify your request. Please try again."));
       }
     });
   });
@@ -255,7 +257,11 @@
      (not every sub-link) + the parent top item. */
   (function () {
     var path = location.pathname.split("/").pop() || "index.html";
-    var b = function (h) { return (h || "").split("#")[0]; };
+    var b = function (h) { var p = (h || "").split("#")[0]; var parts = p.split("/").filter(Boolean); return p.endsWith("/") ? (parts[parts.length - 1] === "blog" ? "blog/" : "index.html") : parts.pop() || "index.html"; };
+    if (/\/blog(?:\/|$)/.test(location.pathname)) {
+      doc.querySelectorAll('.navlink[href$="blog/"], .mobile-menu a[href$="blog/"]').forEach(function (a) { a.classList.add("current"); });
+      return;
+    }
     doc.querySelectorAll(".navlink").forEach(function (a) {
       if (b(a.getAttribute("href")) === path) a.classList.add("current");
     });

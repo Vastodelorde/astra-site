@@ -38,6 +38,7 @@ try {
 }
 
 const detailsCols = (d.details?.items?.length ?? 0) >= 3 ? 'grid grid-3' : 'grid grid-2';
+const legacyManagerNote = 'Веде ваші договори, рахунки й технічні питання.';
 ---
 <Layout
   leadSource={d.hero.breadcrumbLabel}
@@ -92,7 +93,7 @@ const detailsCols = (d.details?.items?.length ?? 0) >= 3 ? 'grid grid-3' : 'grid
           {d.managers.items.map((m: any) => (
             <figure class="mgr">
               <div class="mgr-photo"><img class="mgr-img" src={m.photo} alt={m.alt} loading="lazy"></div>
-              <figcaption class="mgr-cap"><b class="mgr-name">{m.name}</b><span class="mgr-role">{m.role}</span><p class="mgr-note">{m.note}</p></figcaption>
+              <figcaption class="mgr-cap"><b class="mgr-name">{m.name}</b><span class="mgr-role">{m.role}</span>{m.note?.trim() && m.note.trim() !== legacyManagerNote && <p class="mgr-note">{m.note}</p>}</figcaption>
             </figure>
           ))}
         </div>

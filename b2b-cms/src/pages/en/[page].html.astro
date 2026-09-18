@@ -1,0 +1,8 @@
+---
+import EnglishContent from '../../components/EnglishContent.astro';
+import { enPages } from '../../data/enPages';
+export const prerender = false;
+const slug = Astro.params.page || '';
+if (!enPages[slug] || slug === 'index') return new Response('Page not found', { status: 404 });
+---
+<EnglishContent page={enPages[slug]} slug={slug} />

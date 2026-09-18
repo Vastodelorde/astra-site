@@ -13,6 +13,9 @@ export interface Props {
   ogImage?: string;
   bodyClass?: string;
   leadSource?: string;
+  pathPrefix?: string;
+  locale?: 'uk' | 'en';
+  alternatePath?: string;
 }
 const {
   title,
@@ -23,42 +26,53 @@ const {
   ogImage = 'https://astra.in.ua/img/og-cover.jpg',
   bodyClass = 'page-b2b ctx-biz mode-biz',
   leadSource,
+  pathPrefix = '',
+  locale = 'uk',
+  alternatePath,
 } = Astro.props;
 const leadEndpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+const path = Astro.url.pathname.replace(/^\/b2b\//, '/');
+const equivalentPath = alternatePath ?? (locale === 'en' ? path.replace(/^\/en\//, '/') : path === '/' || path === '/index.html' ? '/en/' : `/en${path}`);
+const ukPath = locale === 'uk' ? path : equivalentPath;
+const enPath = locale === 'en' ? path : equivalentPath;
+const sitePrefix = `${pathPrefix}${locale === 'en' ? 'en/' : ''}`;
 ---
 <!DOCTYPE html>
-<html lang="uk">
+<html lang={locale}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content={description}>
 <link rel="canonical" href={canonical}>
-<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="alternate" hreflang="uk" href={`https://astra.in.ua/b2b${ukPath}`}>
+<link rel="alternate" hreflang="en" href={`https://astra.in.ua/b2b${enPath}`}>
+<link rel="icon" href={`${pathPrefix}assets/favicon.ico`} sizes="any">
 
 <meta property="og:type" content="website">
-<meta property="og:locale" content="uk_UA">
-<meta property="og:site_name" content="АСТРА, Сузір'я цифрових послуг">
+<meta property="og:locale" content={locale === 'en' ? 'en_US' : 'uk_UA'}>
+<meta property="og:site_name" content={locale === 'en' ? 'ASTRA, digital services for business' : "АСТРА, Сузір'я цифрових послуг"}>
 <meta property="og:title" content={ogTitle ?? title}>
 <meta property="og:description" content={ogDescription ?? description}>
 <meta property="og:image" content={ogImage}>
 <meta name="twitter:card" content="summary_large_image">
 
 <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/astra.css">
-<link rel="stylesheet" href="css/b2b.css">
+<link rel="stylesheet" href={`${pathPrefix}css/astra.css`}>
+<link rel="stylesheet" href={`${pathPrefix}css/b2b.css`}>
+<link rel="stylesheet" href={`${pathPrefix}css/blog.css`}>
 <slot name="head" />
 </head>
 <body class={bodyClass} data-lead-source={leadSource} data-lead-endpoint={leadEndpoint} data-turnstile-sitekey={turnstileSiteKey}>
-<Header />
+<Header pathPrefix={pathPrefix} sitePrefix={sitePrefix} locale={locale} alternateHref={`${pathPrefix}${equivalentPath.slice(1)}`} />
 <main>
   <slot />
 </main>
-<Footer />
-<LeadModal />
-<MobileMenu />
+<Footer pathPrefix={pathPrefix} sitePrefix={sitePrefix} locale={locale} />
+<LeadModal locale={locale} />
+<MobileMenu sitePrefix={sitePrefix} locale={locale} alternateHref={`${pathPrefix}${equivalentPath.slice(1)}`} />
 <div class="lightbox" aria-hidden="true"><img src="" alt=""></div>
-<script src="js/astra.js" defer is:inline></script>
+<script src={`${pathPrefix}js/astra.js`} defer is:inline></script>
 </body>
 </html>

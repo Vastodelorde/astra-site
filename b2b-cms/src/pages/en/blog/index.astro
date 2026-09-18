@@ -1,0 +1,32 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import BlogCard from '../../../components/BlogCard.astro';
+import { getBlogPosts } from '../../../lib/sanity';
+
+export const prerender = false;
+const posts = await getBlogPosts('en');
+const pageSize = 6;
+const totalPages = Math.ceil(posts.length / pageSize);
+const requestedPage = Astro.url.searchParams.get('page');
+const parsedPage = requestedPage && /^[1-9]\d*$/.test(requestedPage) ? Number(requestedPage) : 1;
+const page = Math.min(parsedPage, Math.max(totalPages, 1));
+const visiblePosts = posts.slice((page - 1) * pageSize, page * pageSize);
+const shownPages = Array.from({ length: totalPages }, (_, index) => index + 1)
+  .filter((number) => number === 1 || number === totalPages || Math.abs(number - page) <= 1);
+const pageHref = (number: number) => number === 1 ? './' : `?page=${number}`;
+const canonical = `https://astra.in.ua/b2b/en/blog/${page === 1 ? '' : `?page=${page}`}`;
+---
+<Layout locale="en" title="ASTRA Blog: connectivity, security and cloud for business" description="Practical articles on internet connectivity, networks, security and server infrastructure for business." canonical={canonical} pathPrefix="../../" bodyClass="page-b2b page-blog ctx-biz mode-biz">
+  <section class="section blog-listing"><div class="container">
+    <div class="blog-heading"><div><h1>ASTRA Blog</h1><p class="lead">Practical infrastructure advice for everyday business operations.</p></div></div>
+    {posts.length ? <div class="blog-grid">{visiblePosts.map((post) => <BlogCard post={post} pathPrefix="../../" sitePrefix="../../en/" />)}</div> : <p class="blog-empty">Articles are being prepared for publication.</p>}
+    {totalPages > 1 && <nav class="blog-pagination" aria-label="Blog pages">
+      {page > 1 ? <a class="blog-pagination__step" href={pageHref(page - 1)} rel="prev">← Previous</a> : <span class="blog-pagination__step is-disabled" aria-hidden="true">← Previous</span>}
+      <div class="blog-pagination__pages">{shownPages.map((number, index) => <>
+        {index > 0 && number - shownPages[index - 1] > 1 && <span class="blog-pagination__ellipsis" aria-hidden="true">…</span>}
+        {number === page ? <span class="blog-pagination__number" aria-current="page" aria-label={`Page ${number}`}>{number}</span> : <a class="blog-pagination__number" href={pageHref(number)} aria-label={`Page ${number}`}>{number}</a>}
+      </>)}</div>
+      {page < totalPages ? <a class="blog-pagination__step" href={pageHref(page + 1)} rel="next">Next →</a> : <span class="blog-pagination__step is-disabled" aria-hidden="true">Next →</span>}
+    </nav>}
+  </div></section>
+</Layout>

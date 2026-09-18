@@ -21,7 +21,6 @@ export const managerType = defineType({
       name: 'note',
       title: 'Підпис',
       type: 'string',
-      initialValue: 'Веде ваші договори, рахунки й технічні питання.',
     }),
     defineField({
       name: 'image',

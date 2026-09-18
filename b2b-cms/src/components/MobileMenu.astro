@@ -1,18 +1,25 @@
+---
+const { sitePrefix = '', locale = 'uk', alternateHref = '#' } = Astro.props;
+const en = locale === 'en';
+const link = (page: string) => `${sitePrefix}${page}`;
+---
 <div class="mobile-menu" id="mobile-menu">
-  <button class="mm-close" data-close-menu aria-label="Закрити меню">✕</button>
-  <nav aria-label="Мобільне меню">
-    <a class="mm-top" href="index.html">Астра B2B</a>
-    <a class="mm-top" href="maliy.html">Малий бізнес</a>
-    <a class="mm-top" href="seredniy.html">Середній бізнес</a>
-    <a class="mm-top" href="velykyi.html">Великий бізнес</a>
-    <a class="mm-top" href="operators.html">Оператори</a>
+  <button class="mm-close" data-close-menu aria-label={en ? 'Close menu' : 'Закрити меню'}>✕</button>
+  <nav aria-label={en ? 'Mobile navigation' : 'Мобільне меню'}>
+    <a class="mm-top" href={link(en ? '' : 'index.html')}>ASTRA B2B</a>
+    <a class="mm-top" href={link('maliy.html')}>{en ? 'Small business' : 'Малий бізнес'}</a>
+    <a class="mm-top" href={link('seredniy.html')}>{en ? 'Medium business' : 'Середній бізнес'}</a>
+    <a class="mm-top" href={link('velykyi.html')}>{en ? 'Large business' : 'Великий бізнес'}</a>
+    <a class="mm-top" href={link('operators.html')}>{en ? 'Operators' : 'Оператори'}</a>
     <details class="mm-group">
-      <summary>Напрямки</summary>
-      <a href="isp.html">ASTRA ISP, інтернет</a>
-      <a href="install.html">ASTRA INSTALL, безпека та мережі</a>
-      <a href="cloud.html">ASTRA CLOUD, хмара</a>
+      <summary>{en ? 'Solutions' : 'Напрямки'}</summary>
+      <a href={link('isp.html')}>{en ? 'ASTRA ISP, internet' : 'ASTRA ISP, інтернет'}</a>
+      <a href={link('install.html')}>{en ? 'ASTRA INSTALL, security & networks' : 'ASTRA INSTALL, безпека та мережі'}</a>
+      <a href={link('cloud.html')}>{en ? 'ASTRA CLOUD, cloud' : 'ASTRA CLOUD, хмара'}</a>
     </details>
-    <a class="mm-top" href="pro.html">Про нас</a>
-    <a class="mm-top" href="kontakty.html">Контакти</a>
+    <a class="mm-top" href={link('blog/')}>{en ? 'Blog' : 'Блог'}</a>
+    <a class="mm-top" href={link('pro.html')}>{en ? 'About us' : 'Про нас'}</a>
+    <a class="mm-top" href={link('kontakty.html')}>{en ? 'Contacts' : 'Контакти'}</a>
+    <a class="mm-top mm-language" href={alternateHref} lang={en ? 'uk' : 'en'}>{en ? 'Українська' : 'English'}</a>
   </nav>
 </div>
