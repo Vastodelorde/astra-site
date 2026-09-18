@@ -40,6 +40,7 @@ try {
 const detailsCols = (d.details?.items?.length ?? 0) >= 3 ? 'grid grid-3' : 'grid grid-2';
 ---
 <Layout
+  leadSource={d.hero.breadcrumbLabel}
   title={d.seo.title}
   description={d.seo.description}
   canonical={d.seo.canonical}

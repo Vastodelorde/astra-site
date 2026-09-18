@@ -12,6 +12,7 @@ export interface Props {
   ogDescription?: string;
   ogImage?: string;
   bodyClass?: string;
+  leadSource?: string;
 }
 const {
   title,
@@ -21,7 +22,10 @@ const {
   ogDescription,
   ogImage = 'https://astra.in.ua/img/og-cover.jpg',
   bodyClass = 'page-b2b ctx-biz mode-biz',
+  leadSource,
 } = Astro.props;
+const leadEndpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 ---
 <!DOCTYPE html>
 <html lang="uk">
@@ -46,7 +50,7 @@ const {
 <link rel="stylesheet" href="css/b2b.css">
 <slot name="head" />
 </head>
-<body class={bodyClass}>
+<body class={bodyClass} data-lead-source={leadSource} data-lead-endpoint={leadEndpoint} data-turnstile-sitekey={turnstileSiteKey}>
 <Header />
 <main>
   <slot />

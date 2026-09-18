@@ -8,6 +8,14 @@ import Layout from '../layouts/Layout.astro';
   ogTitle="АСТРА для бізнесу: цифрові рішення для бізнесу та сучасної нерухомості"
   ogDescription="Інфраструктура зв'язку та безпеки для бізнесу й нерухомості з 2004 року. ASTRA ISP · INSTALL · CLOUD. Рішення для будь-якого масштабу."
 >
+<style is:global slot="head">
+  .page-b2b .partners--home{display:flex;flex-wrap:wrap;justify-content:center}
+  .page-b2b .partners--home .partner{flex:0 0 calc((100% - 70px)/6);height:104px;padding:14px}
+  .page-b2b .partners--home .partner--ugcc img{transform:scale(1.16)}
+  @media(max-width:1000px){.page-b2b .partners--home .partner{flex-basis:calc((100% - 42px)/4)}}
+  @media(max-width:760px){.page-b2b .partners--home .partner{flex-basis:calc((100% - 28px)/3)}}
+  @media(max-width:560px){.page-b2b .partners--home .partner{flex-basis:calc((100% - 14px)/2)}}
+</style>
 <!-- ===================== 1 · HERO ===================== -->
   <section class="hero hero--home">
     <div class="hero-bg"><img src="img/hero-biz.jpg" loading="eager" alt="Цифрова інфраструктура для бізнесу та сучасної нерухомості"></div>
@@ -174,7 +182,7 @@ import Layout from '../layouts/Layout.astro';
           <p style="margin-top:14px;color:var(--muted);font-size:.94rem">Серед наших клієнтів: забудовники, житлові комплекси, ритейл- і HoReCa-мережі, логістичні компанії, заклади культури та освіти.</p>
         </div>
       </div>
-      <div class="partners" style="margin-top:clamp(36px,5vw,56px)">
+      <div class="partners partners--home" style="margin-top:clamp(36px,5vw,56px)">
         <span class="partner"><img src="img/partners/1.jpg" alt="Клієнт АСТРА" loading="lazy"></span>
         <span class="partner"><img src="img/partners/2.jpg" alt="Клієнт АСТРА" loading="lazy"></span>
         <span class="partner"><img src="img/partners/3.jpg" alt="Клієнт АСТРА" loading="lazy"></span>
@@ -191,6 +199,7 @@ import Layout from '../layouts/Layout.astro';
         <span class="partner"><img src="img/partners/14.jpg" alt="Клієнт АСТРА" loading="lazy"></span>
         <span class="partner"><img src="img/partners/15.jpg" alt="Клієнт АСТРА" loading="lazy"></span>
         <span class="partner"><img src="img/partners/16.jpg" alt="Клієнт АСТРА" loading="lazy"></span>
+        <span class="partner partner--ugcc"><img src="img/partners/17.jpg" alt="Українська Греко-Католицька Церква" loading="lazy"></span>
       </div>
     </div>
   </section>

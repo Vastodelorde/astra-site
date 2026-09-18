@@ -41,20 +41,26 @@
     if (mc) mc.addEventListener("click", closeMenu);
   }
 
-  /* lead modal — any [data-modal] opens #lead-modal; supports preset tariff */
+  /* lead modal — show the selected tariff or the source page */
   var modal = doc.querySelector("#lead-modal");
-  function openModal(tariff, mode) {
+  function openModal(tariff, mode, source) {
     if (!modal) return;
     modal.classList.add("open");
     doc.body.style.overflow = "hidden";
     var tf = modal.querySelector('[name="tariff"]');
     if (tf) tf.value = tariff || "";
-    var tl = modal.querySelector(".modal-tariff");
-    if (tl) {
-      if (tariff) { var tb = tl.querySelector("b"); if (tb) tb.textContent = tariff; tl.hidden = false; }
-      else { tl.hidden = true; }
+    var sf = modal.querySelector('[name="source"]');
+    if (sf) sf.value = source || "";
+    var context = modal.querySelector("[data-context-line]");
+    if (context) {
+      context.hidden = !tariff && !source;
+      if (!context.hidden) {
+        context.querySelector("[data-context-label]").textContent = tariff ? "Обраний тариф:" : "Сторінка:";
+        context.querySelector("b").textContent = tariff || source;
+      }
     }
     if (mode) modal.setAttribute("data-mode", mode);
+    mountTurnstile(modal.querySelector("form[data-lead]"));
     var first = modal.querySelector("input");
     if (first) setTimeout(function () { first.focus(); }, 50);
   }
@@ -64,7 +70,7 @@
   }
   doc.addEventListener("click", function (e) {
     var t = e.target.closest("[data-modal]");
-    if (t) { e.preventDefault(); openModal(t.dataset.tariff || "", t.dataset.mode || ""); }
+    if (t) { e.preventDefault(); openModal(t.dataset.tariff || "", t.dataset.mode || "", t.dataset.leadSource || doc.body.dataset.leadSource || ""); }
     if (e.target.closest("[data-close]") || e.target.classList.contains("backdrop")) closeModal();
   });
   doc.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
@@ -95,20 +101,130 @@
     });
   });
 
-  /* form submit — demo success state (no backend) */
-  doc.querySelectorAll("form[data-lead]").forEach(function (form) {
+  /* lead forms — Turnstile token and Telegram delivery must both succeed */
+  var leadEndpoint = doc.body.dataset.leadEndpoint;
+  var siteKey = doc.body.dataset.turnstileSitekey;
+  var leadForms = doc.querySelectorAll("form[data-lead]");
+  function formError(form, message) {
+    var error = form.querySelector(".form-error");
+    if (!error) {
+      error = doc.createElement("p");
+      error.className = "form-error";
+      error.setAttribute("role", "alert");
+      form.querySelector('button[type="submit"]').after(error);
+    }
+    error.textContent = message;
+  }
+  function unlockForm(form) {
+    form._sending = false;
+    var button = form.querySelector('button[type="submit"]');
+    button.disabled = false;
+    button.textContent = button.dataset.leadLabel;
+  }
+  function mountTurnstile(form) {
+    if (!form || !window.turnstile || !siteKey || form._turnstileId != null) return;
+    var container = doc.createElement("div");
+    container.setAttribute("data-turnstile", "");
+    form.querySelector('button[type="submit"]').before(container);
+    try {
+      form._turnstileId = window.turnstile.render(container, {
+        sitekey: siteKey,
+        execution: "execute",
+        appearance: "interaction-only",
+        size: "flexible",
+        callback: function (token) { sendLead(form, token); },
+        "error-callback": function () {
+          unlockForm(form);
+          formError(form, "Не вдалося перевірити заявку. Спробуйте ще раз.");
+        },
+      });
+    } catch {
+      container.remove();
+    }
+  }
+  async function sendLead(form, token) {
+    var values = new FormData(form);
+    var controller = new AbortController();
+    var timeout = setTimeout(function () { controller.abort(); }, 20000);
+    try {
+      var response = await fetch(leadEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
+        body: JSON.stringify({
+          name: values.get("name") || "",
+          phone: values.get("phone") || "",
+          address: values.get("address") || "",
+          message: values.get("message") || "",
+          tariff: values.get("tariff") || "",
+          source: values.get("source") || doc.body.dataset.leadSource || "Головна",
+          turnstileToken: token,
+        }),
+      });
+      if (!response.ok) throw new Error("Delivery failed");
+      var result = await response.json();
+      if (!result.ok) throw new Error("Delivery failed");
+      form.querySelectorAll(".field,button[type=submit],.form-note,[data-turnstile]").forEach(function (node) { node.style.display = "none"; });
+      formError(form, "");
+      var done = form.querySelector("[data-success]");
+      if (done) done.style.display = "block";
+    } catch {
+      formError(form, "Не вдалося надіслати заявку. Спробуйте ще раз або зателефонуйте 0 800 20-38-38.");
+      unlockForm(form);
+      if (form._turnstileId != null && window.turnstile) window.turnstile.reset(form._turnstileId);
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+  leadForms.forEach(function (form) {
+    var button = form.querySelector('button[type="submit"]');
+    button.dataset.leadLabel = button.textContent;
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (form._sending) return;
       var phone = form.querySelector('input[data-phone]');
-      if (phone && phone.value.replace(/\D/g, "").length < 11) {
-        var err = form.querySelector(".err");
-        if (err) err.textContent = "Введіть коректний номер телефону";
-        phone.focus(); return;
+      var digits = phone ? phone.value.replace(/\D/g, "") : "";
+      var phoneError = form.querySelector(".err");
+      if (phoneError) phoneError.textContent = "";
+      formError(form, "");
+      if (!/^380\d{9}$/.test(digits)) {
+        if (phoneError) phoneError.textContent = "Введіть коректний номер телефону";
+        if (phone) phone.focus();
+        return;
       }
-      var done = form.querySelector("[data-success]");
-      if (done) { form.querySelectorAll(".field,button[type=submit],.form-note").forEach(function (n){n.style.display="none";}); done.style.display = "block"; }
+      if (!leadEndpoint || !siteKey) {
+        formError(form, "Заявки тимчасово недоступні. Зателефонуйте 0 800 20-38-38.");
+        return;
+      }
+      mountTurnstile(form);
+      if (form._turnstileId == null) {
+        formError(form, window.turnstile
+          ? "Не вдалося запустити перевірку заявки. Спробуйте пізніше."
+          : "Перевірка заявки ще завантажується. Спробуйте за мить.");
+        return;
+      }
+      form._sending = true;
+      button.disabled = true;
+      button.textContent = "Надсилаємо заявку...";
+      try {
+        window.turnstile.execute(form._turnstileId);
+      } catch {
+        unlockForm(form);
+        formError(form, "Не вдалося перевірити заявку. Спробуйте ще раз.");
+      }
     });
   });
+  if (siteKey && leadEndpoint) {
+    var turnstileScript = doc.createElement("script");
+    turnstileScript.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+    turnstileScript.async = true;
+    turnstileScript.onload = function () {
+      leadForms.forEach(function (form) {
+        if (!form.closest(".modal") || form.closest(".modal.open")) mountTurnstile(form);
+      });
+    };
+    doc.head.appendChild(turnstileScript);
+  }
 
   /* tariff price toggle (month / year) */
   doc.querySelectorAll(".price-toggle button").forEach(function (b) {

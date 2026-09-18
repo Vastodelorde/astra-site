@@ -1,3 +1,7 @@
+## Read first
+
+Before any change, read **[PRODUCT.md](PRODUCT.md)** (what the product is, pages, content sources, Sanity, how-to, known issues) and **[DESIGN.md](DESIGN.md)** (tokens, components, layout patterns, hard client rules). Keep both files up to date when you change the product or the design system.
+
 ## Development
 
 When starting the dev server, use background mode:
