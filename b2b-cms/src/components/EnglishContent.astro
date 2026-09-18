@@ -42,6 +42,10 @@ const brandImages = ['dahua', 'hikvision', 'u-prox', 'zkteco', 'bft', 'nice', 'c
         <figcaption class="mgr-cap"><b class="mgr-name">{item.title}</b><span class="mgr-role">{item.body}</span></figcaption>
       </figure>)}</div>}
 
+      {section.kind === 'gallery' && <div class="grid grid-3">{section.items?.map((item) => <div class="ref-media">
+        <img data-zoom src={`../${item.image}`} alt={item.title} loading="lazy">
+      </div>)}</div>}
+
       {section.kind === 'stats' && <div class="trustbar tb-5">{section.items?.map((item) => <div class="ti"><div class="num">{item.title}</div><div class="lbl">{item.body}</div></div>)}</div>}
 
       {section.kind === 'partners' && <div class={section.id === 'brands' ? 'brand-logos' : 'partners partners--en'}>

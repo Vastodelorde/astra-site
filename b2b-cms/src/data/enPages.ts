@@ -1,6 +1,6 @@
 export type ContentItem = { title: string; body: string; href?: string; id?: string; image?: string; features?: string[]; links?: { label: string; href: string }[] };
 export type ContentSection = {
-  kind: 'cards' | 'plans' | 'people' | 'stats' | 'partners' | 'contact' | 'blog';
+  kind: 'cards' | 'plans' | 'people' | 'gallery' | 'stats' | 'partners' | 'contact' | 'blog';
   id?: string;
   tone?: 'tint' | 'navy';
   heading: string;
@@ -296,7 +296,7 @@ export const enPages: Record<string, EnglishPage> = {
         { title: 'Clear costs', body: 'Several locations under one contract and one invoice.' },
         { title: 'Complete responsibility', body: 'We can assess and support the entire infrastructure, from link to equipment.' },
       ] },
-      { kind: 'people', tone: 'tint', id: 'team', heading: 'Our engineering team', lead: 'Our own engineers and field crews design, build and maintain the infrastructure.', items: [
+      { kind: 'gallery', tone: 'tint', id: 'team', heading: 'Our engineering team', lead: 'Our own engineers and field crews design, build and maintain the infrastructure.', items: [
         { title: 'The ASTRA team', body: 'Our people', image: 'img/team-group.jpg' },
         { title: 'Data center engineers', body: 'On-site expertise', image: 'img/team-datacenter.jpg' },
         { title: 'Field crew', body: 'Installation and maintenance', image: 'img/team-flag.jpg' },
