@@ -79,7 +79,7 @@
     }
     if (mode) modal.setAttribute("data-mode", mode);
     mountTurnstile(modal.querySelector("form[data-lead]"));
-    var first = modal.querySelector("input");
+    var first = modal.querySelector("[data-modal-success]:not([hidden]) [data-close]") || modal.querySelector("input");
     if (first) setTimeout(function () { if (modal.classList.contains("open")) first.focus(); }, 50);
   }
   function closeModal() {
@@ -87,6 +87,20 @@
     modal.classList.remove("open"); doc.body.style.overflow = "";
     modal.inert = true;
     modal.setAttribute("aria-hidden", "true");
+    var success = modal.querySelector("[data-modal-success]");
+    if (success && !success.hidden) {
+      var form = modal.querySelector("form[data-lead]");
+      form.reset();
+      form._sending = false;
+      var submit = form.querySelector('button[type="submit"]');
+      submit.disabled = false;
+      submit.textContent = submit.dataset.leadLabel;
+      form.querySelector(".form-error")?.remove();
+      if (form._turnstileId != null && window.turnstile) window.turnstile.reset(form._turnstileId);
+      modal.querySelector("[data-modal-form-content]").hidden = false;
+      success.hidden = true;
+      modal.setAttribute("aria-labelledby", "lead-modal-title");
+    }
     if (modalTrigger && modalTrigger.isConnected) modalTrigger.focus();
   }
   doc.addEventListener("click", function (e) {
@@ -185,10 +199,19 @@
       if (!response.ok) throw new Error("Delivery failed");
       var result = await response.json();
       if (!result.ok) throw new Error("Delivery failed");
-      form.querySelectorAll(".field,button[type=submit],.form-note,[data-turnstile]").forEach(function (node) { node.style.display = "none"; });
-      formError(form, "");
-      var done = form.querySelector("[data-success]");
-      if (done) done.style.display = "block";
+      var modalForm = form.closest("#lead-modal");
+      if (modalForm) {
+        modalForm.querySelector("[data-modal-form-content]").hidden = true;
+        var modalSuccess = modalForm.querySelector("[data-modal-success]");
+        modalSuccess.hidden = false;
+        modalForm.setAttribute("aria-labelledby", "lead-modal-success-title");
+        if (modalForm.classList.contains("open")) modalSuccess.querySelector("[data-close]").focus();
+      } else {
+        form.querySelectorAll(".field,button[type=submit],.form-note,[data-turnstile]").forEach(function (node) { node.style.display = "none"; });
+        formError(form, "");
+        var done = form.querySelector("[data-success]");
+        if (done) done.style.display = "block";
+      }
     } catch {
       formError(form, tr("Не вдалося надіслати заявку. Спробуйте ще раз або зателефонуйте 0 800 20-38-38.", "We could not send your request. Please try again or call 0 800 20-38-38."));
       unlockForm(form);
