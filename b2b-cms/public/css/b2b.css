@@ -207,7 +207,7 @@
 @media(hover:hover) and (pointer:fine){
   .page-b2b .breadcrumb a:hover{color:#fff}
   .page-b2b :is(.size-card,.dir-card,.svc:not(.all),.card):has(> .link-arrow):hover{background:var(--blue-050);border-color:var(--blue-700);box-shadow:var(--sh-md)}
-  .page-b2b :is(.size-card,.dir-card,.svc:not(.all),.card):has(> .link-arrow):hover> .link-arrow{color:var(--red-600)}
+  .page-b2b :is(.size-card,.dir-card,.svc:not(.all),.card):has(> .link-arrow):hover> .link-arrow{color:var(--navy-900)}
   .page-b2b .size-card:has(> .link-arrow):hover .ic,
   .page-b2b .svc:not(.all):has(> .link-arrow):hover .svc-icon{background:var(--surface);color:var(--blue-700)}
   .page-b2b .svc.all:has(> .link-arrow):hover{background:var(--navy-800);border-color:var(--blue);box-shadow:var(--sh-md)}
