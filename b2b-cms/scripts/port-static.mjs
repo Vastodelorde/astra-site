@@ -1,9 +1,4 @@
-/**
- * Mechanically port the remaining static b2b pages into Astro pages.
- * Extracts SEO from <head> and the <main> inner HTML, wraps it in Layout.
- * Chrome (header/footer/modal/menu/scripts) comes from the Layout, so the body
- * is only the page-unique <main> content. Run: node scripts/port-static.mjs
- */
+/** Ports legacy static pages into Astro. Run with `node scripts/port-static.mjs`. */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
@@ -26,7 +21,6 @@ for (const name of pages) {
   const ogTitle = grab(/<meta property="og:title" content="([\s\S]*?)">/, html);
   const ogDescription = grab(/<meta property="og:description" content="([\s\S]*?)">/, html);
 
-  // page-scoped <style> in <head> (before </head>)
   const headStyle = grab(/<\/style>\s*<\/head>/.test(html) ? /<style>([\s\S]*?)<\/style>\s*<\/head>/ : /<style>([\s\S]*?)<\/style>/, html);
 
   const main = grab(/<main[^>]*>([\s\S]*?)<\/main>/, html);

@@ -13,15 +13,6 @@ import Layout from '../layouts/Layout.astro';
   ogTitle="АСТРА для бізнесу: цифрові рішення для бізнесу та сучасної нерухомості"
   ogDescription="Інфраструктура зв'язку та безпеки для бізнесу й нерухомості з 2004 року. ASTRA ISP · INSTALL · CLOUD. Рішення для будь-якого масштабу."
 >
-<style is:global slot="head">
-  .page-b2b .partners--home{display:flex;flex-wrap:wrap;justify-content:center}
-  .page-b2b .partners--home .partner{flex:0 0 calc((100% - 70px)/6);height:104px;padding:14px}
-  .page-b2b .partners--home .partner--ugcc img{transform:scale(1.16)}
-  @media(max-width:1000px){.page-b2b .partners--home .partner{flex-basis:calc((100% - 42px)/4)}}
-  @media(max-width:760px){.page-b2b .partners--home .partner{flex-basis:calc((100% - 28px)/3)}}
-  @media(max-width:560px){.page-b2b .partners--home .partner{flex-basis:calc((100% - 14px)/2)}}
-</style>
-<!-- ===================== 1 · HERO ===================== -->
   <section class="hero hero--home">
     <div class="hero-bg"><img src="img/hero-biz.jpg" loading="eager" alt="Цифрова інфраструктура для бізнесу та сучасної нерухомості"></div>
     <div class="container">
@@ -35,7 +26,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 2 · СЕГМЕНТИ ЗА РОЗМІРОМ ===================== -->
   <section class="section section--tint" id="segments-size">
     <div class="container">
       <div class="section-head">
@@ -99,7 +89,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 3 · ТРИ НАПРЯМКИ ===================== -->
   <section class="section" id="directions">
     <div class="container">
       <div class="section-head">
@@ -126,7 +115,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 4 · БОЛІ → РІШЕННЯ ===================== -->
   <section class="section section--tint" id="pain">
     <div class="container home-pains">
       <div class="section-head">
@@ -144,7 +132,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 5 · РІШЕННЯ ЗА ОБ'ЄКТОМ ===================== -->
   <section class="section" id="objects">
     <div class="container">
       <div class="section-head">
@@ -152,16 +139,15 @@ import Layout from '../layouts/Layout.astro';
         <p class="lead">Створюємо та обслуговуємо цифрову інфраструктуру з урахуванням специфіки кожного типу об'єкта.</p>
       </div>
       <div class="grid grid-3">
-        <article class="seg-card" style="background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('img/dir-network.jpg')"><div><h4>Офіси та бізнес-центри</h4><p>Масштабований від 1 до 500+ робочих місць, безшовний Wi-Fi та захищені корпоративні VPN-канали.</p></div></article>
-        <article class="seg-card" style="background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('img/dir-internet.jpg')"><div><h4>Житлові комплекси</h4><p>Інтернет-рішення для ЖК, автоматизація та уніфікація систем контролю доступу та безпеки.</p></div></article>
-        <article class="seg-card" style="background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('img/sub-skud.jpg')"><div><h4>Ресторани, кафе та рітейл-мережі</h4><p>Об'єднання сотень філій в єдину ізольовану мережу. Надійний гостьовий Wi-Fi, СКУД та СКС.</p></div></article>
-        <article class="seg-card" style="background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('img/sub-videonagliad.jpg')"><div><h4>Склади та виробництва</h4><p>Стабільне покриття великих площ для IoT-пристроїв, сканерів та терміналів збору даних.</p></div></article>
-        <article class="seg-card" style="background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('img/sub-domofon.jpg')"><div><h4>Готелі та коворкінги</h4><p>Безпечний Wi-Fi Enterprise-рівня, гнучке керування трафіком та розумна аналітика мережі.</p></div></article>
+        <article class="seg-card" style="background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('img/home-office.webp')"><div><h4>Офіси та бізнес-центри</h4><p>Масштабований від 1 до 500+ робочих місць, безшовний Wi-Fi та захищені корпоративні VPN-канали.</p></div></article>
+        <article class="seg-card" style="background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('img/home-residential.webp')"><div><h4>Житлові комплекси</h4><p>Інтернет-рішення для ЖК, автоматизація та уніфікація систем контролю доступу та безпеки.</p></div></article>
+        <article class="seg-card" style="background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('img/home-retail.webp')"><div><h4>Ресторани, кафе та рітейл-мережі</h4><p>Об'єднання сотень філій в єдину ізольовану мережу. Надійний гостьовий Wi-Fi, СКУД та СКС.</p></div></article>
+        <article class="seg-card" style="background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('img/home-warehouse.webp')"><div><h4>Склади та виробництва</h4><p>Стабільне покриття великих площ для IoT-пристроїв, сканерів та терміналів збору даних.</p></div></article>
+        <article class="seg-card" style="background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('img/home-hospitality.webp')"><div><h4>Готелі та коворкінги</h4><p>Безпечний Wi-Fi Enterprise-рівня, гнучке керування трафіком та розумна аналітика мережі.</p></div></article>
       </div>
     </div>
   </section>
 
-  <!-- ===================== 6 · ЧОМУ ОБИРАЮТЬ АСТРА ===================== -->
   <section class="section section--navy" id="chomu">
     <div class="container">
       <div class="section-head">
@@ -176,7 +162,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 7 · НАМ ДОВІРЯЮТЬ ===================== -->
   <section class="section section--tint" id="partners">
     <div class="container">
       <div class="ref-grid home-trust-panel">
@@ -209,7 +194,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 8 · БЛОГ ===================== -->
   {latestPosts.length > 0 && <section class="section section--navy blog-feature" id="blog">
     <div class="container">
       <div class="blog-feature__head"><h2>Поради та матеріали АСТРА</h2><a class="blog-all" href="blog/">Усі статті <span aria-hidden="true">→</span></a></div>
@@ -217,7 +201,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>}
 
-  <!-- ===================== 9 · CTA ===================== -->
   <section class="section tight">
     <div class="container">
       <div class="cta-band">

@@ -6,7 +6,10 @@ const link = (page: string) => `${sitePrefix}${page}`;
 <footer class="site-footer">
   <div class="container footer-main">
     <div class="footer-brand">
-      <img src={`${pathPrefix}assets/logo.svg`} alt="АСТРА">
+      {en
+        ? <div class="footer-brand-lockup" aria-label="ASTRA"><img src={`${pathPrefix}assets/logo-mark.svg`} alt=""><span>ASTRA</span></div>
+        : <img src={`${pathPrefix}assets/logo.svg`} alt="АСТРА">
+      }
       <p>{en ? 'A constellation of digital services. Building connectivity and security infrastructure since 2004.' : "Сузір'я цифрових послуг. Створюємо інфраструктуру зв'язку та безпеки з 2004 року."}</p>
       <div class="socials">
         <a href="https://t.me/astraisp" target="_blank" rel="noopener" aria-label="Telegram"><img src={`${pathPrefix}assets/soc-telegram.svg`} alt=""></a>

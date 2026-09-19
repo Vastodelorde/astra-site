@@ -10,7 +10,6 @@ import Layout from '../layouts/Layout.astro';
   ogDescription="Цілодобова підтримка, месенджери та бухгалтерія для юросіб. Замовте консультацію для вашого об'єкта."
 >
   <style is:global slot="head">
-/* scoped page styles — b2b kontakty (contact-card / phone-list / msg-btn not in shared css) */
 .page-b2b .contact-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column}
 .page-b2b .contact-card h3{margin:0 0 4px}
 .page-b2b .contact-card .sub{font-size:.9rem;color:var(--muted);margin:0 0 18px}
@@ -36,7 +35,6 @@ import Layout from '../layouts/Layout.astro';
 .page-b2b .consult-side .msg-btn{background:var(--navy-800);border-color:oklch(1 0 0 /.16);color:#fff}
 .page-b2b .consult-side .msg-btn:hover{border-color:var(--blue)}
   </style>
-<!-- ===================== 1 · HERO ===================== -->
   <section class="hero">
     <div class="hero-bg"><img src="img/contacts-banner.jpg" loading="eager" alt="Команда підтримки АСТРА у центрі обслуговування"></div>
     <div class="container">
@@ -51,7 +49,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 2 · КОНТАКТНІ КАРТКИ ===================== -->
   <section class="section section--tint" id="contacts" aria-labelledby="contacts-h">
     <div class="container">
       <div class="section-head">
@@ -61,7 +58,6 @@ import Layout from '../layouts/Layout.astro';
 
       <div class="grid grid-3" style="gap:24px;align-items:start">
 
-        <!-- Цілодобова підтримка -->
         <div class="contact-card">
           <h3>Цілодобова підтримка</h3>
           <p class="sub">Технічна лінія на зв'язку 24/7. Дзвінок на 0&nbsp;800 безкоштовний.</p>
@@ -73,7 +69,6 @@ import Layout from '../layouts/Layout.astro';
           </ul>
         </div>
 
-        <!-- Онлайн / месенджери -->
         <div class="contact-card">
           <h3>Онлайн у месенджерах</h3>
           <p class="sub">Напишіть нам, відповідаємо цілодобово.</p>
@@ -89,7 +84,6 @@ import Layout from '../layouts/Layout.astro';
           <p style="margin-top:14px"><a class="link-arrow" href="#consult">Замовити консультацію <span class="ar" aria-hidden="true">→</span></a></p>
         </div>
 
-        <!-- Бухгалтерія для юросіб -->
         <div class="contact-card">
           <h3>Бухгалтерія для юросіб</h3>
           <p class="sub">Договори, акти та оплати для юридичних осіб, ТзОВ «АСТРА-ЛЬВІВ».</p>
@@ -115,7 +109,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 3 · ЗАМОВИТИ КОНСУЛЬТАЦІЮ ===================== -->
   <section class="section section--navy" id="consult" aria-labelledby="consult-h">
     <div class="container">
       <div class="consult-grid">
@@ -149,7 +142,7 @@ import Layout from '../layouts/Layout.astro';
             <p class="form-note">Натискаючи кнопку, ви погоджуєтесь з обробкою даних згідно з політикою конфіденційності.</p>
             <div data-success style="display:none">
               <h4 style="color:var(--navy-900)">Вашу заявку прийнято!</h4>
-              <p class="muted" style="font-size:.92rem;margin-top:8px">Дякуємо! Наш менеджер зв'яжеться з вами найближчим часом. Цілодобово також: Telegram <b>@astraispbot</b>, Viber «АСТРА», 0&nbsp;800&nbsp;20-38-38.</p>
+              <p class="muted" style="font-size:.92rem;margin-top:8px">Дякуємо! Наш менеджер зв'яжеться з вами найближчим часом.</p>
             </div>
           </form>
         </div>
@@ -157,7 +150,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 4 · CTA ===================== -->
   <section class="section tight">
     <div class="container">
       <div class="cta-band">

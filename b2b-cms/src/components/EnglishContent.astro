@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import BlogCard from './BlogCard.astro';
+import ServiceIcon from './ServiceIcon.astro';
 import { getBlogPosts } from '../lib/sanity';
 import type { EnglishPage } from '../data/enPages';
 
@@ -12,9 +13,9 @@ const brandImages = ['dahua', 'hikvision', 'u-prox', 'zkteco', 'bft', 'nice', 'c
 const segmentPages = new Set(['maliy', 'seredniy', 'velykyi']);
 const sizeIcons = [
   '<path d="m2 7 4.4-4.4A2 2 0 0 1 7.8 2h8.4a2 2 0 0 1 1.4.6L22 7"/><path d="M4 7v13a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7"/><path d="M2 7h20"/><path d="M9 21v-6a2 2 0 0 1 4 0v6"/>',
-  '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4"/>',
-  '<path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7"/><path d="m12 2 8 5H4Z"/>',
-  '<rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3M12 12V8"/>',
+  '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/>',
+  '<line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/>',
+  '<rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/>',
 ];
 const featureImages: Record<string, string> = {
   'install:videonagliad': 'img/sub-videonagliad.jpg',
@@ -25,12 +26,15 @@ const featureImages: Record<string, string> = {
   'operators:colocation': 'img/sub-kolokatsiia.jpg',
   'cloud:datacenter': 'img/sub-kolokatsiia.jpg',
 };
+const phoneIconPath = 'M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.2 1l-2.2 2.2Z';
 ---
 <Layout locale="en" title={page.title} description={page.description} canonical={canonical} leadSource={page.source} pathPrefix="../" bodyClass={`page-b2b page-en page-en-${slug} ctx-biz mode-biz`}>
   <section class:list={['hero', { 'hero--home': slug === 'index' }]}>
     <div class="hero-bg"><img src={`../${page.hero.image}`} loading="eager" alt={page.hero.title}></div>
     <div class="container"><div class="hero-inner">
-      {slug !== 'index' && <p class="breadcrumb"><a href={page.hero.parentHref ?? './'}>{page.hero.parentLabel ?? 'Home'}</a> / {page.hero.label}</p>}
+      {slug !== 'index' && (slug === 'pro'
+        ? <nav class="breadcrumb" aria-label="Breadcrumb"><a href={page.hero.parentHref ?? './'}>{page.hero.parentLabel ?? 'Home'}</a> / <span>{page.hero.label}</span></nav>
+        : <p class="breadcrumb"><a href={page.hero.parentHref ?? './'}>{page.hero.parentLabel ?? 'Home'}</a> / {page.hero.label}</p>)}
       <h1>{page.hero.title}</h1>
       <p class="hero-sub">{page.hero.intro}</p>
       <div class="hero-cta"><button class="btn btn--primary btn--lg" data-modal data-mode="consult">Request a consultation</button></div>
@@ -41,7 +45,7 @@ const featureImages: Record<string, string> = {
     {page.sections.map((section) => <div class="svc-group">
       <h3>ASTRA <span class="mk">{section.heading.replace('ASTRA ', '')}</span></h3>
       {section.lead && <p class="svc-group-sub">{section.lead}</p>}
-      <div class="svc-grid">{section.items?.map((item) => <article class="svc"><h4>{item.title}</h4><p>{item.body}</p>{item.href && <a class="link-arrow" href={item.href}>Explore <span class="ar" aria-hidden="true">→</span></a>}</article>)}</div>
+      <div class="svc-grid">{section.items?.map((item) => <article class="svc">{item.icon && <div class="svc-head"><ServiceIcon name={item.icon} /><h4>{item.title}</h4></div>}<p>{item.body}</p>{item.href && <a class="link-arrow" href={item.href}>Explore <span class="ar" aria-hidden="true">→</span></a>}</article>)}</div>
     </div>)}
   </div></section>}
 
@@ -53,19 +57,23 @@ const featureImages: Record<string, string> = {
     const isIndexPains = slug === 'index' && section.kind === 'cards' && section.id === 'pain';
     const isContactConsult = slug === 'kontakty' && section.kind === 'contact';
     const isBlog = section.kind === 'blog';
-    const embedsHeading = isInstallFeature || isOperatorFeature || isCloudReference || isIndexPartners || isIndexPains || isContactConsult || isBlog || section.kind === 'stats';
-    const gridClass = (section.items?.length ?? 0) === 2 ? 'grid grid-2' : 'grid grid-3';
+    const isNarrow = (slug === 'isp' && section.id === 'operators') || (slug === 'pro' && section.id === 'history');
+    const isTight = slug === 'pro' && section.kind === 'stats';
+    const embedsHeading = isOperatorFeature || isCloudReference || isIndexPartners || isIndexPains || isContactConsult || isBlog || section.kind === 'stats';
+    const gridClass = (section.items?.length ?? 0) === 2 || (slug === 'cloud' && !section.id) ? 'grid grid-2' : 'grid grid-3';
     return <section class:list={[
       'section',
       { 'section--tint': section.tone === 'tint' && slug !== 'poslugy' },
       { 'section--navy': section.tone === 'navy' },
+      { tight: isTight },
       { 'blog-feature': isBlog },
       { 'en-services-band': slug === 'poslugy' },
     ]} id={section.id}>
-      <div class="container">
+      <div class:list={['container', { 'home-pains': isIndexPains, narrow: isNarrow }]}>
         {!embedsHeading && <div class="section-head"><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}</div>}
 
-        {section.kind === 'copy' && <div class="en-copy-block">{section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}</div>}
+        {section.kind === 'copy' && slug === 'pro' && <>{section.paragraphs?.[0] && <p class="lead">{section.paragraphs[0]}</p>}{section.paragraphs?.[1] && <p style="margin-top:16px;color:var(--muted)">{section.paragraphs[1]}</p>}</>}
+        {section.kind === 'copy' && slug !== 'pro' && <div class="en-copy-block">{section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}</div>}
 
         {section.kind === 'cards' && slug === 'index' && section.id === 'segments-size' && <div class="size-grid">{section.items?.map((item, index) => <article class="size-card">
           <div class="top"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" set:html={sizeIcons[index]}></svg></span><div><p class="who">{item.title}</p><p class="rng">{item.body}</p></div></div>
@@ -78,7 +86,7 @@ const featureImages: Record<string, string> = {
           {item.href && <a class="link-arrow" href={item.href}>Explore <span class="ar" aria-hidden="true">→</span></a>}
         </article>)}</div>}
 
-        {isIndexPains && <div class="home-pains"><div class="section-head"><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}</div><div class="home-pains__list">{section.items?.map((item) => <article class="pain"><span class="from">{item.title}</span><span class="to">{item.body}</span></article>)}</div></div>}
+        {isIndexPains && <><div class="section-head"><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}</div><div class="home-pains__list">{section.items?.map((item) => <article class="pain"><span class="from">{item.title}</span><span class="to">{item.body}</span></article>)}</div></>}
 
         {section.kind === 'cards' && slug === 'index' && section.id === 'objects' && <div class="grid grid-3">{section.items?.map((item) => <article class="seg-card" style={`background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('../${item.image}')`}><div><h4>{item.title}</h4><p>{item.body}</p></div></article>)}</div>}
 
@@ -86,35 +94,56 @@ const featureImages: Record<string, string> = {
 
         {section.kind === 'cards' && segmentPages.has(slug) && section.id === 'details' && <div class={(section.items?.length ?? 0) >= 3 ? 'grid grid-3' : 'grid grid-2'}>{section.items?.map((item) => <article class="diff"><h4>{item.title}</h4><p>{item.body}</p></article>)}</div>}
 
-        {section.kind === 'cards' && ((segmentPages.has(slug) && section.id === 'services') || slug === 'poslugy' || (slug === 'taryfy' && section.id === 'operatory')) && <div class:list={['svc-group', { 'svc-group--standalone': slug !== 'poslugy' }]}>
-          {slug === 'poslugy' && <><h3>{section.heading}</h3>{section.lead && <p class="svc-group-sub">{section.lead}</p>}</>}
-          <div class="svc-grid">{section.items?.map((item) => <article class:list={['svc', { all: item.title === 'All services' }]}><h4>{item.title}</h4><p>{item.body}</p>{item.href && <a class="link-arrow" href={item.href}>Explore <span class="ar" aria-hidden="true">→</span></a>}</article>)}</div>
-        </div>}
+        {section.kind === 'cards' && segmentPages.has(slug) && section.id === 'services' && <>
+          <div class="svc-grid">{section.items?.map((item) => <article class:list={['svc', { all: item.title === 'All services' }]}>{item.icon ? <div class="svc-head"><ServiceIcon name={item.icon} /><h4>{item.title}</h4></div> : <h4>{item.title}</h4>}<p>{item.body}</p>{item.href && (item.title === 'All services' ? <a class="link-arrow" href={item.href}>Explore the catalog →</a> : <a class="link-arrow" href={item.href}>Explore <span class="ar" aria-hidden="true">→</span></a>)}</article>)}</div>
+        </>}
 
-        {section.kind === 'cards' && ((slug === 'isp' && (section.id === 'xgspon' || section.id === 'network')) || (slug === 'operators' && (section.id === 'europe' || section.id === 'wholesale'))) && <div class="pillars">{section.items?.map((item) => <article class="pillar" id={item.id}><h4>{item.title}</h4><ul>{(item.features ?? [item.body]).map((feature) => <li>{feature}</li>)}</ul></article>)}</div>}
+        {section.kind === 'cards' && slug === 'taryfy' && section.id === 'operatory' && <div class="grid grid-3">{section.items?.map((item) => <article class="card"><h4>{item.title}</h4><p>{item.body}</p>{item.href && <a class="link-arrow" href={item.href}>Explore <span class="ar" aria-hidden="true">→</span></a>}</article>)}</div>}
+
+        {section.kind === 'cards' && slug === 'isp' && (section.id === 'xgspon' || section.id === 'network') && <div class="pillars">{section.items?.map((item) => <article class="pillar" id={item.id}><h4>{item.title}</h4><ul>{(item.features ?? [item.body]).map((feature) => <li>{feature}</li>)}</ul></article>)}</div>}
+        {section.kind === 'cards' && slug === 'operators' && (section.id === 'europe' || section.id === 'wholesale') && <div class="pillars">{section.items?.map((item) => <div class="pillar" id={item.id}><h4>{item.title}</h4><ul>{(item.features ?? [item.body]).map((feature) => <li>{feature}</li>)}</ul></div>)}</div>}
 
         {section.kind === 'cards' && slug === 'isp' && section.id === 'operators' && <p style="text-align:center"><a class="btn btn--ghost btn--lg" href={section.items?.[0]?.href}>Operator solutions <span aria-hidden="true">→</span></a></p>}
 
         {section.kind === 'cards' && isInstallFeature && <div class="ref-grid">
-          <div class="ref-media"><img src={`../${featureImages[`install:${section.id}`]}`} loading="lazy" alt={section.heading}></div>
-          <div><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}<div class="feat-col" style="margin-top:22px">{section.items?.map((item) => <div class="f"><b>{item.title}</b><span>{item.body}</span></div>)}</div></div>
+          <div class="ref-media"><img src={`../${featureImages[`install:${section.id}`]}`} width="1500" height="1000" loading="lazy" alt={section.heading}></div>
+          <div class="feat-col">{section.items?.map((item) => <div class="f"><b>{item.title}</b><span>{item.body}</span></div>)}</div>
         </div>}
 
         {section.kind === 'cards' && isOperatorFeature && <div class="ref-grid">
-          {section.id === 'volz' && <div class="ref-media"><img src={`../${featureImages['operators:volz']}`} loading="lazy" alt={section.heading}></div>}
-          <div><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}<div class={section.id === 'volz' ? 'grid grid-2 en-feature-grid' : 'pillars en-feature-grid'}>{section.items?.map((item) => section.id === 'volz' ? <article class="card"><h4>{item.title}</h4><p>{item.body}</p></article> : <article class="pillar"><h4>{item.title}</h4><ul>{(item.features ?? [item.body]).map((feature) => <li>{feature}</li>)}</ul></article>)}</div></div>
-          {section.id === 'colocation' && <div class="ref-media"><img src={`../${featureImages['operators:colocation']}`} loading="lazy" alt={section.heading}></div>}
+          {section.id === 'volz' && <div class="ref-media"><img src={`../${featureImages['operators:volz']}`} width="1500" height="1000" loading="lazy" alt={section.heading}></div>}
+          <div><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}<div class={section.id === 'volz' ? 'grid grid-2' : 'pillars'} style="gap:16px;margin-top:22px">{section.items?.map((item) => section.id === 'volz' ? <div class="card"><h4 style="margin:0 0 8px">{item.title}</h4><p class="muted" style="margin:0">{item.body}</p></div> : <div class="pillar"><h4>{item.title}</h4><ul>{(item.features ?? [item.body]).map((feature) => <li>{feature}</li>)}</ul></div>)}</div></div>
+          {section.id === 'colocation' && <div class="ref-media"><img src={`../${featureImages['operators:colocation']}`} width="1500" height="1000" loading="lazy" alt={section.heading}></div>}
         </div>}
 
         {section.kind === 'cards' && isCloudReference && <div class="ref-grid">
-          <div class="ref-media"><img src={`../${featureImages['cloud:datacenter']}`} loading="lazy" alt={section.heading}></div>
-          <div><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}{section.items?.map((item) => <p class="en-reference-note"><b>{item.title}.</b> {item.body}</p>)}</div>
+          <div class="ref-media"><img src={`../${featureImages['cloud:datacenter']}`} width="1500" height="1000" loading="lazy" alt={section.heading}></div>
+          <div><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}{section.items?.map((item) => <p style="margin-top:14px;color:var(--muted);font-size:.94rem">{item.body}</p>)}</div>
         </div>}
 
-        {section.kind === 'cards' && slug === 'kontakty' && section.id === 'contacts' && <div class="grid grid-3 en-contact-grid">{section.items?.map((item) => {
-          const noteAfter = item.noteAfterLinks ?? 0;
-          return <article class="contact-card"><h3>{item.title}</h3><p class="sub">{item.body}</p>{item.note && noteAfter === 0 && <p class="en-contact-note">{item.note}</p>}<div class="en-contact-links">{item.links?.map((link, index) => <><a href={link.href}>{link.label}</a>{item.note && noteAfter === index + 1 && <p class="en-contact-note en-contact-note--inline">{item.note}</p>}</>)}</div></article>;
-        })}</div>}
+        {section.kind === 'cards' && slug === 'kontakty' && section.id === 'contacts' && <div class="grid grid-3" style="gap:24px;align-items:start">
+          <div class="contact-card">
+            <h3>{section.items?.[0]?.title}</h3><p class="sub">{section.items?.[0]?.body}</p>
+            <ul class="phone-list">{section.items?.[0]?.links?.map((link, index) => <li><a href={link.href}><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={phoneIconPath}/></svg>{link.label.replace(' · TOLL-FREE', '')}{index === 0 && <span class="tag">Toll-free</span>}</a></li>)}</ul>
+          </div>
+          <div class="contact-card">
+            <h3>{section.items?.[1]?.title}</h3><p class="sub">{section.items?.[1]?.body}</p>
+            <div class="msg-row">{section.items?.[1]?.links?.slice(0, 2).map((link, index) => <a class="msg-btn" href={link.href} target="_blank" rel="noopener"><span class:list={['ic', index === 0 ? 'ic--tg' : 'ic--viber']} style={`--msg-icon:url('../assets/${index === 0 ? 'telegram.svg' : 'vb.svg'}')`} aria-hidden="true"></span>{link.label}</a>)}</div>
+            {section.items?.[1]?.note && <p class="sub" style="margin:22px 0 0">{section.items[1].note}</p>}
+            {section.items?.[1]?.links?.[2] && <p style="margin-top:14px"><a class="link-arrow" href={section.items[1].links[2].href}>{section.items[1].links[2].label.replace(' →', '')} <span class="ar" aria-hidden="true">→</span></a></p>}
+          </div>
+          <div class="contact-card">
+            <h3>{section.items?.[2]?.title}</h3><p class="sub">{section.items?.[2]?.body}</p>
+            {section.items?.[2]?.note && <address class="addr" style="margin-bottom:16px"><strong>{section.items[2].note}</strong></address>}
+            <ul class="phone-list">{section.items?.[2]?.links?.slice(0, 2).map((link) => <li><a href={link.href}><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={phoneIconPath}/></svg>{link.label}</a></li>)}</ul>
+            <div class="msg-row" style="margin-top:14px">{section.items?.[2]?.links?.slice(2, 4).map((link, index) => <a class="msg-btn" href={link.href} target="_blank" rel="noopener"><span class:list={['ic', index === 0 ? 'ic--tg' : 'ic--viber']} style={`--msg-icon:url('../assets/${index === 0 ? 'telegram.svg' : 'vb.svg'}')`} aria-hidden="true"></span>{link.label.replace('Telegram ', '')}</a>)}</div>
+            {section.items?.[2]?.links?.[4] && <p class="sub" style="margin:18px 0 0">Email: <a class="mail" href={section.items[2].links[4].href}>{section.items[2].links[4].label.replace('Email: ', '')}</a></p>}
+          </div>
+        </div>}
+
+        {section.kind === 'cards' && slug === 'operators' && section.id === 'peering' && <div class="grid grid-2">{section.items?.map((item) => <div class="card" id={item.id}><h4 style="margin:0 0 8px">{item.title}</h4><p class="muted" style="margin:0">{item.body}</p></div>)}</div>}
+
+        {section.kind === 'cards' && slug === 'cloud' && !section.id && <div class="grid grid-2">{section.items?.map((item) => <article class="card" id={item.id}><h3 style="margin-top:0">{item.title}</h3><p class="muted">{item.body}</p></article>)}</div>}
 
         {section.kind === 'cards' && !(
           (slug === 'index' && ['segments-size', 'directions', 'pain', 'objects', 'chomu'].includes(section.id ?? '')) ||
@@ -123,36 +152,50 @@ const featureImages: Record<string, string> = {
           slug === 'poslugy' || (slug === 'taryfy' && section.id === 'operatory') ||
           (slug === 'isp' && ['xgspon', 'network', 'operators'].includes(section.id ?? '')) ||
           (slug === 'install' && isInstallFeature) || (slug === 'operators' && ['europe', 'volz', 'colocation', 'wholesale'].includes(section.id ?? '')) ||
-          isCloudReference || (slug === 'kontakty' && section.id === 'contacts')
-        ) && <div class={gridClass}>{section.items?.map((item) => <article class="card" id={item.id}><h3>{item.title}</h3><p>{item.body}</p>{item.href && <a class="link-arrow" href={item.href}>Explore <span class="ar" aria-hidden="true">→</span></a>}</article>)}</div>}
+          isCloudReference || (slug === 'kontakty' && section.id === 'contacts') ||
+          (slug === 'operators' && section.id === 'peering') || (slug === 'cloud' && !section.id)
+        ) && <div class={gridClass}>{section.items?.map((item) => <article class="card" id={item.id}>{slug === 'operators' && section.id === 'peering' ? <h4>{item.title}</h4> : <h3>{item.title}</h3>}<p>{item.body}</p>{item.href && <a class="link-arrow" href={item.href}>Explore <span class="ar" aria-hidden="true">→</span></a>}</article>)}</div>}
 
-        {section.kind === 'plans' && <><div class="tariff-list">{section.items?.map((item) => <article class="trow">
-          <div class="sp"><span class="plan">{item.title}</span><span class="val">{item.body.split(' ')[0]}<small>Mbps</small></span>{item.body.split(' · ')[2] && <span class="guar">{item.body.split(' · ')[2]}</span>}</div>
+        {section.kind === 'plans' && <><div class="tariff-list">{section.items?.map((item) => {
+          const [speed, price = '', guarantee] = item.body.split(' · ');
+          const priceSlash = price.lastIndexOf('/');
+          const priceAmount = priceSlash >= 0 ? price.slice(0, priceSlash) : price;
+          const pricePeriod = priceSlash >= 0 ? price.slice(priceSlash) : '';
+          return <article class="trow">
+          <div class="sp"><span class="plan">{item.title}</span><span class="val">{speed.replace(/\s*Mbps$/, '')}<small>Mbps</small></span>{guarantee && <span class="guar">{guarantee}</span>}</div>
           <ul class="svc-list">{item.features?.map((feature) => <li>{feature}</li>)}</ul>
-          <div class="buy"><span class="price">{item.body.split(' · ')[1]}</span><button class="btn btn--primary" data-modal data-mode="callback" data-tariff={item.title}>Request a consultation</button></div>
-        </article>)}</div>{section.footnote && <p class="tariff-note">{section.footnote}</p>}</>}
+          <div class="buy"><span class="price">{priceAmount} {pricePeriod && <span class="per">{pricePeriod}</span>}</span><button class="btn btn--primary" data-modal data-mode="callback" data-tariff={item.title}>Request a consultation</button></div>
+        </article>})}</div>{section.footnote && (slug === 'taryfy'
+          ? <p class="tariff-note">A dedicated <b>account manager</b> is available to clients on Business 250 and higher. Plans <b>Business 2500</b> and <b>Business 10000</b> require an XG/XGS-PON optical converter, purchased separately.</p>
+          : <p class="tariff-note">{section.footnote}</p>)}</>}
 
         {section.kind === 'people' && <div class="mgr-grid">{section.items?.map((item) => <figure class="mgr"><div class="mgr-photo"><img class="mgr-img" src={`../${item.image}`} alt={item.title} loading="lazy"></div><figcaption class="mgr-cap"><b class="mgr-name">{item.title}</b><span class="mgr-role">{item.body}</span></figcaption></figure>)}</div>}
 
         {section.kind === 'gallery' && <div class="grid grid-3">{section.items?.map((item) => <div class="ref-media"><img data-zoom src={`../${item.image}`} alt={item.title} loading="lazy"></div>)}</div>}
 
-        {section.kind === 'stats' && <div class="trustbar tb-5">{section.items?.map((item) => <div class="ti"><div class="num">{item.title}</div><div class="lbl">{item.body}</div></div>)}</div>}
+        {section.kind === 'stats' && <div class="trustbar tb-5">{section.items?.map((item) => <div class="ti"><div class="num">{item.title.endsWith('+') ? <>{item.title.slice(0, -1)}<span class="u">+</span></> : item.title === '24/7' ? <>24<span class="u">/7</span></> : item.title}</div><div class="lbl">{item.body}</div></div>)}</div>}
 
-        {section.kind === 'partners' && isIndexPartners && <><div class="ref-grid home-trust-panel"><div class="ref-media"><img src="../img/team-datacenter.jpg" width="1536" height="1920" loading="lazy" alt="ASTRA engineers in the Lviv data center"></div><div class="home-trust-panel__copy"><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}{section.note && <p class="en-reference-note">{section.note}</p>}</div></div><div class="partners partners--en" style="margin-top:clamp(36px,5vw,56px)">{partnerImages.map((name) => <span class:list={['partner', { 'partner--ugcc': name === 17 }]}><img src={`../img/partners/${name}.jpg`} alt={name === 17 ? 'Ukrainian Greek Catholic Church' : 'ASTRA client'} loading="lazy"></span>)}</div></>}
+        {section.kind === 'partners' && isIndexPartners && <><div class="ref-grid home-trust-panel"><div class="ref-media"><img src="../img/team-datacenter.jpg" width="1536" height="1920" loading="lazy" alt="ASTRA engineers in the Lviv data center"></div><div class="home-trust-panel__copy"><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}{section.note && <p style="margin-top:14px;color:var(--muted);font-size:.94rem">{section.note}</p>}</div></div><div class="partners partners--home" style="margin-top:clamp(36px,5vw,56px)">{partnerImages.map((name) => <span class:list={['partner', { 'partner--ugcc': name === 17 }]}><img src={`../img/partners/${name}.jpg`} alt={name === 17 ? 'Ukrainian Greek Catholic Church' : 'ASTRA client'} loading="lazy"></span>)}</div></>}
 
-        {section.kind === 'partners' && !isIndexPartners && <div class={section.id === 'brands' ? 'brand-logos' : 'partners partners--en'}>{(section.id === 'brands' ? brandImages : partnerImages.slice(0, 16)).map((name) => <span class="partner"><img src={section.id === 'brands' ? `../img/brands/${name}.jpg` : `../img/partners/${name}.jpg`} alt={section.id === 'brands' ? String(name) : 'ASTRA client'} loading="lazy"></span>)}</div>}
+        {section.kind === 'partners' && !isIndexPartners && <div class={section.id === 'brands' ? 'brand-logos' : 'partners'}>{(section.id === 'brands' ? brandImages : partnerImages.slice(0, 16)).map((name) => <span class="partner"><img src={section.id === 'brands' ? `../img/brands/${name}.jpg` : `../img/partners/${name}.jpg`} alt={section.id === 'brands' ? String(name) : 'ASTRA client'} loading="lazy"></span>)}</div>}
 
         {section.kind === 'blog' && <><div class="blog-feature__head"><h2>{section.heading}</h2><a class="blog-all" href="blog/">All articles <span aria-hidden="true">→</span></a></div><div class="blog-grid">{latestPosts.map((post) => <BlogCard post={post} pathPrefix="../" sitePrefix="../en/" />)}</div></>}
 
-        {section.kind === 'contact' && isContactConsult && <div class="consult-grid"><div class="consult-side"><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}<h3>Or message us</h3><div class="msg-row"><a class="msg-btn" href="https://t.me/astraispbot" target="_blank" rel="noopener">Telegram</a><a class="msg-btn" href="viber://chat?number=%2B380800203838" target="_blank" rel="noopener">Viber</a></div><p class="lead en-support-line">24/7 support: <a href="tel:+380800203838">0 800 20-38-38</a></p></div><div class="lead-card"><form data-lead style="display:flex;flex-direction:column;gap:14px">
-          <input type="hidden" name="mode" value="consult"><div class="field"><label for={`${slug}-lead-name`}>Name / company</label><input id={`${slug}-lead-name`} type="text" name="name" autocomplete="organization" placeholder="Your name or company"></div><div class="field"><label for={`${slug}-lead-phone`}>Phone number</label><input id={`${slug}-lead-phone`} type="tel" data-phone name="phone" autocomplete="tel" inputmode="tel" placeholder="+38 (0__) ___-__-__" required aria-describedby={`${slug}-lead-phone-error`}><span class="err" id={`${slug}-lead-phone-error`} aria-live="polite"></span></div><div class="field"><label for={`${slug}-lead-address`}>Site address</label><input id={`${slug}-lead-address`} type="text" name="address" autocomplete="street-address" placeholder="City, street, building"></div><div class="field"><label for={`${slug}-lead-message`}>Tell us what you need</label><textarea id={`${slug}-lead-message`} name="message" rows="3" placeholder="Site type, services needed, approximate scale"></textarea></div><input type="hidden" name="tariff"><button class="btn btn--primary btn--block" type="submit">Send request</button><p class="form-note">By submitting this form, you agree to the processing of your data under our privacy policy.</p><div data-success style="display:none"><h4>Request received!</h4><p class="muted">Thank you! Our manager will contact you shortly.</p></div>
+        {section.kind === 'contact' && isContactConsult && <div class="consult-grid"><div><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}<div class="consult-side"><h3>Or message us</h3><div class="msg-row" style="margin-top:14px"><a class="msg-btn" href="https://t.me/astraispbot" target="_blank" rel="noopener"><span class="ic ic--tg" style="--msg-icon:url('../assets/telegram.svg')" aria-hidden="true"></span>Telegram</a><a class="msg-btn" href="viber://chat?number=%2B380800203838" target="_blank" rel="noopener"><span class="ic ic--viber" style="--msg-icon:url('../assets/vb.svg')" aria-hidden="true"></span>Viber</a></div><p class="lead" style="margin-top:20px">24/7 support: <a href="tel:+380800203838" style="color:#fff;font-weight:600">0 800 20-38-38</a></p></div></div><div class="lead-card"><form data-lead style="display:flex;flex-direction:column;gap:14px">
+          <input type="hidden" name="mode" value="consult"><div class="field"><label for={`${slug}-lead-name`}>Name / company</label><input id={`${slug}-lead-name`} type="text" name="name" autocomplete="organization" placeholder="Your name or company"></div><div class="field"><label for={`${slug}-lead-phone`}>Phone number</label><input id={`${slug}-lead-phone`} type="tel" data-phone name="phone" autocomplete="tel" inputmode="tel" placeholder="+38 (0__) ___-__-__" required aria-describedby={`${slug}-lead-phone-error`}><span class="err" id={`${slug}-lead-phone-error`} aria-live="polite"></span></div><div class="field"><label for={`${slug}-lead-address`}>Site address</label><input id={`${slug}-lead-address`} type="text" name="address" autocomplete="street-address" placeholder="City, street, building"></div><div class="field"><label for={`${slug}-lead-message`}>Tell us what you need</label><textarea id={`${slug}-lead-message`} name="message" rows="3" placeholder="Site type, services needed, approximate scale"></textarea></div><input type="hidden" name="tariff"><button class="btn btn--primary btn--block" type="submit">Send request</button><p class="form-note">By submitting this form, you agree to the processing of your data under our privacy policy.</p><div data-success style="display:none"><h4>Request received!</h4><p class="muted" style="font-size:.92rem;margin-top:8px">Thank you! Our manager will contact you shortly.</p></div>
         </form></div></div>}
 
         {section.kind === 'contact' && !isContactConsult && <div class="lead-card" style="max-width:640px;margin-inline:auto"><form data-lead style="display:flex;flex-direction:column;gap:14px">
-          <input type="hidden" name="mode" value="consult"><div class="field"><label for={`${slug}-lead-name`}>Name / company</label><input id={`${slug}-lead-name`} type="text" name="name" autocomplete="organization" placeholder="Your name or company"></div><div class="field"><label for={`${slug}-lead-phone`}>Phone number</label><input id={`${slug}-lead-phone`} type="tel" data-phone name="phone" autocomplete="tel" inputmode="tel" placeholder="+38 (0__) ___-__-__" required aria-describedby={`${slug}-lead-phone-error`}><span class="err" id={`${slug}-lead-phone-error`} aria-live="polite"></span></div><div class="field"><label for={`${slug}-lead-address`}>Site address</label><input id={`${slug}-lead-address`} type="text" name="address" autocomplete="street-address" placeholder="City, street, building"></div><div class="field"><label for={`${slug}-lead-message`}>Tell us what you need</label><textarea id={`${slug}-lead-message`} name="message" rows="3" placeholder="Site type, services needed, approximate scale"></textarea></div><input type="hidden" name="tariff"><button class="btn btn--primary btn--block" type="submit">Send request</button><p class="form-note">By submitting this form, you agree to the processing of your data under our privacy policy.</p><div data-success style="display:none"><h4>Request received!</h4><p class="muted">Thank you! Our manager will contact you shortly.</p></div>
+          <input type="hidden" name="mode" value="consult"><div class="field"><label for={`${slug}-lead-name`}>Name / company</label><input id={`${slug}-lead-name`} type="text" name="name" autocomplete="organization" placeholder="Your name or company"></div><div class="field"><label for={`${slug}-lead-phone`}>Phone number</label><input id={`${slug}-lead-phone`} type="tel" data-phone name="phone" autocomplete="tel" inputmode="tel" placeholder="+38 (0__) ___-__-__" required aria-describedby={`${slug}-lead-phone-error`}><span class="err" id={`${slug}-lead-phone-error`} aria-live="polite"></span></div><div class="field"><label for={`${slug}-lead-address`}>Site address</label><input id={`${slug}-lead-address`} type="text" name="address" autocomplete="street-address" placeholder="City, street, building"></div><div class="field"><label for={`${slug}-lead-message`}>Tell us what you need</label><textarea id={`${slug}-lead-message`} name="message" rows="3" placeholder="Site type, services needed, approximate scale"></textarea></div><input type="hidden" name="tariff"><button class="btn btn--primary btn--block" type="submit">Send request</button><p class="form-note">By submitting this form, you agree to the processing of your data under our privacy policy.</p><div data-success style="display:none"><h4>Request received!</h4><p class="muted" style="font-size:.92rem;margin-top:8px">Thank you! Our manager will contact you shortly.</p></div>
         </form></div>}
 
-        {section.note && !isIndexPartners && <p class="en-section-note">{section.note}</p>}
+        {section.note && !isIndexPartners && (slug === 'operators'
+          ? <p class="muted" style="max-width:72ch;margin-top:24px">{section.note}</p>
+          : slug === 'install' && section.id === 'multimedia'
+            ? <p class="lead" style="margin-top:clamp(28px,4vw,44px)">{section.note}</p>
+            : slug === 'taryfy' && section.id === 'operatory'
+              ? <p class="op-note">{section.note}{section.noteLink && <> <a class="link-arrow" href={section.noteLink.href}>{section.noteLink.label} <span class="ar" aria-hidden="true">→</span></a></>}</p>
+              : <p class="en-section-note">{section.note}{section.noteLink && <> <a class="link-arrow" href={section.noteLink.href}>{section.noteLink.label} <span class="ar" aria-hidden="true">→</span></a></>}</p>)}
       </div>
     </section>;
   })}

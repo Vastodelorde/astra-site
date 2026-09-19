@@ -1,0 +1,91 @@
+---
+import BlogCard from '../components/BlogCard.astro';
+import type { BlogPost } from '../data/blog';
+import { homeContent as c, partnerImages } from './homeContent';
+const { posts = [] } = Astro.props as { posts: BlogPost[] };
+---
+<div class="home-proto hp-control" data-proto-root="control">
+  <section class="hpc-hero">
+    <img class="hpc-hero__image" src="../img/hero-biz.jpg" alt="Цифрова інфраструктура для бізнесу" fetchpriority="high">
+    <div class="proto-shell hpc-hero__content proto-enter">
+      <h1>{c.hero.title}</h1>
+      <p>{c.hero.body}</p>
+      <button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button>
+    </div>
+    <div class="hpc-status proto-enter">
+      {c.trust.metrics.map((metric) => <div><b>{metric.value}</b><span>{metric.label}</span></div>)}
+    </div>
+  </section>
+
+  <section class="proto-section hpc-scale" id="control-segments">
+    <div class="proto-shell hpc-split-head proto-reveal">
+      <div><h2>{c.segments.title}</h2><p>{c.segments.body}</p></div>
+      <a href="../taryfy.html">Порівняти всі тарифи <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="proto-shell hpc-scale__grid">
+      {c.segments.items.map((item) => <article class="hpc-scale__item proto-reveal">
+        <div class="hpc-scale__name"><h3>{item.name}</h3><p>{item.range}</p></div>
+        <ul>{item.features.map((feature) => <li>{feature}</li>)}</ul>
+        <a href={item.href} aria-label={`Детальніше: ${item.name}`}>→</a>
+      </article>)}
+    </div>
+  </section>
+
+  <section class="proto-section hpc-system" id="control-directions">
+    <div class="proto-shell">
+      <div class="hpc-split-head proto-reveal"><div><h2>{c.directions.title}</h2><p>{c.directions.body}</p></div><span class="hpc-system__stamp">Один договір<br>Одна відповідальність</span></div>
+      <div class="hpc-system__grid">
+        {c.directions.items.map((item) => <a class="hpc-system__item proto-reveal" href={item.href}>
+          <img src={item.image} alt="" loading="lazy">
+          <div><h3>{item.name}</h3><p>{item.body}</p><span>Відкрити напрямок →</span></div>
+        </a>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="proto-section hpc-diagnostics">
+    <div class="proto-shell hpc-diagnostics__layout">
+      <div class="hpc-diagnostics__intro proto-reveal"><h2>{c.pains.title}</h2><p>{c.pains.body}</p></div>
+      <div class="hpc-diagnostics__list">
+        {c.pains.items.map((item) => <div class="hpc-diagnostics__row proto-reveal"><span>{item.problem}</span><i aria-hidden="true">→</i><strong>{item.solution}</strong></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="proto-section hpc-objects">
+    <div class="proto-shell">
+      <div class="hpc-split-head proto-reveal"><div><h2>{c.objects.title}</h2><p>{c.objects.body}</p></div></div>
+      <div class="hpc-objects__grid">
+        {c.objects.items.map((item, index) => <article class:list={['hpc-object', `hpc-object--${index + 1}`, 'proto-reveal']}>
+          <img src={item.image} alt="" loading="lazy">
+          <div><h3>{item.name}</h3><p>{item.body}</p></div>
+        </article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="proto-section hpc-responsibility">
+    <div class="proto-shell">
+      <div class="hpc-split-head proto-reveal"><div><h2>{c.reasons.title}</h2><p>{c.reasons.body}</p></div></div>
+      <div class="hpc-responsibility__grid">
+        {c.reasons.items.map((item) => <article class="proto-reveal"><h3>{item.name}</h3><p>{item.body}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="proto-section hpc-trust">
+    <div class="proto-shell">
+      <div class="hpc-trust__feature proto-reveal">
+        <img src="../img/team-datacenter.jpg" alt="Команда АСТРА в дата-центрі" loading="lazy">
+        <div><h2>{c.trust.title}</h2><p>{c.trust.body}</p><small>{c.trust.note}</small></div>
+      </div>
+      <div class="hpc-logos proto-reveal">{partnerImages.map((image) => <span><img src={`../img/partners/${image}.jpg`} alt="Клієнт АСТРА" loading="lazy"></span>)}</div>
+    </div>
+  </section>
+
+  {posts.length > 0 && <section class="proto-section hpc-blog">
+    <div class="proto-shell"><div class="hpc-split-head proto-reveal"><div><h2>{c.blog.title}</h2></div><a href="../blog/">Усі статті →</a></div><div class="blog-grid">{posts.map((post) => <BlogCard post={post} pathPrefix="../" sitePrefix="../" />)}</div></div>
+  </section>}
+
+  <section class="proto-section hpc-final"><div class="proto-shell proto-reveal"><h2>{c.cta.title}</h2><p>{c.cta.body}</p><button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button></div></section>
+</div>

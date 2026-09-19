@@ -2,9 +2,7 @@ import { createClient } from '@sanity/client';
 import { starterPosts, type BlogPost } from '../data/blog';
 import { starterPostsEn, starterEnSourceSlug } from '../data/blogEn';
 
-// SANITY_TOKEN is server-only (never shipped to the client). When present the
-// build reads directly (works with a private dataset); otherwise it uses the
-// public CDN. So no need to make the dataset public.
+// A server-only token enables private-dataset reads; otherwise requests use the public CDN.
 const token = import.meta.env.SANITY_TOKEN;
 const requestOptions = () => ({ signal: AbortSignal.timeout(6000) });
 
@@ -16,8 +14,7 @@ export const client = createClient({
   useCdn: !token,
 });
 
-// GROQ for a segment page (maliy / seredniy / velykyi), resolving referenced
-// managers + tariffs and image asset URLs so the shape matches the local data.
+// Resolve references so Sanity results match the local fallback shape.
 const segmentPageQuery = `*[_type == "segmentPage" && slug.current == $slug][0]{
   seo,
   hero{ ..., "image": coalesce(imagePath, image.asset->url) },

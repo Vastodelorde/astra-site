@@ -1,11 +1,4 @@
-/**
- * Seed the segment pages (maliy / seredniy / velykyi) into Sanity from the local
- * data files, uploading manager photos and de-duplicating shared managers/tariffs.
- * Idempotent (deterministic _id + createOrReplace). Safe to re-run.
- *
- * Run:  node --env-file=.env scripts/seed.ts
- * Needs SANITY_TOKEN (Editor) in .env.
- */
+/** Idempotently seeds segment pages and shared assets into Sanity. Requires `SANITY_TOKEN`. */
 import { createClient } from '@sanity/client'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
@@ -42,7 +35,6 @@ async function run() {
   const seededTariff = new Set<string>()
 
   for (const { slug, title, data } of pages) {
-    // managers (dedup + upload once)
     const managerRefs: Ref[] = []
     for (const m of data.managers?.items ?? []) {
       const _id = managerId(m.photo)
@@ -63,7 +55,6 @@ async function run() {
       managerRefs.push({ _key: _id, _type: 'reference', _ref: _id })
     }
 
-    // tariffs (dedup)
     const tariffRefs: Ref[] = []
     for (const t of data.tariffs.items) {
       const _id = tariffId(t.speed)

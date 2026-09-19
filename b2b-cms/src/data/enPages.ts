@@ -1,3 +1,5 @@
+import type { ServiceIconName } from '../components/ServiceIcon.astro';
+
 export type ContentItem = {
   title: string;
   body: string;
@@ -8,6 +10,7 @@ export type ContentItem = {
   links?: { label: string; href: string }[];
   note?: string;
   noteAfterLinks?: number;
+  icon?: ServiceIconName;
 };
 
 export type ContentSection = {
@@ -17,6 +20,7 @@ export type ContentSection = {
   heading: string;
   lead?: string;
   note?: string;
+  noteLink?: { label: string; href: string };
   paragraphs?: string[];
   footnote?: string;
   items?: ContentItem[];
@@ -57,31 +61,31 @@ const directions: ContentItem[] = [
 ];
 
 const serviceCards: ContentItem[] = [
-  { title: 'Symmetric business internet', body: 'A dedicated symmetric connection with a static IP address and speeds up to 10 Gbps using XGS-PON technology.', href: 'isp.html#xgspon' },
-  { title: 'Redundant backbone routes', body: 'Duplicate independent routes and a power-resilient network that keeps your business online.', href: 'isp.html#stability' },
-  { title: 'Direct routes to Europe', body: 'Direct connections to European traffic exchange points with minimal latency.', href: 'isp.html#europe' },
-  { title: 'Peering for operators', body: 'Public and private traffic exchange for ISP and telecom operators.', href: 'operators.html#peering' },
-  { title: 'Video surveillance with analytics', body: 'IP cameras with video analytics, event detection and reliable archive storage.', href: 'install.html#videonagliad' },
-  { title: 'Access control and ACS', body: 'Access control and management systems for employees and visitors.', href: 'install.html#access' },
-  { title: 'IP intercoms', body: 'Multi-subscriber IP intercoms with video calls for offices, residential complexes and commercial properties.', href: 'install.html#access' },
-  { title: 'Smart entrances and barriers', body: 'Automatic barriers and gates with vehicle license plate recognition.', href: 'install.html#access' },
-  { title: 'Ajax security systems', body: 'Ajax wireless security alarms with sensors and instant notifications.', href: 'install.html#access' },
-  { title: 'Structured cabling systems', body: 'Turnkey design and installation of structured cabling systems.', href: 'install.html#networks' },
-  { title: 'Professional Wi-Fi / Mesh', body: 'Seamless enterprise-grade coverage without dead zones across the entire property.', href: 'install.html#networks' },
-  { title: 'GSM/LTE signal boosting', body: 'Mobile signal boosters for reliable connectivity inside buildings.', href: 'install.html#networks' },
-  { title: 'Fiber-optic lines', body: 'Fiber-optic line construction by our own field teams.', href: 'install.html#networks' },
-  { title: 'Multimedia and conferencing systems', body: 'Turnkey meeting rooms, video walls and conferencing systems.', href: 'install.html#multimedia' },
-  { title: 'Data center colocation', body: 'Equipment hosting in our Lviv data center with backup power and 24/7 monitoring.', href: 'cloud.html#kolokatsiia' },
-  { title: 'VPS / VDS', body: 'Virtual servers with guaranteed resources and blackout protection.', href: 'cloud.html#vps' },
-  { title: 'Dedicated server rental', body: 'Physical servers for your workloads, maintained by ASTRA.', href: 'cloud.html#server' },
+  { title: 'Symmetric business internet', body: 'A dedicated symmetric connection with a static IP address and speeds up to 10 Gbps using XGS-PON technology.', href: 'isp.html#xgspon', icon: 'gauge' },
+  { title: 'Redundant backbone routes', body: 'Duplicate independent routes and a power-resilient network that keeps your business online.', href: 'isp.html#stability', icon: 'route' },
+  { title: 'Direct routes to Europe', body: 'Direct connections to European traffic exchange points with minimal latency.', href: 'isp.html#europe', icon: 'globe' },
+  { title: 'Peering for operators', body: 'Public and private traffic exchange for ISP and telecom operators.', href: 'operators.html#peering', icon: 'network' },
+  { title: 'Video surveillance with analytics', body: 'IP cameras with video analytics, event detection and reliable archive storage.', href: 'install.html#videonagliad', icon: 'cctv' },
+  { title: 'Access control and ACS', body: 'Access control and management systems for employees and visitors.', href: 'install.html#access', icon: 'fingerprint' },
+  { title: 'IP intercoms', body: 'Multi-subscriber IP intercoms with video calls for offices, residential complexes and commercial properties.', href: 'install.html#access', icon: 'door' },
+  { title: 'Smart entrances and barriers', body: 'Automatic barriers and gates with vehicle license plate recognition.', href: 'install.html#access', icon: 'car' },
+  { title: 'Ajax security systems', body: 'Ajax wireless security alarms with sensors and instant notifications.', href: 'install.html#access', icon: 'shield' },
+  { title: 'Structured cabling systems', body: 'Turnkey design and installation of structured cabling systems.', href: 'install.html#networks', icon: 'cable' },
+  { title: 'Professional Wi-Fi / Mesh', body: 'Seamless enterprise-grade coverage without dead zones across the entire property.', href: 'install.html#networks', icon: 'wifi' },
+  { title: 'GSM/LTE signal boosting', body: 'Mobile signal boosters for reliable connectivity inside buildings.', href: 'install.html#networks', icon: 'radioTower' },
+  { title: 'Fiber-optic lines', body: 'Fiber-optic line construction by our own field teams.', href: 'install.html#networks', icon: 'waypoints' },
+  { title: 'Multimedia and conferencing systems', body: 'Turnkey meeting rooms, video walls and conferencing systems.', href: 'install.html#multimedia', icon: 'presentation' },
+  { title: 'Data center colocation', body: 'Equipment hosting in our Lviv data center with backup power and 24/7 monitoring.', href: 'cloud.html#kolokatsiia', icon: 'server' },
+  { title: 'VPS / VDS', body: 'Virtual servers with guaranteed resources and blackout protection.', href: 'cloud.html#vps', icon: 'cloud' },
+  { title: 'Dedicated server rental', body: 'Physical servers for your workloads, maintained by ASTRA.', href: 'cloud.html#server', icon: 'hardDrive' },
 ];
 
 export const enPages: Record<string, EnglishPage> = {
   index: {
-    title: 'ASTRA for Business: digital solutions for business and modern property',
+    title: 'ASTRA for Business: digital solutions for business and modern real estate',
     description: 'Digital infrastructure for business and commercial property since 2004: power-resilient internet, security systems, networks, colocation and cloud services.',
     source: 'Home',
-    hero: { image: 'img/hero-biz.jpg', title: 'Digital solutions for business and modern property', intro: 'Since 2004, we have built and maintained connectivity and security infrastructure: internet, networks, video surveillance, access control and cloud services under one contract.' },
+    hero: { image: 'img/hero-biz.jpg', title: 'Digital solutions for business and modern real estate', intro: 'Since 2004, we have built and maintained connectivity and security infrastructure: internet, networks, video surveillance, access control and cloud services under one contract.' },
     sections: [
       { kind: 'cards', tone: 'tint', id: 'segments-size', heading: 'Solutions for every scale', lead: 'The core set of services is the same in every plan, while we tailor recommended additional solutions to your scale and requirements.', items: [
         { title: 'Small business', body: 'Cafe, shop, salon or small office', href: 'maliy.html', features: ['Symmetric redundant connection and static IP', 'Unlimited traffic and 24/7 support', 'Guest Wi-Fi for visitors', 'Video surveillance and IP intercoms'] },
@@ -99,18 +103,18 @@ export const enPages: Record<string, EnglishPage> = {
         { title: 'Security risks', body: 'Reliable data protection and 24/7 video monitoring of the perimeter.' },
       ] },
       { kind: 'cards', id: 'objects', heading: 'Solutions by property type', lead: 'We build and maintain digital infrastructure around the specific needs of each type of property.', items: [
-        { title: 'Offices and business centers', body: 'Scalable from 1 to 500+ workstations, with seamless Wi-Fi and secure corporate VPN connections.', image: 'img/dir-network.jpg' },
-        { title: 'Residential complexes', body: 'Internet solutions for residential complexes, automation and unified access control and security systems.', image: 'img/dir-internet.jpg' },
-        { title: 'Restaurants, cafes and retail chains', body: 'Connect hundreds of branches into one isolated network. Reliable guest Wi-Fi, access control and structured cabling.', image: 'img/sub-skud.jpg' },
-        { title: 'Warehouses and manufacturing', body: 'Reliable coverage across large areas for IoT devices, scanners and data collection terminals.', image: 'img/sub-videonagliad.jpg' },
-        { title: 'Hotels and coworking spaces', body: 'Secure enterprise-grade Wi-Fi, flexible traffic management and intelligent network analytics.', image: 'img/sub-domofon.jpg' },
+        { title: 'Offices and business centers', body: 'Scalable from 1 to 500+ workstations, with seamless Wi-Fi and secure corporate VPN connections.', image: 'img/home-office.webp' },
+        { title: 'Residential complexes', body: 'Internet solutions for residential complexes, automation and unified access control and security systems.', image: 'img/home-residential.webp' },
+        { title: 'Restaurants, cafes and retail chains', body: 'Connect hundreds of branches into one isolated network. Reliable guest Wi-Fi, access control and structured cabling.', image: 'img/home-retail.webp' },
+        { title: 'Warehouses and manufacturing', body: 'Reliable coverage across large areas for IoT devices, scanners and data collection terminals.', image: 'img/home-warehouse.webp' },
+        { title: 'Hotels and coworking spaces', body: 'Secure enterprise-grade Wi-Fi, flexible traffic management and intelligent network analytics.', image: 'img/home-hospitality.webp' },
       ] },
       { kind: 'cards', tone: 'navy', id: 'chomu', heading: 'A partnership model that frees you from connectivity concerns', lead: 'We take care of the technical issues so you can focus on your business.', items: [
         { title: 'Personal approach and service', body: 'Your dedicated manager knows the specifics of every location, coordinates technical teams and resolves your questions quickly.' },
         { title: 'Consolidated and optimized costs', body: 'All your offices, warehouses, shops or residential complexes are served under one contract. One invoice, a clear payment date and complete cost transparency.' },
         { title: 'End-to-end responsibility for the result', body: 'We are responsible for the entire infrastructure, from the backbone to your equipment. When needed, we perform a complete network audit and resolve problems at any level.' },
       ] },
-      { kind: 'partners', tone: 'tint', id: 'partners', heading: 'More than 50 residential associations and dozens of commercial properties', lead: 'Our specialists have many years of experience building networks and security systems of varying complexity, from offices to industrial sites.', note: 'Our clients include developers, residential complexes, retail and HoReCa chains, logistics companies, cultural institutions and educational organizations.' },
+      { kind: 'partners', tone: 'tint', id: 'partners', heading: 'More than 50 condominium associations and dozens of commercial properties', lead: 'Our specialists have many years of experience building networks and security systems of varying complexity, from offices to industrial sites.', note: 'Our clients include developers, residential complexes, retail and HoReCa chains, logistics companies, cultural institutions and educational organizations.' },
       { kind: 'blog', tone: 'navy', id: 'blog', heading: 'ASTRA advice and resources' },
     ],
     cta: { title: 'Let\'s discuss your property infrastructure', text: 'Leave a request and our manager will contact you, select a solution for your scale and prepare a commercial proposal.' },
@@ -127,9 +131,9 @@ export const enPages: Record<string, EnglishPage> = {
         { title: 'One partner for every requirement', body: 'Internet, Wi-Fi, video surveillance and intercoms under one contract, with one invoice and dedicated support.' },
       ] },
       { kind: 'cards', tone: 'tint', id: 'services', heading: 'Services that may be useful for your business', lead: 'In addition to internet access, ASTRA can meet the other needs of a small venue. Add guest Wi-Fi, video surveillance or an intercom, or explore the full service catalog.', items: [
-        { title: 'Guest Wi-Fi', body: 'A separate visitor network, isolated from your business systems, with reliable coverage throughout the venue.', href: 'install.html#networks' },
-        { title: 'Basic video surveillance', body: 'A set of 2 to 8 cameras with recording and remote video access from a smartphone.', href: 'install.html#videonagliad' },
-        { title: 'IP intercom', body: 'Entrance control, calls to a smartphone and access management for staff-only areas.', href: 'install.html#access' },
+        { title: 'Guest Wi-Fi', body: 'A separate visitor network, isolated from your business systems, with reliable coverage throughout the venue.', href: 'install.html#networks', icon: 'wifi' },
+        { title: 'Basic video surveillance', body: 'A set of 2 to 8 cameras with recording and remote video access from a smartphone.', href: 'install.html#videonagliad', icon: 'cctv' },
+        { title: 'IP intercom', body: 'Entrance control, calls to a smartphone and access management for staff-only areas.', href: 'install.html#access', icon: 'door' },
         { title: 'All services', body: 'The complete ASTRA business service catalog: internet, networks, security and cloud.', href: 'poslugy.html' },
       ] },
       { kind: 'contact', tone: 'navy', id: 'contact', heading: 'Request a consultation', lead: 'Leave a request and our manager will contact you, select a solution for your venue and prepare a proposal.' },
@@ -151,10 +155,10 @@ export const enPages: Record<string, EnglishPage> = {
         { title: 'Priority service', body: 'Requests are resolved on the day they are submitted, and your calls are answered ahead of the general queue. Your dedicated manager handles documentation and coordinates technical teams to minimize downtime for critical services.' },
       ] },
       { kind: 'cards', tone: 'tint', id: 'services', heading: 'Services that may be useful for your business', lead: 'In addition to internet access, we can cover the other needs of a chain or office. Choose what you need or explore the full business service catalog.', items: [
-        { title: 'Structured cabling + Wi-Fi Mesh', body: 'Structured cabling and seamless Mesh coverage for hundreds of devices, without dead zones anywhere on the property.', href: 'install.html#networks' },
-        { title: 'Video surveillance with analytics', body: 'Cameras with video analytics and remote access, event recognition and perimeter monitoring at every location.', href: 'install.html#videonagliad' },
-        { title: 'Access control / ACS', body: 'Centralized policies for entrance management, time and attendance, and access zones across all locations.', href: 'install.html#access' },
-        { title: 'VPS / VDS', body: 'Cloud servers in our blackout-protected Lviv data center for accounting systems, CRM and internal services.', href: 'cloud.html#vps' },
+        { title: 'Structured cabling + Wi-Fi Mesh', body: 'Structured cabling and seamless Mesh coverage for hundreds of devices, without dead zones anywhere on the property.', href: 'install.html#networks', icon: 'wifi' },
+        { title: 'Video surveillance with analytics', body: 'Cameras with video analytics and remote access, event recognition and perimeter monitoring at every location.', href: 'install.html#videonagliad', icon: 'cctv' },
+        { title: 'Access control / ACS', body: 'Centralized policies for entrance management, time and attendance, and access zones across all locations.', href: 'install.html#access', icon: 'fingerprint' },
+        { title: 'VPS / VDS', body: 'Cloud servers in our blackout-protected Lviv data center for accounting systems, CRM and internal services.', href: 'cloud.html#vps', icon: 'cloud' },
         { title: 'All services', body: 'The complete ASTRA business service catalog: internet, networks, security and cloud.', href: 'poslugy.html' },
       ] },
       { kind: 'contact', tone: 'navy', id: 'contact', heading: 'Request a consultation', lead: 'Leave a request and our manager will contact you, select a solution for your chain and prepare a commercial proposal.' },
@@ -176,11 +180,11 @@ export const enPages: Record<string, EnglishPage> = {
         { title: 'XG/XGS-PON optical converter', body: 'Business 2500 and Business 10000 require an XG/XGS-PON optical converter, purchased separately.' },
       ] },
       { kind: 'cards', tone: 'tint', id: 'services', heading: 'Services that may be useful for your business', lead: 'In addition to internet access, we can cover every telecom need of a large property. Choose a division or explore the complete business service catalog.', items: [
-        { title: 'Redundant backbones', body: 'Several independent fiber entry points with instant failover. Critical services continue to operate without interruption.', href: 'isp.html#stability' },
-        { title: 'Turnkey integrated security', body: 'Video surveillance with analytics, access control, barriers and security systems, from design to maintenance by our own teams.', href: 'install.html#videonagliad' },
-        { title: 'Data center colocation', body: 'Host servers in our Lviv data center with backup power, cooling and 24/7 security.', href: 'cloud.html#kolokatsiia' },
-        { title: 'Multimedia and conferencing systems', body: 'Meeting rooms with displays and video conferencing, background audio, video walls and public address systems across the property.', href: 'install.html#multimedia' },
-        { title: 'Fiber-optic lines', body: 'Design and construction of underground and aerial fiber-optic lines by our own field teams.', href: 'install.html#networks' },
+        { title: 'Redundant backbones', body: 'Several independent fiber entry points with instant failover. Critical services continue to operate without interruption.', href: 'isp.html#stability', icon: 'route' },
+        { title: 'Turnkey integrated security', body: 'Video surveillance with analytics, access control, barriers and security systems, from design to maintenance by our own teams.', href: 'install.html#videonagliad', icon: 'shield' },
+        { title: 'Data center colocation', body: 'Host servers in our Lviv data center with backup power, cooling and 24/7 security.', href: 'cloud.html#kolokatsiia', icon: 'server' },
+        { title: 'Multimedia and conferencing systems', body: 'Meeting rooms with displays and video conferencing, background audio, video walls and public address systems across the property.', href: 'install.html#multimedia', icon: 'presentation' },
+        { title: 'Fiber-optic lines', body: 'Design and construction of underground and aerial fiber-optic lines by our own field teams.', href: 'install.html#networks', icon: 'waypoints' },
         { title: 'All services', body: 'The complete ASTRA business service catalog: internet, networks, security and cloud.', href: 'poslugy.html' },
       ] },
       { kind: 'contact', tone: 'navy', id: 'contact', heading: 'Request a consultation', lead: 'Leave your contact details and a short description of the task. Our manager will assess the property, select a solution for your scale and prepare a commercial proposal.' },
@@ -192,7 +196,7 @@ export const enPages: Record<string, EnglishPage> = {
     hero: { image: 'img/dir-network.jpg', label: 'ASTRA ISP', parentLabel: 'Divisions', parentHref: './#directions', title: 'Power-resilient internet and fiber-optic networks', intro: 'Stable internet on our own fiber-optic backbone in Lviv: XGS-PON technology up to 10 Gbps, independent redundant connections and direct routes to Europe that continue working during power outages.' },
     sections: [
       { kind: 'cards', id: 'xgspon', heading: 'Technology, reliability and speed to Europe', lead: 'We build internet connectivity on next-generation passive fiber with several independent connections and direct access to European internet exchange points.', items: [
-        { title: 'XGS-PON technology (up to 10 Gbps)', body: '', features: ['Next-generation passive fiber', 'Symmetric speeds up to 10 Gbps', 'Operation independent of power outages'] },
+        { title: 'XGS-PON technology (up to 10 Gbps)', body: '', features: ['Next-generation passive fiber', 'Symmetric speeds up to 10 Gbps', 'Continues operating during power outages'] },
         { title: 'Guaranteed reliability', body: '', id: 'stability', features: ['Several independent fiber-optic connections', 'Automatic failover to a backup connection', 'Uninterrupted network access'] },
         { title: 'Direct routes to Europe', body: '', id: 'europe', features: ['Direct connection to European internet exchange points', 'Minimal latency for cloud services', 'Stable streaming and business applications'] },
       ] },
@@ -242,7 +246,7 @@ export const enPages: Record<string, EnglishPage> = {
     title: 'ASTRA CLOUD: server hosting and blackout-protected cloud infrastructure', description: 'Our own Lviv data center: colocation, VPS/VDS and dedicated server rental with backup power, climate control and 24/7 monitoring.', source: 'ASTRA CLOUD',
     hero: { image: 'img/dir-cloud.jpg', label: 'ASTRA CLOUD', parentLabel: 'Divisions', parentHref: './#directions', title: 'Server hosting and cloud infrastructure protected against blackouts', intro: 'Our own data center in Lviv: colocation for your equipment, VPS/VDS virtual servers and dedicated server rental. Backup power, climate control and 24/7 data center monitoring.' },
     sections: [
-      { kind: 'cards', heading: 'Cloud infrastructure on our own premises', lead: 'Host equipment and deploy servers in our data center with guaranteed autonomy, from a single rack unit to full racks.', items: [
+      { kind: 'cards', heading: 'Cloud infrastructure in our own data center', lead: 'Host equipment and deploy servers in our data center with guaranteed autonomy, from a single rack unit to full racks.', items: [
         { title: 'Colocation', body: 'Host your equipment in our technology facility, from 1U to full racks, with connectivity and public IP addresses.', id: 'kolokatsiia' },
         { title: 'Guaranteed autonomy', body: 'Backup power, climate control and 24/7 data center monitoring. Equipment continues to operate even during blackouts.' },
         { title: 'Virtual servers (VPS/VDS)', body: 'Flexible virtual infrastructure with instant scaling. We tailor processor, memory and storage to your workload.', id: 'vps' },
@@ -302,7 +306,7 @@ export const enPages: Record<string, EnglishPage> = {
     hero: { image: 'img/hero-biz.jpg', label: 'Plans', title: 'Business plans', intro: 'All ASTRA business plans in one place. Symmetric speed, a static IP address and document management are included in every plan. We will calculate the exact set of services for your property during a consultation.' },
     sections: [
       { kind: 'plans', heading: 'ASTRA business plans', lead: 'From Business 100 for a small venue to Business 10000 for a corporation or data center. Speed and price increase, while the core set of services remains the same for everyone.', footnote: 'A dedicated account manager is available to clients on Business 250 and higher. Business 2500 and Business 10000 require an XG/XGS-PON optical converter, purchased separately.', items: plans },
-      { kind: 'cards', tone: 'tint', id: 'operatory', heading: 'Operators', lead: 'A separate offering for ISP, telecom and data center clients, with services not available in the other categories. Prices are calculated individually.', note: 'Terms for operators depend on capacity, routes and contract duration. See the complete service list and calculation details on the Solutions for operators page.', items: [
+      { kind: 'cards', tone: 'tint', id: 'operatory', heading: 'Operators', lead: 'A separate offering for ISP, telecom and data center clients, with services not available in the other categories. Prices are calculated individually.', note: 'Terms for operators depend on capacity, routes and contract duration.', noteLink: { label: 'View operator solutions', href: 'operators.html' }, items: [
         { title: 'Public and private peering', body: 'Public and private traffic exchange. The service is available exclusively to legal entities and network operators.', href: 'operators.html#peering' },
         { title: 'Direct routes to Europe', body: 'Direct connection to European internet exchange points with minimal latency.', href: 'operators.html#europe' },
         { title: 'Turnkey fiber-optic lines', body: 'Design and construction of fiber-optic communication lines by our own field teams.', href: 'operators.html#volz' },
@@ -323,7 +327,7 @@ export const enPages: Record<string, EnglishPage> = {
       ] },
       { kind: 'stats', tone: 'tint', heading: 'ASTRA in numbers', items: [
         { title: '20+', body: 'years of experience' }, { title: '45,000+', body: 'active subscribers' },
-        { title: '50+', body: 'residential associations under our supervision' }, { title: '1', body: 'our own data center in Lviv' },
+        { title: '50+', body: 'condominium associations served' }, { title: '1', body: 'data center of our own in Lviv' },
         { title: '24/7', body: 'support and monitoring' },
       ] },
       { kind: 'cards', id: 'directions', heading: 'Three divisions under one roof', lead: 'We have organized our services into three specialist divisions to cover every telecom need of your business or residential complex, from connectivity and perimeter cameras to servers in our data center.', items: directions },
@@ -337,7 +341,7 @@ export const enPages: Record<string, EnglishPage> = {
         { title: 'Data center engineers', body: 'On-site expertise', image: 'img/team-datacenter.jpg' },
         { title: 'Field team', body: 'Installation and maintenance', image: 'img/team-flag.jpg' },
       ] },
-      { kind: 'partners', id: 'partners', heading: 'Trusted by our clients', lead: 'More than 50 residential associations and dozens of commercial properties: developers, residential complexes, retail and HoReCa chains, logistics companies, cultural institutions and educational organizations.' },
+      { kind: 'partners', id: 'partners', heading: 'Trusted by our clients', lead: 'More than 50 condominium associations and dozens of commercial properties: developers, residential complexes, retail and HoReCa chains, logistics companies, cultural institutions and educational organizations.' },
     ],
     cta: { title: 'Let\'s discuss your property infrastructure', text: 'Leave a request and our manager will contact you, select a solution for your scale and prepare a commercial proposal.' },
   },
@@ -351,7 +355,7 @@ export const enPages: Record<string, EnglishPage> = {
           { label: '0 800 20-38-38 · TOLL-FREE', href: 'tel:+380800203838' }, { label: '(097) 418-3838', href: 'tel:+380974183838' },
           { label: '(095) 418-3838', href: 'tel:+380954183838' }, { label: '(032) 232-8808', href: 'tel:+380322328808' },
         ] },
-        { title: 'Online in messengers', body: 'Message us. We reply around the clock.', note: 'Need a call? Leave your number in the form below and a manager will call you back.', noteAfterLinks: 2, links: [
+        { title: 'Chat with us', body: 'Message us. We reply around the clock.', note: 'Need a call? Leave your number in the form below and a manager will call you back.', noteAfterLinks: 2, links: [
           { label: 'Telegram', href: 'https://t.me/astraispbot' }, { label: 'Viber', href: 'viber://chat?number=%2B380800203838' },
           { label: 'Request a consultation →', href: '#consult' },
         ] },

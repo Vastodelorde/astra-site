@@ -1,0 +1,65 @@
+---
+import BlogCard from '../components/BlogCard.astro';
+import type { BlogPost } from '../data/blog';
+import { homeContent as c, partnerImages } from './homeContent';
+const { posts = [] } = Astro.props as { posts: BlogPost[] };
+---
+<div class="home-proto hp-proof" data-proto-root="proof">
+  <section class="hpp-hero">
+    <img src="../img/hero-biz.jpg" alt="Інфраструктура сучасного бізнес-центру" fetchpriority="high">
+    <div class="proto-shell hpp-hero__copy proto-enter"><h1>{c.hero.title}</h1><p>{c.hero.body}</p><button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button></div>
+    <div class="hpp-hero__proof proto-enter"><span>Працюємо з 2004 року</span><span>Власна оптична мережа</span><span>Власний ЦОД у Львові</span><span>Підтримка 24/7</span></div>
+  </section>
+
+  <section class="proto-section hpp-numbers">
+    <div class="proto-shell">
+      <p class="hpp-numbers__statement proto-reveal">Інфраструктура, яку можна перевірити цифрами, командою та реальними об'єктами.</p>
+      <div class="hpp-numbers__grid">{c.trust.metrics.map((metric) => <div class="proto-reveal"><b>{metric.value}</b><span>{metric.label}</span></div>)}</div>
+    </div>
+  </section>
+
+  <section class="proto-section hpp-trust">
+    <div class="proto-shell hpp-trust__layout">
+      <div class="hpp-trust__image proto-reveal"><img src="../img/team-datacenter.jpg" alt="Інженери АСТРА в дата-центрі" loading="lazy"></div>
+      <div class="hpp-trust__copy proto-reveal"><h2>{c.trust.title}</h2><p>{c.trust.body}</p><p>{c.trust.note}</p></div>
+    </div>
+    <div class="proto-shell hpp-logo-ribbon proto-reveal">{partnerImages.map((image) => <span><img src={`../img/partners/${image}.jpg`} alt="Клієнт АСТРА" loading="lazy"></span>)}</div>
+  </section>
+
+  <section class="proto-section hpp-directions">
+    <div class="proto-shell"><header class="hpp-section-head proto-reveal"><h2>{c.directions.title}</h2><p>{c.directions.body}</p></header>
+      <div class="hpp-directions__list">{c.directions.items.map((item, index) => <article class="hpp-direction proto-reveal">
+        <div class="hpp-direction__image"><img src={item.image} alt="" loading="lazy"></div>
+        <div class="hpp-direction__copy"><span>0{index + 1}</span><h3>{item.name}</h3><p>{item.body}</p><a href={item.href}>Детальніше →</a></div>
+      </article>)}</div>
+    </div>
+  </section>
+
+  <section class="proto-section hpp-scale">
+    <div class="proto-shell"><header class="hpp-section-head proto-reveal"><h2>{c.segments.title}</h2><p>{c.segments.body}</p></header>
+      <div class="hpp-scale__table">{c.segments.items.map((item) => <a class="hpp-scale__row proto-reveal" href={item.href}>
+        <div><h3>{item.name}</h3><p>{item.range}</p></div><ul>{item.features.map((feature) => <li>{feature}</li>)}</ul><span aria-hidden="true">→</span>
+      </a>)}</div>
+    </div>
+  </section>
+
+  <section class="proto-section hpp-objects">
+    <div class="proto-shell"><header class="hpp-section-head proto-reveal"><h2>{c.objects.title}</h2><p>{c.objects.body}</p></header>
+      <div class="hpp-objects__track">{c.objects.items.map((item) => <article class="hpp-object proto-reveal"><img src={item.image} alt="" loading="lazy"><div><h3>{item.name}</h3><p>{item.body}</p></div></article>)}</div>
+    </div>
+  </section>
+
+  <section class="proto-section hpp-problems">
+    <div class="proto-shell"><header class="hpp-section-head proto-reveal"><h2>{c.pains.title}</h2><p>{c.pains.body}</p></header>
+      <div class="hpp-problems__grid">{c.pains.items.map((item) => <article class="proto-reveal"><span>{item.problem}</span><p>{item.solution}</p></article>)}</div>
+    </div>
+  </section>
+
+  <section class="proto-section hpp-reasons">
+    <div class="proto-shell hpp-reasons__layout"><header class="proto-reveal"><h2>{c.reasons.title}</h2><p>{c.reasons.body}</p></header><div>{c.reasons.items.map((item) => <article class="proto-reveal"><h3>{item.name}</h3><p>{item.body}</p></article>)}</div></div>
+  </section>
+
+  {posts.length > 0 && <section class="proto-section hpp-blog"><div class="proto-shell"><header class="hpp-section-head hpp-section-head--row proto-reveal"><h2>{c.blog.title}</h2><a href="../blog/">Усі статті →</a></header><div class="blog-grid">{posts.map((post) => <BlogCard post={post} pathPrefix="../" sitePrefix="../" />)}</div></div></section>}
+
+  <section class="proto-section hpp-final"><div class="proto-shell proto-reveal"><h2>{c.cta.title}</h2><p>{c.cta.body}</p><button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button></div></section>
+</div>

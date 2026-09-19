@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
 ---
 <Layout
   leadSource="Усі послуги"
@@ -9,7 +10,6 @@ import Layout from '../layouts/Layout.astro';
   ogTitle="Усі послуги АСТРА для бізнесу: каталог"
   ogDescription="Повний каталог зв'язку, мереж, безпеки та хмари під одним договором. ASTRA ISP · INSTALL · CLOUD."
 >
-<!-- ===================== 1 · HERO ===================== -->
   <section class="hero">
     <div class="hero-bg"><img src="img/dir-network.jpg" loading="eager" alt="Каталог послуг АСТРА для бізнесу"></div>
     <div class="container">
@@ -24,113 +24,109 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 2 · КАТАЛОГ ПОСЛУГ ===================== -->
   <section class="section">
     <div class="container">
 
-      <!-- ===== ASTRA ISP ===== -->
       <div class="svc-group">
         <h3>ASTRA <span class="mk">ISP</span></h3>
         <p class="svc-group-sub">Інтернет і магістралі</p>
         <div class="svc-grid">
           <article class="svc">
-            <h4>Симетричний бізнес-інтернет</h4>
+            <div class="svc-head"><ServiceIcon name="gauge" /><h4>Симетричний бізнес-інтернет</h4></div>
             <p>Виділений симетричний канал зі статичною IP та швидкістю до 10&nbsp;Гбіт/с на технології XGS-PON.</p>
             <a class="link-arrow" href="isp.html#xgspon">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>Резервні магістралі</h4>
+            <div class="svc-head"><ServiceIcon name="route" /><h4>Резервні магістралі</h4></div>
             <p>Дубльовані незалежні маршрути й енергонезалежна мережа для роботи без обривів.</p>
             <a class="link-arrow" href="isp.html#stability">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>Прямі канали в Європу</h4>
+            <div class="svc-head"><ServiceIcon name="globe" /><h4>Прямі канали в Європу</h4></div>
             <p>Пряме підключення до європейських точок обміну трафіком з мінімальним пінгом.</p>
             <a class="link-arrow" href="isp.html#europe">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>Піринг для операторів</h4>
+            <div class="svc-head"><ServiceIcon name="network" /><h4>Піринг для операторів</h4></div>
             <p>Публічний і приватний обмін трафіком для ISP та telecom-операторів.</p>
             <a class="link-arrow" href="operators.html#peering">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
         </div>
       </div>
 
-      <!-- ===== ASTRA INSTALL ===== -->
       <div class="svc-group">
         <h3>ASTRA <span class="mk">INSTALL</span></h3>
         <p class="svc-group-sub">Безпека та мережі</p>
         <div class="svc-grid">
           <article class="svc">
-            <h4>Відеонагляд з аналітикою</h4>
+            <div class="svc-head"><ServiceIcon name="cctv" /><h4>Відеонагляд з аналітикою</h4></div>
             <p>IP-камери з відеоаналітикою, розпізнаванням подій і надійним зберіганням архіву.</p>
             <a class="link-arrow" href="install.html#videonagliad">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>Контроль доступу та СКУД</h4>
+            <div class="svc-head"><ServiceIcon name="fingerprint" /><h4>Контроль доступу та СКУД</h4></div>
             <p>Системи контролю та управління доступом для співробітників і відвідувачів.</p>
             <a class="link-arrow" href="install.html#access">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>IP-домофонія</h4>
+            <div class="svc-head"><ServiceIcon name="door" /><h4>IP-домофонія</h4></div>
             <p>Багатоабонентні IP-домофони з відеовикликом для офісів, ЖК та комерційних об'єктів.</p>
             <a class="link-arrow" href="install.html#access">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>Розумні в'їзні групи / шлагбауми</h4>
+            <div class="svc-head"><ServiceIcon name="car" /><h4>Розумні в'їзні групи / шлагбауми</h4></div>
             <p>Автоматичні шлагбауми й ворота з розпізнаванням номерів авто.</p>
             <a class="link-arrow" href="install.html#access">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>Охоронні системи Ajax</h4>
+            <div class="svc-head"><ServiceIcon name="shield" /><h4>Охоронні системи Ajax</h4></div>
             <p>Бездротова охоронна сигналізація Ajax з датчиками та миттєвими сповіщеннями.</p>
             <a class="link-arrow" href="install.html#access">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>СКС та структуровані мережі</h4>
+            <div class="svc-head"><ServiceIcon name="cable" /><h4>СКС та структуровані мережі</h4></div>
             <p>Проєктування та монтаж структурованих кабельних систем під ключ.</p>
             <a class="link-arrow" href="install.html#networks">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>Професійний Wi-Fi / Mesh</h4>
+            <div class="svc-head"><ServiceIcon name="wifi" /><h4>Професійний Wi-Fi / Mesh</h4></div>
             <p>Безшовне покриття Enterprise-рівня без мертвих зон на всій території об'єкта.</p>
             <a class="link-arrow" href="install.html#networks">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>GSM/LTE-підсилення</h4>
+            <div class="svc-head"><ServiceIcon name="radioTower" /><h4>GSM/LTE-підсилення</h4></div>
             <p>Підсилювачі мобільного сигналу для стабільного зв'язку всередині будівель.</p>
             <a class="link-arrow" href="install.html#networks">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>Оптичні лінії ВОЛЗ</h4>
+            <div class="svc-head"><ServiceIcon name="waypoints" /><h4>Оптичні лінії ВОЛЗ</h4></div>
             <p>Будівництво волоконно-оптичних ліній зв'язку власними виїзними бригадами.</p>
             <a class="link-arrow" href="install.html#networks">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>Мультимедіа та конференц-системи</h4>
+            <div class="svc-head"><ServiceIcon name="presentation" /><h4>Мультимедіа та конференц-системи</h4></div>
             <p>Переговорні кімнати, відеостіни та системи конференц-зв'язку під ключ.</p>
             <a class="link-arrow" href="install.html#multimedia">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
         </div>
       </div>
 
-      <!-- ===== ASTRA CLOUD ===== -->
       <div class="svc-group">
         <h3>ASTRA <span class="mk">CLOUD</span></h3>
         <p class="svc-group-sub">Хмара та ЦОД</p>
         <div class="svc-grid">
           <article class="svc">
-            <h4>Колокація в ЦОД</h4>
+            <div class="svc-head"><ServiceIcon name="server" /><h4>Колокація в ЦОД</h4></div>
             <p>Розміщення обладнання в нашому дата-центрі у Львові з резервним живленням і моніторингом 24/7.</p>
             <a class="link-arrow" href="cloud.html#kolokatsiia">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>VPS / VDS</h4>
+            <div class="svc-head"><ServiceIcon name="cloud" /><h4>VPS / VDS</h4></div>
             <p>Віртуальні сервери з гарантованими ресурсами та захистом від блекаутів.</p>
             <a class="link-arrow" href="cloud.html#vps">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
           <article class="svc">
-            <h4>Оренда виділених серверів</h4>
+            <div class="svc-head"><ServiceIcon name="hardDrive" /><h4>Оренда виділених серверів</h4></div>
             <p>Фізичні сервери в оренду під ваші задачі з обслуговуванням від АСТРА.</p>
             <a class="link-arrow" href="cloud.html#server">Детальніше <span class="ar" aria-hidden="true">→</span></a>
           </article>
@@ -140,7 +136,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 3 · CTA ===================== -->
   <section class="section tight">
     <div class="container">
       <div class="cta-band">

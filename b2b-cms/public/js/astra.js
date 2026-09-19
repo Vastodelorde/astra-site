@@ -1,4 +1,3 @@
-/* ASTRA — shared interactions. Progressive enhancement; site works without JS. */
 (function () {
   "use strict";
   var doc = document;
@@ -14,7 +13,6 @@
     else if (!event.shiftKey && doc.activeElement === last) { event.preventDefault(); first.focus(); }
   }
 
-  /* sticky header shadow */
   var header = doc.querySelector(".site-header");
   if (header) {
     var onScroll = function () { header.classList.toggle("scrolled", window.scrollY > 8); };
@@ -22,8 +20,6 @@
     onScroll();
   }
 
-  /* ---- audience router: the Дім/Бізнес pills are links to the section
-     landing pages. Highlight whichever matches the current page. ---- */
   (function () {
     var path = location.pathname.split("/").pop() || "index.html";
     var biz = ["biznes.html", "bezpeka-biznes.html", "merezhi.html", "hmara.html"];
@@ -34,7 +30,6 @@
     });
   })();
 
-  /* mobile menu */
   var burger = doc.querySelector(".burger");
   var mobile = doc.querySelector(".mobile-menu");
   var menuScrim = doc.querySelector(".mobile-menu-scrim");
@@ -71,7 +66,6 @@
     });
   }
 
-  /* lead modal — show the selected tariff or the source page */
   var modal = doc.querySelector("#lead-modal");
   var modalTrigger = null;
   function openModal(tariff, mode, source) {
@@ -129,7 +123,6 @@
     else trapFocus(modal, e);
   });
 
-  /* image lightbox — click any [data-zoom] image to view it enlarged */
   var lightbox = doc.querySelector(".lightbox");
   if (lightbox) {
     var lbImg = lightbox.querySelector("img");
@@ -160,7 +153,6 @@
     });
   }
 
-  /* phone mask +38 (0XX) XXX-XX-XX */
   doc.querySelectorAll('input[data-phone]').forEach(function (inp) {
     inp.addEventListener("input", function () {
       var d = inp.value.replace(/\D/g, "").replace(/^38/, "").slice(0, 10);
@@ -307,10 +299,9 @@
     doc.head.appendChild(turnstileScript);
   }
 
-  /* tariff price toggle (month / year) */
   doc.querySelectorAll(".price-toggle button").forEach(function (b) {
     b.addEventListener("click", function () {
-      var mode = b.dataset.price; // month | year
+      var mode = b.dataset.price;
       b.parentElement.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
       var scope = b.closest("[data-tariffs]") || doc;
       scope.querySelectorAll(".tariff .price").forEach(function (p) {
@@ -319,7 +310,6 @@
     });
   });
 
-  /* simple tabs (tariff categories) */
   doc.querySelectorAll(".tabs").forEach(function (tabs) {
     tabs.querySelectorAll("button").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -344,7 +334,6 @@
     doc.querySelectorAll(".navlink").forEach(function (a) {
       if (b(a.getAttribute("href")) === path) a.classList.add("current");
     });
-    // pages that have their own top-level item must not also light up "Напрямки"
     var topHrefs = [].map.call(doc.querySelectorAll(".mainnav .navlink"), function (a) { return b(a.getAttribute("href")); });
     var hasTop = topHrefs.indexOf(path) > -1;
     doc.querySelectorAll(".mega .col").forEach(function (col) {
@@ -359,10 +348,7 @@
     });
   })();
 
-  /* deep-link: activate the tab named in the URL hash and scroll to the tabs
-     bar (not the panel below — scrolling to the content crops the tabs off the
-     top). Runs on load AND on in-page hash changes, e.g. clicking a menu item
-     (taryfy-dim.html#pryvatnyi) while already on the tariffs page. */
+  /* Hash-driven tariff tabs scroll to the tab bar so its controls remain visible. */
   (function () {
     function apply(smooth) {
       var h = decodeURIComponent(location.hash.slice(1));
@@ -379,7 +365,6 @@
     window.addEventListener("hashchange", function () { apply(true); });
   })();
 
-  /* hero carousel — fade slides, auto-advance, dots, arrows, pause on hover */
   doc.querySelectorAll(".hcar").forEach(function (car) {
     var slides = [].slice.call(car.querySelectorAll(".hcar-slide"));
     if (slides.length < 2) return;

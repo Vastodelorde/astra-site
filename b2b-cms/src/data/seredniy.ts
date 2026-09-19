@@ -1,6 +1,5 @@
-// Local content for the seredniy (middle business) page.
-// This shape mirrors the future Sanity documents (segmentPage + referenced
-// manager / tariff / service items), so swapping the source later is a 1:1 map.
+import type { ServiceIconName } from '../components/ServiceIcon.astro';
+
 
 export interface Tariff {
   plan: string;
@@ -9,7 +8,7 @@ export interface Tariff {
   features: string[];
   price: string;
   per: string;
-  tag: string; // value passed to the lead modal (data-tariff)
+  tag: string;
 }
 
 export interface Manager {
@@ -30,6 +29,7 @@ export interface Service {
   body: string;
   href: string;
   label: string;
+  icon?: ServiceIconName;
   all?: boolean;
 }
 
@@ -94,10 +94,10 @@ export const seredniy = {
     heading: 'Послуги, що можуть бути корисні вашому бізнесу',
     lead: 'Окрім інтернету, ми можемо закрити й інші потреби мережі закладів чи офісу. Оберіть потрібне або перегляньте весь каталог послуг для бізнесу.',
     items: [
-      { title: 'СКС + Wi-Fi Mesh', body: 'Структурована кабельна система та безшовне Mesh-покриття на сотні пристроїв без «мертвих зон» на всій території.', href: 'install.html#networks', label: 'Детальніше' },
-      { title: 'Відеонагляд з аналітикою', body: 'Камери з відеоаналітикою та віддаленим доступом, розпізнавання подій і контроль периметра кожної локації.', href: 'install.html#videonagliad', label: 'Детальніше' },
-      { title: 'Контроль доступу / СКУД', body: 'Керування входом, обліком робочого часу та зонами доступу з централізованими політиками на всі заклади.', href: 'install.html#access', label: 'Детальніше' },
-      { title: 'VPS / VDS', body: 'Хмарні сервери у нашому ЦОД у Львові із захистом від блекаутів для 1С, CRM та внутрішніх сервісів.', href: 'cloud.html#vps', label: 'Детальніше' },
+      { title: 'СКС + Wi-Fi Mesh', body: 'Структурована кабельна система та безшовне Mesh-покриття на сотні пристроїв без «мертвих зон» на всій території.', href: 'install.html#networks', label: 'Детальніше', icon: 'wifi' },
+      { title: 'Відеонагляд з аналітикою', body: 'Камери з відеоаналітикою та віддаленим доступом, розпізнавання подій і контроль периметра кожної локації.', href: 'install.html#videonagliad', label: 'Детальніше', icon: 'cctv' },
+      { title: 'Контроль доступу / СКУД', body: 'Керування входом, обліком робочого часу та зонами доступу з централізованими політиками на всі заклади.', href: 'install.html#access', label: 'Детальніше', icon: 'fingerprint' },
+      { title: 'VPS / VDS', body: 'Хмарні сервери у нашому ЦОД у Львові із захистом від блекаутів для 1С, CRM та внутрішніх сервісів.', href: 'cloud.html#vps', label: 'Детальніше', icon: 'cloud' },
       { title: 'Усі послуги', body: 'Повний каталог послуг АСТРА для бізнесу: інтернет, мережі, безпека та хмара.', href: 'poslugy.html', label: 'Переглянути каталог →', all: true },
     ] as Service[],
   },

@@ -1,4 +1,3 @@
-/* Editorial pages and the homepage blog feature. */
 .page-b2b .blog-feature{--blog-grid-line:oklch(0.9 0.008 250 / .045);background-color:var(--navy-750);background-image:linear-gradient(var(--blog-grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--blog-grid-line) 1px,transparent 1px);background-size:56px 56px}
 .page-b2b .blog-feature__head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:30px}
 .page-b2b .blog-feature__head h2{margin:0;max-width:650px}

@@ -2,7 +2,6 @@
 import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel';
 
-// https://astro.build/config
 export default defineConfig({
   site: 'https://astra.in.ua',
   // Output flat .html files (seredniy.html) so URLs, relative asset paths and

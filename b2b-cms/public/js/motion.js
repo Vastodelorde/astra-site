@@ -1,4 +1,3 @@
-/* One-time, progressive motion for marketing sections and article reading. */
 (function () {
   "use strict";
 

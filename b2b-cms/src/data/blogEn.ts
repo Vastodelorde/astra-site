@@ -9,7 +9,7 @@ export const starterPostsEn: BlogPost[] = [
     title: 'Backup internet for business: where to start', slug: 'backup-internet-for-business', publishedAt: '2026-09-18T09:00:00Z',
     category: 'Internet', tags: ['Business continuity', 'Networks'],
     excerpt: 'What to check before adding a second connection, and why another provider alone does not guarantee uninterrupted service.',
-    image: 'img/blog/rezervuvannia-kanalu.png', imageAlt: 'Network patch panel with connected cables',
+    image: 'img/blog/backup-internet.webp', imageAlt: 'Two independent network connections in a server rack',
     body: [
       paragraph('A short internet outage can interrupt payments, CRM access, video meetings and cloud services. A backup link reduces downtime only when the route, power supply and failover process are planned together.'),
       heading('Identify what cannot wait'),
@@ -27,7 +27,7 @@ export const starterPostsEn: BlogPost[] = [
     title: 'Warehouse video surveillance: planning without blind spots', slug: 'warehouse-video-surveillance', publishedAt: '2026-09-16T09:00:00Z',
     category: 'Security', tags: ['Video surveillance', 'Warehouses'],
     excerpt: 'Movement routes, lighting, retention and archive access: a practical checklist before cameras are installed.',
-    image: 'img/blog/videonagliad-skladu.png', imageAlt: 'Surveillance camera inside a warehouse',
+    image: 'img/blog/warehouse-surveillance.webp', imageAlt: 'Video surveillance system inside a warehouse',
     body: [
       paragraph('A warehouse changes every day. Pallets move, shelves fill up and vehicles block the view. Start camera planning with the events you need to see, not with a device count.'),
       heading('Mark key events on the plan'),
@@ -45,7 +45,7 @@ export const starterPostsEn: BlogPost[] = [
     title: 'VPS or colocation: choosing a home for business services', slug: 'vps-or-colocation', publishedAt: '2026-09-12T09:00:00Z',
     category: 'Cloud & data center', tags: ['VPS', 'Colocation'],
     excerpt: 'Compare two hosting approaches by control, scalability and your team’s operational responsibilities.',
-    image: 'img/blog/kolokatsiia-vps.png', imageAlt: 'Server racks in a data center',
+    image: 'img/blog/vps-colocation.webp', imageAlt: 'Physical server and racks in a data center',
     body: [
       paragraph('When an on-premise server is no longer enough, the question is not only where to put it. Decide who owns the hardware lifecycle, how quickly capacity can grow and what your applications require.'),
       heading('When a VPS makes sense'),

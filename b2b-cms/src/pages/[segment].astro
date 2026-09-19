@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
 import { maliy } from '../data/maliy.ts';
 import { seredniy } from '../data/seredniy.ts';
 import { velykyi } from '../data/velykyi.ts';
@@ -15,6 +16,7 @@ export function getStaticPaths() {
 
 const { segment } = Astro.params;
 const { local } = Astro.props as { local: any };
+const localServiceIcons = new Map((local.services?.items ?? []).map((item: any) => [item.href, item.icon]));
 
 // Prefer Sanity; fall back to the local file per page.
 let d: any = local;
@@ -29,7 +31,11 @@ try {
         ? { heading: cms.managersHeading, lead: cms.managersLead, items: cms.managers }
         : null,
       details: { heading: cms.detailsHeading, lead: cms.detailsLead, items: cms.diffs ?? [] },
-      services: { heading: cms.servicesHeading, lead: cms.servicesLead, items: cms.services ?? [] },
+      services: {
+        heading: cms.servicesHeading,
+        lead: cms.servicesLead,
+        items: (cms.services ?? []).map((item: any) => ({ ...item, icon: item.icon ?? localServiceIcons.get(item.href) })),
+      },
       contact: { heading: cms.contactHeading, lead: cms.contactLead },
     };
   }
@@ -48,7 +54,6 @@ const legacyManagerNote = 'Веде ваші договори, рахунки й
   ogTitle={d.seo.ogTitle}
   ogDescription={d.seo.ogDescription}
 >
-  <!-- 1 · HERO -->
   <section class="hero">
     <div class="hero-bg"><img src={d.hero.image} loading="eager" alt={d.hero.imageAlt}></div>
     <div class="container">
@@ -63,7 +68,6 @@ const legacyManagerNote = 'Веде ваші договори, рахунки й
     </div>
   </section>
 
-  <!-- 2 · ТАРИФИ -->
   <section class="section" id="taryfy">
     <div class="container">
       <div class="section-head">
@@ -101,7 +105,6 @@ const legacyManagerNote = 'Веде ваші договори, рахунки й
     </section>
   )}
 
-  <!-- 4 · ЩО ВАРТО ЗНАТИ -->
   <section class="section section--tint" id="details">
     <div class="container">
       <div class="section-head">
@@ -119,7 +122,6 @@ const legacyManagerNote = 'Веде ваші договори, рахунки й
     </div>
   </section>
 
-  <!-- 5 · РЕЛЕВАНТНІ ПОСЛУГИ -->
   <section class="section section--tint" id="services">
     <div class="container">
       <div class="section-head">
@@ -129,7 +131,7 @@ const legacyManagerNote = 'Веде ваші договори, рахунки й
       <div class="svc-grid">
         {d.services.items.map((s: any) => (
           <article class={s.all ? 'svc all' : 'svc'}>
-            <h4>{s.title}</h4>
+            {s.icon ? <div class="svc-head"><ServiceIcon name={s.icon} /><h4>{s.title}</h4></div> : <h4>{s.title}</h4>}
             <p>{s.body}</p>
             {s.all
               ? <a class="link-arrow" href={s.href}>{s.label}</a>
@@ -140,7 +142,6 @@ const legacyManagerNote = 'Веде ваші договори, рахунки й
     </div>
   </section>
 
-  <!-- 6 · КОНТАКТНА ФОРМА -->
   <section class="section section--navy" id="contact">
     <div class="container">
       <div class="section-head">
@@ -159,7 +160,7 @@ const legacyManagerNote = 'Веде ваші договори, рахунки й
           <p class="form-note">Натискаючи кнопку, ви погоджуєтесь з обробкою даних згідно з політикою конфіденційності.</p>
           <div data-success style="display:none">
             <h4 style="color:var(--navy-900)">Вашу заявку прийнято!</h4>
-            <p class="muted" style="font-size:.92rem;margin-top:8px">Дякуємо! Наш менеджер зв'яжеться з вами найближчим часом. Цілодобово також: Telegram <b>@astraispbot</b>, Viber «АСТРА», 0&nbsp;800&nbsp;20-38-38.</p>
+            <p class="muted" style="font-size:.92rem;margin-top:8px">Дякуємо! Наш менеджер зв'яжеться з вами найближчим часом.</p>
           </div>
         </form>
       </div>

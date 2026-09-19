@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HomeControl from '../../prototypes/HomeControl.astro';
+import HomeProof from '../../prototypes/HomeProof.astro';
+import HomeNavigator from '../../prototypes/HomeNavigator.astro';
+import { getBlogPosts } from '../../lib/sanity';
+
+export const prerender = false;
+const posts = (await getBlogPosts()).slice(0, 3);
+---
+<Layout
+  title="Варіанти головної сторінки АСТРА"
+  description="Локальна примірочна трьох концепцій головної сторінки АСТРА."
+  canonical="https://astra.in.ua/b2b/"
+  bodyClass="page-b2b page-prototype ctx-biz mode-biz"
+  pathPrefix="../"
+  leadSource="homepage-prototype"
+>
+  <meta slot="head" name="robots" content="noindex,nofollow">
+  <link slot="head" rel="stylesheet" href="../css/home-prototypes.css">
+
+  <div id="stage" class="proto-stage" aria-live="polite"></div>
+
+  <template id="proto-control"><HomeControl posts={posts} /></template>
+  <template id="proto-proof"><HomeProof posts={posts} /></template>
+  <template id="proto-navigator"><HomeNavigator posts={posts} /></template>
+
+  <nav class="proto-picker" aria-label="Prototype variants">
+    <span class="proto-picker-highlight" aria-hidden="true"></span>
+    <button class="proto-picker-item" data-active aria-current="true">Control</button>
+    <button class="proto-picker-item">Proof</button>
+    <button class="proto-picker-item">Navigator</button>
+    <span class="proto-picker-divider" aria-hidden="true"></span>
+    <button class="proto-picker-item proto-picker-replay" aria-label="Replay animation (R)">↻</button>
+  </nav>
+
+  <script src="../js/home-prototypes.js" defer is:inline></script>
+</Layout>

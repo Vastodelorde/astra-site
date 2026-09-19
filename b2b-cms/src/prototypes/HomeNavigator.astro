@@ -1,0 +1,75 @@
+---
+import BlogCard from '../components/BlogCard.astro';
+import type { BlogPost } from '../data/blog';
+import { homeContent as c, partnerImages } from './homeContent';
+const { posts = [] } = Astro.props as { posts: BlogPost[] };
+const segmentImages = ['../img/dir-internet.jpg', '../img/dir-network.jpg', '../img/dir-security.jpg', '../img/dir-cloud.jpg'];
+---
+<div class="home-proto hp-navigator" data-proto-root="navigator">
+  <section class="hpn-hero">
+    <img src="../img/hero-biz.jpg" alt="Цифрова інфраструктура для бізнесу" fetchpriority="high">
+    <div class="proto-shell hpn-hero__layout proto-enter">
+      <div><span class="hpn-kicker">АСТРА для бізнесу</span><h1>{c.hero.title}</h1></div>
+      <div><p>{c.hero.body}</p><button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button></div>
+    </div>
+  </section>
+
+  <section class="proto-section hpn-selector">
+    <div class="proto-shell">
+      <header class="hpn-section-head proto-reveal"><span>01 / Почніть зі свого масштабу</span><h2>{c.segments.title}</h2><p>{c.segments.body}</p></header>
+      <div class="hpn-selector__tabs proto-reveal" role="tablist" aria-label="Тип бізнесу">
+        {c.segments.items.map((item, index) => <button type="button" role="tab" data-proto-segment={index} data-active={index === 0 ? '' : undefined} aria-selected={index === 0 ? 'true' : 'false'}>{item.name}</button>)}
+      </div>
+      <div class="hpn-selector__panels">
+        {c.segments.items.map((item, index) => <article class="hpn-segment-panel proto-reveal" data-proto-panel={index} hidden={index !== 0}>
+          <div class="hpn-segment-panel__media"><img src={segmentImages[index]} alt="" loading="lazy"><span>0{index + 1}</span></div>
+          <div class="hpn-segment-panel__copy"><p class="hpn-segment-panel__range">{item.range}</p><h3>{item.name}</h3><ul>{item.features.map((feature) => <li>{feature}</li>)}</ul><a href={item.href}>Переглянути рішення <span aria-hidden="true">→</span></a></div>
+        </article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="proto-section hpn-route">
+    <div class="proto-shell">
+      <header class="hpn-section-head proto-reveal"><span>02 / Один маршрут</span><h2>{c.directions.title}</h2><p>{c.directions.body}</p></header>
+      <div class="hpn-route__rail">
+        {c.directions.items.map((item, index) => <a class="hpn-route__item proto-reveal" href={item.href}>
+          <div class="hpn-route__index">0{index + 1}</div><div class="hpn-route__media"><img src={item.image} alt="" loading="lazy"></div><div class="hpn-route__copy"><h3>{item.name}</h3><p>{item.body}</p><span>Відкрити напрямок →</span></div>
+        </a>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="proto-section hpn-diagnosis">
+    <div class="proto-shell hpn-diagnosis__layout">
+      <header class="hpn-section-head proto-reveal"><span>03 / Діагностика</span><h2>{c.pains.title}</h2><p>{c.pains.body}</p></header>
+      <div class="hpn-diagnosis__list">{c.pains.items.map((item, index) => <article class="proto-reveal"><b>{String(index + 1).padStart(2, '0')}</b><div><h3>{item.problem}</h3><p>{item.solution}</p></div></article>)}</div>
+    </div>
+  </section>
+
+  <section class="proto-section hpn-objects">
+    <div class="proto-shell">
+      <header class="hpn-section-head proto-reveal"><span>04 / За типом об'єкта</span><h2>{c.objects.title}</h2><p>{c.objects.body}</p></header>
+      <div class="hpn-objects__list">{c.objects.items.map((item, index) => <article class="hpn-object proto-reveal"><div class="hpn-object__number">0{index + 1}</div><img src={item.image} alt="" loading="lazy"><div><h3>{item.name}</h3><p>{item.body}</p></div></article>)}</div>
+    </div>
+  </section>
+
+  <section class="proto-section hpn-care">
+    <div class="proto-shell">
+      <header class="hpn-section-head proto-reveal"><span>05 / Відповідальність</span><h2>{c.reasons.title}</h2><p>{c.reasons.body}</p></header>
+      <div class="hpn-care__grid">{c.reasons.items.map((item, index) => <article class="proto-reveal"><span>0{index + 1}</span><h3>{item.name}</h3><p>{item.body}</p></article>)}</div>
+    </div>
+  </section>
+
+  <section class="proto-section hpn-trust">
+    <div class="proto-shell hpn-trust__layout">
+      <div class="hpn-trust__copy proto-reveal"><span>06 / Докази</span><h2>{c.trust.title}</h2><p>{c.trust.body}</p><small>{c.trust.note}</small><div class="hpn-trust__metrics">{c.trust.metrics.map((metric) => <div><b>{metric.value}</b><span>{metric.label}</span></div>)}</div></div>
+      <div class="hpn-trust__image proto-reveal"><img src="../img/team-datacenter.jpg" alt="Команда АСТРА в дата-центрі" loading="lazy"></div>
+    </div>
+    <div class="proto-shell hpn-logos proto-reveal">{partnerImages.map((image) => <span><img src={`../img/partners/${image}.jpg`} alt="Клієнт АСТРА" loading="lazy"></span>)}</div>
+  </section>
+
+  {posts.length > 0 && <section class="proto-section hpn-blog"><div class="proto-shell"><header class="hpn-section-head hpn-section-head--row proto-reveal"><div><span>07 / Корисне</span><h2>{c.blog.title}</h2></div><a href="../blog/">Усі статті →</a></header><div class="blog-grid">{posts.map((post) => <BlogCard post={post} pathPrefix="../" sitePrefix="../" />)}</div></div></section>}
+
+  <section class="proto-section hpn-final"><div class="proto-shell proto-reveal"><span>Готові почати?</span><h2>{c.cta.title}</h2><p>{c.cta.body}</p><button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button></div></section>
+</div>

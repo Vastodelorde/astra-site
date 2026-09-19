@@ -1,0 +1,49 @@
+---
+import {
+  Cable,
+  CarFront,
+  Cctv,
+  CloudCog,
+  DoorOpen,
+  FingerprintPattern,
+  Gauge,
+  Globe,
+  HardDrive,
+  Network,
+  Presentation,
+  RadioTower,
+  Route,
+  ServerCog,
+  ShieldCheck,
+  Waypoints,
+  Wifi,
+} from '@lucide/astro';
+
+const iconComponents = {
+  cable: Cable,
+  car: CarFront,
+  cctv: Cctv,
+  cloud: CloudCog,
+  door: DoorOpen,
+  fingerprint: FingerprintPattern,
+  gauge: Gauge,
+  globe: Globe,
+  hardDrive: HardDrive,
+  network: Network,
+  presentation: Presentation,
+  radioTower: RadioTower,
+  route: Route,
+  server: ServerCog,
+  shield: ShieldCheck,
+  waypoints: Waypoints,
+  wifi: Wifi,
+} as const;
+
+export type ServiceIconName = keyof typeof iconComponents;
+
+const { name } = Astro.props as { name: ServiceIconName };
+const Icon = iconComponents[name];
+---
+<span class="svc-icon" aria-hidden="true">
+  <Icon size={25} stroke-width={1.8} />
+</span>

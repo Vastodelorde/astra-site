@@ -10,13 +10,11 @@ import Layout from '../layouts/Layout.astro';
   ogDescription="Усі бізнес-тарифи АСТРА: симетрична швидкість, статична IP та документообіг у кожному. Для операторів: піринг, ВОЛЗ та колокація за індивідуальним розрахунком."
 >
   <style is:global slot="head">
-/* ── Page-scoped: six-card tariff grid + note (не входять у astra.css/b2b.css) ── */
 .page-b2b .tariff-note{margin-top:clamp(20px,3vw,32px);font-size:.94rem;color:var(--muted);line-height:1.6}
 .page-b2b .tariff-note b{color:var(--navy-900)}
 .page-b2b .op-note{margin-top:clamp(20px,3vw,28px);font-size:.94rem;color:var(--muted);line-height:1.6}
 .page-b2b .op-note b{color:var(--navy-900)}
   </style>
-<!-- ===================== 1 · HERO ===================== -->
   <section class="hero">
     <div class="hero-bg"><img src="img/hero-biz.jpg" loading="eager" alt="Тарифи АСТРА для бізнесу"></div>
     <div class="container">
@@ -31,7 +29,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 2 · УСІ ТАРИФИ ===================== -->
   <section class="section">
     <div class="container">
       <div class="section-head">
@@ -74,7 +71,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 3 · ОПЕРАТОРИ ===================== -->
   <section class="section section--tint" id="operatory">
     <div class="container">
       <div class="section-head">
@@ -118,7 +114,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ===================== 4 · CTA ===================== -->
   <section class="section tight">
     <div class="container">
       <div class="cta-band">
