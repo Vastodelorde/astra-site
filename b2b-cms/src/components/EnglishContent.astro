@@ -50,9 +50,10 @@ const featureImages: Record<string, string> = {
     const isOperatorFeature = slug === 'operators' && (section.id === 'volz' || section.id === 'colocation');
     const isCloudReference = slug === 'cloud' && section.id === 'datacenter';
     const isIndexPartners = slug === 'index' && section.kind === 'partners';
+    const isIndexPains = slug === 'index' && section.kind === 'cards' && section.id === 'pain';
     const isContactConsult = slug === 'kontakty' && section.kind === 'contact';
     const isBlog = section.kind === 'blog';
-    const embedsHeading = isInstallFeature || isOperatorFeature || isCloudReference || isIndexPartners || isContactConsult || isBlog || section.kind === 'stats';
+    const embedsHeading = isInstallFeature || isOperatorFeature || isCloudReference || isIndexPartners || isIndexPains || isContactConsult || isBlog || section.kind === 'stats';
     const gridClass = (section.items?.length ?? 0) === 2 ? 'grid grid-2' : 'grid grid-3';
     return <section class:list={[
       'section',
@@ -77,11 +78,11 @@ const featureImages: Record<string, string> = {
           {item.href && <a class="link-arrow" href={item.href}>Explore <span class="ar" aria-hidden="true">→</span></a>}
         </article>)}</div>}
 
-        {section.kind === 'cards' && slug === 'index' && section.id === 'pain' && <div class="grid grid-3">{section.items?.map((item) => <article class="pain"><span class="from">{item.title}</span><span class="to">{item.body}</span></article>)}</div>}
+        {isIndexPains && <div class="home-pains"><div class="section-head"><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}</div><div class="home-pains__list">{section.items?.map((item) => <article class="pain"><span class="from">{item.title}</span><span class="to">{item.body}</span></article>)}</div></div>}
 
         {section.kind === 'cards' && slug === 'index' && section.id === 'objects' && <div class="grid grid-3">{section.items?.map((item) => <article class="seg-card" style={`background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('../${item.image}')`}><div><h4>{item.title}</h4><p>{item.body}</p></div></article>)}</div>}
 
-        {section.kind === 'cards' && section.id === 'chomu' && <div class="grid grid-3">{section.items?.map((item) => <article class="diff"><h4>{item.title}</h4><p>{item.body}</p></article>)}</div>}
+        {section.kind === 'cards' && section.id === 'chomu' && <div class={slug === 'index' ? 'home-collab' : 'grid grid-3'}>{section.items?.map((item) => <article class="diff"><h4>{item.title}</h4><p>{item.body}</p></article>)}</div>}
 
         {section.kind === 'cards' && segmentPages.has(slug) && section.id === 'details' && <div class={(section.items?.length ?? 0) >= 3 ? 'grid grid-3' : 'grid grid-2'}>{section.items?.map((item) => <article class="diff"><h4>{item.title}</h4><p>{item.body}</p></article>)}</div>}
 
@@ -137,7 +138,7 @@ const featureImages: Record<string, string> = {
 
         {section.kind === 'stats' && <div class="trustbar tb-5">{section.items?.map((item) => <div class="ti"><div class="num">{item.title}</div><div class="lbl">{item.body}</div></div>)}</div>}
 
-        {section.kind === 'partners' && isIndexPartners && <><div class="ref-grid"><div class="ref-media"><img src="../img/team-datacenter.jpg" width="1536" height="1920" loading="lazy" alt="ASTRA engineers in the Lviv data center"></div><div><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}{section.note && <p class="en-reference-note">{section.note}</p>}</div></div><div class="partners partners--en" style="margin-top:clamp(36px,5vw,56px)">{partnerImages.map((name) => <span class:list={['partner', { 'partner--ugcc': name === 17 }]}><img src={`../img/partners/${name}.jpg`} alt={name === 17 ? 'Ukrainian Greek Catholic Church' : 'ASTRA client'} loading="lazy"></span>)}</div></>}
+        {section.kind === 'partners' && isIndexPartners && <><div class="ref-grid home-trust-panel"><div class="ref-media"><img src="../img/team-datacenter.jpg" width="1536" height="1920" loading="lazy" alt="ASTRA engineers in the Lviv data center"></div><div class="home-trust-panel__copy"><h2>{section.heading}</h2>{section.lead && <p class="lead">{section.lead}</p>}{section.note && <p class="en-reference-note">{section.note}</p>}</div></div><div class="partners partners--en" style="margin-top:clamp(36px,5vw,56px)">{partnerImages.map((name) => <span class:list={['partner', { 'partner--ugcc': name === 17 }]}><img src={`../img/partners/${name}.jpg`} alt={name === 17 ? 'Ukrainian Greek Catholic Church' : 'ASTRA client'} loading="lazy"></span>)}</div></>}
 
         {section.kind === 'partners' && !isIndexPartners && <div class={section.id === 'brands' ? 'brand-logos' : 'partners partners--en'}>{(section.id === 'brands' ? brandImages : partnerImages.slice(0, 16)).map((name) => <span class="partner"><img src={section.id === 'brands' ? `../img/brands/${name}.jpg` : `../img/partners/${name}.jpg`} alt={section.id === 'brands' ? String(name) : 'ASTRA client'} loading="lazy"></span>)}</div>}
 
