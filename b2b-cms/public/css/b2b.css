@@ -99,6 +99,32 @@
 .page-b2b .svc-group > h3 .mk{color:var(--red)}
 .page-b2b .svc-group-sub{margin:0 0 18px;color:var(--muted);font-size:.98rem}
 
+/* English pages reuse the same purpose-built layouts as the Ukrainian originals. */
+.page-b2b .en-services-band{padding-block:clamp(24px,3vw,40px);background:var(--bg)}
+.page-b2b .en-services-band .svc-group{margin:0}
+.page-b2b .en-feature-grid{margin-top:22px;gap:16px}
+.page-b2b .en-feature-grid.card{margin:0}
+.page-b2b .en-reference-note{margin-top:14px;color:var(--muted);font-size:.94rem;line-height:1.6}
+.page-b2b .en-copy-block{max-width:880px;display:grid;gap:18px}
+.page-b2b .en-copy-block p{margin:0;color:var(--muted);font-size:1rem;line-height:1.7}
+.page-b2b .en-section-note{margin:clamp(22px,3vw,34px) 0 0;color:var(--muted);font-size:.94rem;line-height:1.6}
+
+.page-b2b .contact-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column;min-width:0}
+.page-b2b .contact-card h3{margin:0 0 4px}
+.page-b2b .contact-card .sub{font-size:.9rem;color:var(--muted);margin:0 0 18px;line-height:1.55}
+.page-b2b .contact-card .en-contact-note{font-size:.86rem;color:var(--muted);margin:0 0 14px;line-height:1.5}
+.page-b2b .contact-card .en-contact-links{display:flex;flex-direction:column;align-items:stretch;margin-top:auto}
+.page-b2b .contact-card .en-contact-links a{padding:10px 0;border-bottom:1px solid var(--line);font-family:var(--font-display);font-weight:700;color:var(--navy-900);overflow-wrap:anywhere}
+.page-b2b .contact-card .en-contact-links a:last-child{border-bottom:0}
+.page-b2b .consult-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,40px);align-items:start}
+.page-b2b .msg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.page-b2b .msg-btn{display:flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:var(--r-pill);border:1px solid oklch(1 0 0 /.16);background:var(--navy-800);font-weight:600;font-size:.92rem;color:#fff;transition:border-color .2s var(--ease)}
+.page-b2b .consult-side h3{color:#fff;margin-top:26px}
+.page-b2b .en-support-line{margin-top:20px}
+.page-b2b .en-support-line a{color:#fff;font-weight:600}
+@media(max-width:860px){.page-b2b .consult-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.page-b2b .msg-row{grid-template-columns:1fr}}
+
 /* ── full-width tariff rows (speed-first; works for 1..N tariffs) ── */
 .page-b2b .tariff-list{display:flex;flex-direction:column;gap:14px}
 .page-b2b .trow{display:grid;grid-template-columns:minmax(230px,.9fr) 1.5fr auto;gap:clamp(20px,3vw,40px);align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);padding:clamp(22px,2.2vw,30px) clamp(24px,3vw,40px);transition:box-shadow .2s var(--ease),border-color .2s var(--ease)}
@@ -130,6 +156,8 @@
   .page-b2b .breadcrumb a:hover{color:#fff}
   .page-b2b .svc:has(a[href],button):hover{border-color:var(--blue);box-shadow:var(--sh-md)}
   .page-b2b .trow:has(a[href],button):hover{box-shadow:var(--sh-md);border-color:var(--line-strong)}
+  .page-b2b .contact-card .en-contact-links a:hover{color:var(--blue-700)}
+  .page-b2b .msg-btn:hover{border-color:var(--blue)}
 }
 
 /* Campaign-like entrances; content stays visible when JS or motion is unavailable. */

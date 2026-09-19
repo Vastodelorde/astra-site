@@ -20,7 +20,7 @@ export const starterPostsEn: BlogPost[] = [
       bullet('Use a router that switches to the backup link automatically and returns to the primary link when it recovers.'),
       bullet('Keep the router, switches and entry equipment powered during an outage.'),
       bullet('Test an actual failover, not just the status indicators for both connections.'),
-      paragraph('Run a controlled test with your technical team and record which services recover automatically. A tested procedure turns a backup connection into a reliable continuity plan.'),
+      paragraph('Ask the technical team to run a test during working hours and record which services recover automatically and which require manual action. This turns the backup connection into a tested process rather than merely a line in a contract.'),
     ],
   },
   {
