@@ -6,6 +6,7 @@ import { starterPostsEn, starterEnSourceSlug } from '../data/blogEn';
 // build reads directly (works with a private dataset); otherwise it uses the
 // public CDN. So no need to make the dataset public.
 const token = import.meta.env.SANITY_TOKEN;
+const requestOptions = () => ({ signal: AbortSignal.timeout(6000) });
 
 export const client = createClient({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
@@ -30,7 +31,7 @@ const segmentPageQuery = `*[_type == "segmentPage" && slug.current == $slug][0]{
 }`;
 
 export async function getSegmentPage(slug: string) {
-  return client.fetch(segmentPageQuery, { slug });
+  return client.fetch(segmentPageQuery, { slug }, requestOptions());
 }
 
 const blogFields = `title, "slug": slug.current, publishedAt, category, tags, excerpt,
@@ -46,6 +47,8 @@ export async function getBlogPosts(locale: 'uk' | 'en' = 'uk'): Promise<BlogPost
           "excerpt": excerptEn, "image": cover.asset->url, "imageAlt": coalesce(coverAltEn, cover.alt), "body": bodyEn,
           "sourceSlug": slug.current
         }`,
+        {},
+        requestOptions(),
       );
       const translatedSources = new Set(translated.map((post) => post.sourceSlug));
       return [...translated, ...starterPostsEn.filter((post) => !Object.entries(starterEnSourceSlug).some(([source, enSlug]) => enSlug === post.slug && translatedSources.has(source)))]
@@ -53,25 +56,11 @@ export async function getBlogPosts(locale: 'uk' | 'en' = 'uk'): Promise<BlogPost
     }
     return await client.withConfig({ useCdn: false }).fetch(
       `*[_type == "blogPost" && defined(slug.current) && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc) { ${blogFields} }`,
+      {},
+      requestOptions(),
     );
   } catch (error) {
-    if (!import.meta.env.DEV) throw error;
-    console.warn('[sanity] blog posts unavailable; using local content');
+    console.warn('[sanity] blog posts unavailable; using local content:', (error as Error)?.message);
     return locale === 'en' ? starterPostsEn : starterPosts;
-  }
-}
-
-export async function getBlogPost(slug: string, locale: 'uk' | 'en' = 'uk'): Promise<BlogPost | null> {
-  if (locale === 'en') return (await getBlogPosts('en')).find((post) => post.slug === slug) ?? null;
-  if (!import.meta.env.PUBLIC_SANITY_PROJECT_ID) return starterPosts.find((post) => post.slug === slug) ?? null;
-  try {
-    return await client.withConfig({ useCdn: false }).fetch(
-      `*[_type == "blogPost" && slug.current == $slug && defined(publishedAt) && publishedAt <= now()][0] { ${blogFields} }`,
-      { slug },
-    );
-  } catch (error) {
-    if (!import.meta.env.DEV) throw error;
-    console.warn('[sanity] blog post unavailable; using local content');
-    return starterPosts.find((post) => post.slug === slug) ?? null;
   }
 }

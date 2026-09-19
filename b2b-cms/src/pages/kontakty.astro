@@ -23,15 +23,16 @@ import Layout from '../layouts/Layout.astro';
 .page-b2b .msg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
 .page-b2b .msg-btn{display:flex;align-items:center;justify-content:center;gap:9px;padding:11px 16px;border-radius:var(--r-pill);border:1px solid var(--line-strong);background:var(--surface);font-weight:600;font-size:.92rem;color:var(--navy-900);transition:.2s var(--ease)}
 .page-b2b .msg-btn:hover{border-color:var(--blue);color:var(--blue-700)}
-.page-b2b .msg-btn .ic{width:18px;height:18px;flex:none;-webkit-mask:center/contain no-repeat;mask:center/contain no-repeat}
-.page-b2b .msg-btn .ic--tg{background-color:#229ED9;-webkit-mask-image:url(assets/telegram.svg);mask-image:url(assets/telegram.svg)}
-.page-b2b .msg-btn .ic--viber{background-color:#7d3daf;-webkit-mask-image:url(assets/vb.svg);mask-image:url(assets/vb.svg)}
+.page-b2b .msg-btn .ic{width:18px;height:18px;flex:none;-webkit-mask:var(--msg-icon) center/contain no-repeat;mask:var(--msg-icon) center/contain no-repeat}
+.page-b2b .msg-btn .ic--tg{background-color:#229ED9}
+.page-b2b .msg-btn .ic--viber{background-color:#7d3daf}
 .page-b2b .addr{font-style:normal;color:var(--ink);font-size:.95rem;line-height:1.5}
 .page-b2b .addr strong{display:block;font-family:var(--font-display);font-weight:700;font-size:1.02rem;color:var(--navy-900);margin-bottom:4px}
 .page-b2b .contact-card .mail{font-family:var(--font-display);font-weight:700;color:var(--blue-700)}
 .page-b2b .contact-card .mail:hover{text-decoration:underline}
 .page-b2b .consult-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,40px);align-items:start}
 @media(max-width:860px){.page-b2b .consult-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.page-b2b .msg-row{grid-template-columns:1fr}.page-b2b .msg-btn{min-width:0}}
 .page-b2b .consult-side .msg-btn{background:var(--navy-800);border-color:oklch(1 0 0 /.16);color:#fff}
 .page-b2b .consult-side .msg-btn:hover{border-color:var(--blue)}
   </style>
@@ -78,10 +79,10 @@ import Layout from '../layouts/Layout.astro';
           <p class="sub">Напишіть нам, відповідаємо цілодобово.</p>
           <div class="msg-row">
             <a class="msg-btn" href="https://t.me/astraispbot" target="_blank" rel="noopener">
-              <span class="ic ic--tg" aria-hidden="true"></span>Telegram
+              <span class="ic ic--tg" style="--msg-icon:url('assets/telegram.svg')" aria-hidden="true"></span>Telegram
             </a>
             <a class="msg-btn" href="viber://chat?number=%2B380800203838" target="_blank" rel="noopener">
-              <span class="ic ic--viber" aria-hidden="true"></span>Viber
+              <span class="ic ic--viber" style="--msg-icon:url('assets/vb.svg')" aria-hidden="true"></span>Viber
             </a>
           </div>
           <p class="sub" style="margin:22px 0 0">Потрібен дзвінок? Залиште номер у формі нижче, і менеджер передзвонить.</p>
@@ -101,10 +102,10 @@ import Layout from '../layouts/Layout.astro';
           </ul>
           <div class="msg-row" style="margin-top:14px">
             <a class="msg-btn" href="https://t.me/bukh_astra" target="_blank" rel="noopener">
-              <span class="ic ic--tg" aria-hidden="true"></span>@bukh_astra
+              <span class="ic ic--tg" style="--msg-icon:url('assets/telegram.svg')" aria-hidden="true"></span>@bukh_astra
             </a>
             <a class="msg-btn" href="viber://chat?number=%2B380932899815" target="_blank" rel="noopener">
-              <span class="ic ic--viber" aria-hidden="true"></span>Viber @bukh_astra
+              <span class="ic ic--viber" style="--msg-icon:url('assets/vb.svg')" aria-hidden="true"></span>Viber @bukh_astra
             </a>
           </div>
           <p class="sub" style="margin:18px 0 0">E-mail: <a class="mail" href="mailto:info@astra.in.ua">info@astra.in.ua</a></p>
@@ -126,10 +127,10 @@ import Layout from '../layouts/Layout.astro';
             <h3 style="color:#fff;margin-top:26px">Або напишіть у месенджери</h3>
             <div class="msg-row" style="margin-top:14px">
               <a class="msg-btn" href="https://t.me/astraispbot" target="_blank" rel="noopener">
-                <span class="ic ic--tg" aria-hidden="true"></span>Telegram
+                <span class="ic ic--tg" style="--msg-icon:url('assets/telegram.svg')" aria-hidden="true"></span>Telegram
               </a>
               <a class="msg-btn" href="viber://chat?number=%2B380800203838" target="_blank" rel="noopener">
-                <span class="ic ic--viber" aria-hidden="true"></span>Viber
+                <span class="ic ic--viber" style="--msg-icon:url('assets/vb.svg')" aria-hidden="true"></span>Viber
               </a>
             </div>
             <p class="lead" style="margin-top:20px">Цілодобова підтримка: <a href="tel:+380800203838" style="color:#fff;font-weight:600">0&nbsp;800&nbsp;20-38-38</a></p>
@@ -139,10 +140,10 @@ import Layout from '../layouts/Layout.astro';
         <div class="lead-card">
           <form data-lead style="display:flex;flex-direction:column;gap:14px">
             <input type="hidden" name="mode" value="consult">
-            <div class="field"><label>Ім'я / компанія</label><input type="text" name="name" placeholder="Ваше ім'я або назва компанії"></div>
-            <div class="field"><label>Номер телефону</label><input type="tel" data-phone name="phone" placeholder="+38 (0__) ___-__-__" required><span class="err"></span></div>
-            <div class="field"><label>Адреса об'єкта</label><input type="text" name="address" placeholder="Місто, вулиця, будинок"></div>
-            <div class="field"><label>Опишіть деталі вашого звернення</label><textarea name="message" rows="3" placeholder="Тип об'єкта, потрібні послуги, орієнтовний масштаб"></textarea></div>
+            <div class="field"><label for="contacts-lead-name">Ім'я / компанія</label><input id="contacts-lead-name" type="text" name="name" autocomplete="organization" placeholder="Ваше ім'я або назва компанії"></div>
+            <div class="field"><label for="contacts-lead-phone">Номер телефону</label><input id="contacts-lead-phone" type="tel" data-phone name="phone" autocomplete="tel" inputmode="tel" placeholder="+38 (0__) ___-__-__" required aria-describedby="contacts-lead-phone-error"><span class="err" id="contacts-lead-phone-error" aria-live="polite"></span></div>
+            <div class="field"><label for="contacts-lead-address">Адреса об'єкта</label><input id="contacts-lead-address" type="text" name="address" autocomplete="street-address" placeholder="Місто, вулиця, будинок"></div>
+            <div class="field"><label for="contacts-lead-message">Опишіть деталі вашого звернення</label><textarea id="contacts-lead-message" name="message" rows="3" placeholder="Тип об'єкта, потрібні послуги, орієнтовний масштаб"></textarea></div>
             <input type="hidden" name="tariff">
             <button class="btn btn--primary btn--block" type="submit">Надіслати заявку</button>
             <p class="form-note">Натискаючи кнопку, ви погоджуєтесь з обробкою даних згідно з політикою конфіденційності.</p>

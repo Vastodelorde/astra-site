@@ -23,7 +23,7 @@ const {
   canonical,
   ogTitle,
   ogDescription,
-  ogImage = 'https://astra.in.ua/img/og-cover.jpg',
+  ogImage = 'https://astra.in.ua/b2b/img/og-cover.jpg',
   bodyClass = 'page-b2b ctx-biz mode-biz',
   leadSource,
   pathPrefix = '',
@@ -49,6 +49,7 @@ const languageHref = `${mountPath}${equivalentPath}`;
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07152e">
 <title>{title}</title>
 <meta name="description" content={description}>
 <link rel="canonical" href={canonical}>
@@ -64,6 +65,8 @@ const languageHref = `${mountPath}${equivalentPath}`;
 <meta property="og:image" content={ogImage}>
 <meta name="twitter:card" content="summary_large_image">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href={`${pathPrefix}css/astra.css`}>
 <link rel="stylesheet" href={`${pathPrefix}css/b2b.css`}>
@@ -71,14 +74,18 @@ const languageHref = `${mountPath}${equivalentPath}`;
 <slot name="head" />
 </head>
 <body class={bodyClass} data-lead-source={leadSource} data-lead-endpoint={leadEndpoint} data-turnstile-sitekey={turnstileSiteKey}>
+<a class="skip-link" href="#main-content">{locale === 'en' ? 'Skip to content' : 'Перейти до вмісту'}</a>
 <Header pathPrefix={pathPrefix} sitePrefix={sitePrefix} locale={locale} alternateHref={languageHref} />
-<main>
+<main id="main-content" tabindex="-1">
   <slot />
 </main>
 <Footer pathPrefix={pathPrefix} sitePrefix={sitePrefix} locale={locale} />
 <LeadModal locale={locale} />
 <MobileMenu sitePrefix={sitePrefix} locale={locale} alternateHref={languageHref} />
-<div class="lightbox" aria-hidden="true"><img src="" alt=""></div>
+<div class="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label={locale === 'en' ? 'Image preview' : 'Перегляд зображення'} inert>
+  <button class="lightbox-close" type="button" data-close-lightbox aria-label={locale === 'en' ? 'Close image preview' : 'Закрити перегляд'}>✕</button>
+  <img src="" alt="">
+</div>
 <script src={`${pathPrefix}js/astra.js`} defer is:inline></script>
 <script src={`${pathPrefix}js/motion.js`} defer is:inline></script>
 </body>

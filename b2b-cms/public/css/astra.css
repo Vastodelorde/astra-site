@@ -71,7 +71,7 @@
 
 /* ----------------------------------------------------------------- RESET */
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:118px}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:118px;overflow-x:clip}
 body{
   font-family:var(--font-body);
   font-size:var(--t-body);
@@ -87,6 +87,8 @@ ul,ol{list-style:none}
 button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
 input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:3px}
+.skip-link{position:fixed;top:10px;left:10px;z-index:1000;padding:10px 14px;border-radius:var(--r-md);background:#fff;color:var(--navy-900);font-weight:700;transform:translateY(-160%);transition:transform var(--dur) var(--ease)}
+.skip-link:focus{transform:none}
 ::selection{background:oklch(0.585 0.205 25 / .18)}
 
 /* ----------------------------------------------------------------- TYPE */
@@ -127,6 +129,7 @@ strong{font-weight:600}
 .section-head.center .eyebrow{justify-content:center}
 
 .grid{display:grid;gap:clamp(16px,2vw,26px)}
+.grid>*{min-width:0}
 .grid-2{grid-template-columns:repeat(2,1fr)}
 .grid-3{grid-template-columns:repeat(3,1fr)}
 .grid-4{grid-template-columns:repeat(4,1fr)}
@@ -499,6 +502,7 @@ strong{font-weight:600}
 .lightbox.open{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
 .lightbox img{max-width:min(1100px,94vw);max-height:92vh;border-radius:var(--r-lg);box-shadow:var(--sh-lg);cursor:zoom-out;transform:scale(.96);transition:transform var(--dur) var(--ease)}
 .lightbox.open img{transform:none}
+.lightbox-close{position:absolute;top:max(18px,env(safe-area-inset-top));right:max(18px,env(safe-area-inset-right));z-index:1;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#fff;color:var(--navy-900);font-size:1.15rem;box-shadow:var(--sh-md)}
 
 /* sticky mobile bar */
 .mobile-cta{display:none;position:fixed;left:0;right:0;bottom:0;z-index:55;gap:10px;padding:10px 14px;background:oklch(0.20 0.04 264 /.96);backdrop-filter:blur(6px);box-shadow:0 -8px 24px -16px #000}

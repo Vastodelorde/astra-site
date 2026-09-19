@@ -56,10 +56,10 @@ const brandImages = ['dahua', 'hikvision', 'u-prox', 'zkteco', 'bft', 'nice', 'c
 
       {section.kind === 'contact' && <div class="lead-card" style="max-width:640px;margin-inline:auto"><form data-lead style="display:flex;flex-direction:column;gap:14px">
         <input type="hidden" name="mode" value="consult">
-        <div class="field"><label>Name / company</label><input type="text" name="name" placeholder="Your name or company"></div>
-        <div class="field"><label>Phone number</label><input type="tel" data-phone name="phone" placeholder="+38 (0__) ___-__-__" required><span class="err"></span></div>
-        <div class="field"><label>Site address</label><input type="text" name="address" placeholder="City, street, building"></div>
-        <div class="field"><label>Tell us what you need</label><textarea name="message" rows="3" placeholder="Site type, services needed, approximate scale"></textarea></div>
+        <div class="field"><label for={`${slug}-lead-name`}>Name / company</label><input id={`${slug}-lead-name`} type="text" name="name" autocomplete="organization" placeholder="Your name or company"></div>
+        <div class="field"><label for={`${slug}-lead-phone`}>Phone number</label><input id={`${slug}-lead-phone`} type="tel" data-phone name="phone" autocomplete="tel" inputmode="tel" placeholder="+38 (0__) ___-__-__" required aria-describedby={`${slug}-lead-phone-error`}><span class="err" id={`${slug}-lead-phone-error`} aria-live="polite"></span></div>
+        <div class="field"><label for={`${slug}-lead-address`}>Site address</label><input id={`${slug}-lead-address`} type="text" name="address" autocomplete="street-address" placeholder="City, street, building"></div>
+        <div class="field"><label for={`${slug}-lead-message`}>Tell us what you need</label><textarea id={`${slug}-lead-message`} name="message" rows="3" placeholder="Site type, services needed, approximate scale"></textarea></div>
         <input type="hidden" name="tariff">
         <button class="btn btn--primary btn--block" type="submit">Send request</button>
         <p class="form-note">By submitting this form, you agree to the processing of your data under our privacy policy.</p>

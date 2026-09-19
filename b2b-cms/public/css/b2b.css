@@ -7,7 +7,6 @@
 .page-b2b .size-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(18px,2.2vw,28px);align-items:stretch}
 @media(max-width:720px){.page-b2b .size-grid{grid-template-columns:1fr}}
 .page-b2b .size-card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);padding:clamp(24px,2.4vw,32px);transition:box-shadow .25s var(--ease),border-color .25s var(--ease)}
-.page-b2b .size-card:has(a[href],button):hover{box-shadow:var(--sh-lg);border-color:var(--blue)}
 .page-b2b .size-card .top{display:flex;align-items:center;gap:16px;margin-bottom:20px}
 .page-b2b .size-card .ic{flex:none;width:54px;height:54px;border-radius:15px;background:var(--blue-050);display:grid;place-items:center}
 .page-b2b .size-card .ic svg{width:27px;height:27px;fill:none;stroke:var(--blue-700);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -22,7 +21,6 @@
 
 /* three directions (ISP / INSTALL / CLOUD) */
 .page-b2b .dir-card{display:flex;flex-direction:column;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px 26px;transition:box-shadow .25s var(--ease),border-color .25s var(--ease)}
-.page-b2b .dir-card:has(a[href],button):hover{box-shadow:var(--sh-md);border-color:var(--blue)}
 .page-b2b .dir-card .badge{font-family:var(--font-display);font-weight:800;letter-spacing:.04em;font-size:1.1rem;color:var(--navy-900)}
 .page-b2b .dir-card .badge .mk{color:var(--red)}
 .page-b2b .dir-card p{font-size:.94rem;color:var(--muted);margin:0;flex:1}
@@ -69,7 +67,6 @@
 /* breadcrumb on navy heroes */
 .page-b2b .breadcrumb{font-size:.84rem;color:var(--on-navy-dim);margin-bottom:6px}
 .page-b2b .breadcrumb a{color:var(--on-navy-dim)}
-.page-b2b .breadcrumb a:hover{color:#fff}
 
 /* account managers — large horizontal cards (~half-width), big photo + name/role/note */
 .page-b2b .mgr-grid{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:clamp(18px,2.2vw,28px)}
@@ -87,7 +84,6 @@
 @media(max-width:820px){.page-b2b .svc-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.page-b2b .svc-grid{grid-template-columns:1fr}}
 .page-b2b .svc{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 22px;transition:box-shadow .2s var(--ease),border-color .2s var(--ease)}
-.page-b2b .svc:has(a[href],button):hover{border-color:var(--blue);box-shadow:var(--sh-md)}
 .page-b2b .svc h4{margin:0;font-size:1.05rem}
 .page-b2b .svc p{margin:0;font-size:.9rem;color:var(--muted);line-height:1.5;flex:1}
 .page-b2b .svc .link-arrow{margin-top:6px;font-size:.88rem}
@@ -106,7 +102,6 @@
 /* ── full-width tariff rows (speed-first; works for 1..N tariffs) ── */
 .page-b2b .tariff-list{display:flex;flex-direction:column;gap:14px}
 .page-b2b .trow{display:grid;grid-template-columns:minmax(230px,.9fr) 1.5fr auto;gap:clamp(20px,3vw,40px);align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);padding:clamp(22px,2.2vw,30px) clamp(24px,3vw,40px);transition:box-shadow .2s var(--ease),border-color .2s var(--ease)}
-.page-b2b .trow:has(a[href],button):hover{box-shadow:var(--sh-md);border-color:var(--line-strong)}
 /* speed — the dominant element */
 .page-b2b .trow .sp .plan{display:block;font-family:var(--font-display);font-weight:700;font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:8px}
 .page-b2b .trow .sp .val{display:flex;align-items:baseline;gap:8px;font-family:var(--font-display);font-weight:800;font-size:clamp(2.1rem, 1.6rem + 1.6vw, 2.7rem);color:var(--navy-900);line-height:1;letter-spacing:-.01em;white-space:nowrap}
@@ -128,6 +123,14 @@
   .page-b2b .trow .buy{border-left:0;padding:6px 0 0;flex-direction:row;align-items:center;justify-content:space-between;width:100%}
 }
 @media(max-width:520px){.page-b2b .trow .svc-list{grid-template-columns:1fr}.page-b2b .trow .buy{flex-direction:column;align-items:flex-start}}
+
+@media(hover:hover) and (pointer:fine){
+  .page-b2b .size-card:has(a[href],button):hover{box-shadow:var(--sh-lg);border-color:var(--blue)}
+  .page-b2b .dir-card:has(a[href],button):hover{box-shadow:var(--sh-md);border-color:var(--blue)}
+  .page-b2b .breadcrumb a:hover{color:#fff}
+  .page-b2b .svc:has(a[href],button):hover{border-color:var(--blue);box-shadow:var(--sh-md)}
+  .page-b2b .trow:has(a[href],button):hover{box-shadow:var(--sh-md);border-color:var(--line-strong)}
+}
 
 /* Campaign-like entrances; content stays visible when JS or motion is unavailable. */
 @keyframes b2b-enter{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}

@@ -11,9 +11,6 @@ import Layout from '../layouts/Layout.astro';
 >
   <style is:global slot="head">
 /* ── Page-scoped: six-card tariff grid + note (не входять у astra.css/b2b.css) ── */
-.page-b2b .tariff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px)}
-@media(max-width:960px){.page-b2b .tariff-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.page-b2b .tariff-grid{grid-template-columns:1fr}}
 .page-b2b .tariff-note{margin-top:clamp(20px,3vw,32px);font-size:.94rem;color:var(--muted);line-height:1.6}
 .page-b2b .tariff-note b{color:var(--navy-900)}
 .page-b2b .op-note{margin-top:clamp(20px,3vw,28px);font-size:.94rem;color:var(--muted);line-height:1.6}

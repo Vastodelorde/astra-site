@@ -13,7 +13,7 @@ const link = (page: string) => `${sitePrefix}${page}`;
     <a class="t-phone" href="tel:+380800203838">0&nbsp;800&nbsp;20-38-38<small>{en ? '24/7 support' : 'цілодобова підтримка'}</small></a>
     <a class="lang-switch lang-switch--top" href={alternateHref} lang={en ? 'uk' : 'en'} aria-label={en ? 'Українська версія' : 'English version'}>{en ? 'УКР' : 'EN'}</a>
     <button class="btn btn--primary btn--sm" data-modal data-mode="consult">{en ? 'Request a consultation' : 'Замовити консультацію'}</button>
-    <button class="burger" aria-label={en ? 'Open menu' : 'Меню'} aria-expanded="false"><span></span></button>
+    <button class="burger" aria-label={en ? 'Open menu' : 'Відкрити меню'} data-label-open={en ? 'Open menu' : 'Відкрити меню'} data-label-close={en ? 'Close menu' : 'Закрити меню'} aria-expanded="false" aria-controls="mobile-menu"><span></span></button>
   </div>
   <nav class="mainnav" aria-label={en ? 'Main navigation' : 'Головна навігація'}>
     <div class="container"><ul>

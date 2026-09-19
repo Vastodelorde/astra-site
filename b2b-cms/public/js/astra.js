@@ -4,6 +4,15 @@
   var doc = document;
   var en = doc.documentElement.lang === 'en';
   var tr = function (uk, english) { return en ? english : uk; };
+  var focusableSelector = 'a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  function trapFocus(root, event) {
+    if (event.key !== "Tab") return;
+    var items = [].slice.call(root.querySelectorAll(focusableSelector)).filter(function (item) { return item.getClientRects().length > 0; });
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (event.shiftKey && doc.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && doc.activeElement === last) { event.preventDefault(); first.focus(); }
+  }
 
   /* sticky header shadow */
   var header = doc.querySelector(".site-header");
@@ -36,6 +45,7 @@
       mobile.inert = true;
       mobile.setAttribute("aria-hidden", "true");
       burger.setAttribute("aria-expanded", "false");
+      burger.setAttribute("aria-label", burger.dataset.labelOpen);
       if (restoreFocus) burger.focus();
     };
     burger.addEventListener("click", function () {
@@ -45,6 +55,7 @@
       mobile.classList.add("open");
       if (menuScrim) menuScrim.classList.add("open");
       burger.setAttribute("aria-expanded", "true");
+      burger.setAttribute("aria-label", burger.dataset.labelClose);
       doc.body.style.overflow = "hidden";
       var close = mobile.querySelector("[data-close-menu]");
       if (close) close.focus();
@@ -53,7 +64,11 @@
     var mc = mobile.querySelector("[data-close-menu]");
     if (mc) mc.addEventListener("click", function () { closeMenu(true); });
     if (menuScrim) menuScrim.addEventListener("click", function () { closeMenu(true); });
-    doc.addEventListener("keydown", function (e) { if (e.key === "Escape" && mobile.classList.contains("open")) closeMenu(true); });
+    doc.addEventListener("keydown", function (e) {
+      if (!mobile.classList.contains("open")) return;
+      if (e.key === "Escape") closeMenu(true);
+      else trapFocus(mobile, e);
+    });
   }
 
   /* lead modal — show the selected tariff or the source page */
@@ -108,19 +123,41 @@
     if (t) { e.preventDefault(); modalTrigger = t; openModal(t.dataset.tariff || "", t.dataset.mode || "", t.dataset.leadSource || doc.body.dataset.leadSource || ""); }
     if (e.target.closest("[data-close]") || e.target.classList.contains("backdrop")) closeModal();
   });
-  doc.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
+  doc.addEventListener("keydown", function (e) {
+    if (!modal || !modal.classList.contains("open")) return;
+    if (e.key === "Escape") closeModal();
+    else trapFocus(modal, e);
+  });
 
   /* image lightbox — click any [data-zoom] image to view it enlarged */
   var lightbox = doc.querySelector(".lightbox");
   if (lightbox) {
     var lbImg = lightbox.querySelector("img");
-    var closeLb = function () { lightbox.classList.remove("open"); lightbox.setAttribute("aria-hidden", "true"); doc.body.style.overflow = ""; };
+    var lbTrigger = null;
+    var closeLb = function () {
+      lightbox.classList.remove("open"); lightbox.setAttribute("aria-hidden", "true"); lightbox.inert = true; doc.body.style.overflow = "";
+      if (lbTrigger && lbTrigger.isConnected) lbTrigger.focus();
+    };
+    var openLb = function (image) {
+      lbTrigger = image; lbImg.src = image.currentSrc || image.src; lbImg.alt = image.alt || "";
+      lightbox.inert = false; lightbox.setAttribute("aria-hidden", "false"); lightbox.classList.add("open"); doc.body.style.overflow = "hidden";
+      lightbox.querySelector("[data-close-lightbox]").focus();
+    };
+    doc.querySelectorAll("img[data-zoom]").forEach(function (image) {
+      image.tabIndex = 0; image.setAttribute("role", "button");
+      image.setAttribute("aria-label", tr("Збільшити зображення: ", "Enlarge image: ") + (image.alt || ""));
+      image.addEventListener("keydown", function (event) { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openLb(image); } });
+    });
     doc.addEventListener("click", function (e) {
       var z = e.target.closest("[data-zoom]");
-      if (z && z.tagName === "IMG") { lbImg.src = z.currentSrc || z.src; lbImg.alt = z.alt || ""; lightbox.setAttribute("aria-hidden", "false"); lightbox.classList.add("open"); doc.body.style.overflow = "hidden"; return; }
-      if (e.target.closest(".lightbox")) closeLb();
+      if (z && z.tagName === "IMG") { openLb(z); return; }
+      if (e.target.closest("[data-close-lightbox]") || e.target === lightbox || e.target === lbImg) closeLb();
     });
-    doc.addEventListener("keydown", function (e) { if (e.key === "Escape" && lightbox.classList.contains("open")) closeLb(); });
+    doc.addEventListener("keydown", function (e) {
+      if (!lightbox.classList.contains("open")) return;
+      if (e.key === "Escape") closeLb();
+      else trapFocus(lightbox, e);
+    });
   }
 
   /* phone mask +38 (0XX) XXX-XX-XX */

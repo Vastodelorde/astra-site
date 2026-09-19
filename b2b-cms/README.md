@@ -1,43 +1,71 @@
-# Astro Starter Kit: Minimal
+# ASTRA B2B website
 
-```sh
-npm create astro@latest -- --template minimal
+Production website for ASTRA business customers. The project includes Ukrainian and English pages, a Sanity-managed blog and segment content, and lead forms delivered to Telegram through a Cloudflare Worker.
+
+## Requirements
+
+- Node.js 22.12 or newer
+- npm
+- Sanity project access for content editing
+- Cloudflare Worker and Turnstile credentials for lead forms
+
+## Local setup
+
+```bash
+npm install
+cp .env.example .env
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Open `http://localhost:4321/`. Do not commit `.env`; it may contain the private Sanity read token.
 
-## 🚀 Project Structure
+## Environment variables
 
-Inside of your Astro project, you'll see the following folders and files:
+| Variable | Visibility | Purpose |
+| --- | --- | --- |
+| `PUBLIC_SANITY_PROJECT_ID` | Browser-safe | Sanity project identifier |
+| `PUBLIC_SANITY_DATASET` | Browser-safe | Sanity dataset, normally `production` |
+| `SANITY_TOKEN` | Secret | Server-side read token for a private dataset |
+| `PUBLIC_LEAD_ENDPOINT` | Browser-safe | Cloudflare Worker URL for form delivery |
+| `PUBLIC_TURNSTILE_SITE_KEY` | Browser-safe | Cloudflare Turnstile site key |
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+The Telegram bot token, chat ID, Turnstile secret key, and allowed origins belong in the Cloudflare Worker secrets, not in this website project.
+
+## Commands
+
+```bash
+npm run dev          # local development
+npm run build        # production build
+npm run test:worker  # Cloudflare Worker unit tests
+npm run test:syntax  # public JavaScript and Vercel configuration
+npm run check        # Astro and TypeScript diagnostics
+npm run preflight    # route, metadata, link, asset and form checks
+npm test             # complete handoff check: Worker tests, build, preflight
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+`npm run preflight` reuses a running local server or starts a temporary one. To test another deployment:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```bash
+npm run preflight -- https://example.com/
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Content editing
 
-## 🧞 Commands
+- Blog posts and segment pages are edited in Sanity Studio.
+- Local fallback content lives in `src/data/` and keeps the public site usable if Sanity is temporarily unavailable.
+- Shared navigation is split between `Header.astro`, `MobileMenu.astro`, and `Footer.astro`; update all three together.
+- Product rules and content ownership are documented in `PRODUCT.md`; visual rules are in `DESIGN.md`.
 
-All commands are run from the root of the project, from a terminal:
+## Deployment
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+The current adapter and `vercel.json` target Vercel. Set all website environment variables for both Production and Preview before redeploying. The Sanity Studio and Cloudflare Worker are separate deployments.
 
-## 👀 Want to learn more?
+The site is not locked to Vercel. For a conventional Node.js host, replace `@astrojs/vercel` with `@astrojs/node`, change the adapter in `astro.config.mjs`, set the same environment variables, build the project, and run the generated server behind HTTPS. Confirm the final host supports Node.js SSR because the blog and English pages are rendered on request.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Handoff checklist
+
+1. Run `npm test` with a clean install.
+2. Verify a real form submission in the production domain and confirm the Telegram notification.
+3. Transfer access to the Git repository, hosting project, Sanity project, Cloudflare account, bot ownership, and domain DNS.
+4. Rotate secrets if access is changing between organizations.
+5. Update canonical URLs and allowed origins before moving from `/b2b/` or to another domain.

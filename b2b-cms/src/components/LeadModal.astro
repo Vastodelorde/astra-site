@@ -9,12 +9,12 @@ const en = locale === 'en';
     <div data-modal-form-content>
       <h3 id="lead-modal-title" style="margin:8px 0 4px">{en ? 'Request a consultation' : 'Замовити консультацію'}</h3>
       <p class="modal-context" data-context-line hidden><span data-context-label></span> <b></b></p>
-      <p class="muted" style="font-size:.9rem;margin-bottom:18px">{en ? 'Your account manager will contact you, recommend a solution, and prepare a proposal.' : "Закріплений менеджер зв'яжеться з вами, підбере рішення та підготує пропозицію."}</p>
+      <p class="muted" style="font-size:.9rem;margin-bottom:18px">{en ? 'Our manager will contact you, recommend a solution, and prepare a proposal.' : "Наш менеджер зв'яжеться з вами, підбере рішення та підготує пропозицію."}</p>
       <form data-lead style="display:flex;flex-direction:column;gap:14px">
-        <div class="field"><label>{en ? 'Name / company' : "Ім'я / компанія"}</label><input type="text" name="name" placeholder={en ? 'Your name or company' : "Ваше ім'я або назва компанії"}></div>
-        <div class="field"><label>{en ? 'Phone number' : 'Номер телефону'}</label><input type="tel" data-phone name="phone" placeholder="+38 (0__) ___-__-__" required><span class="err"></span></div>
-        <div class="field"><label>{en ? 'Site address' : "Адреса об'єкта"}</label><input type="text" name="address" placeholder={en ? 'City, street, building' : 'Місто, вулиця, будинок'}></div>
-        <div class="field"><label>{en ? 'Tell us what you need' : 'Опишіть деталі вашого звернення'}</label><textarea name="message" rows="3" placeholder={en ? 'Site type, services needed, approximate scale' : "Тип об'єкта, потрібні послуги, орієнтовний масштаб"}></textarea></div>
+        <div class="field"><label for="lead-modal-name">{en ? 'Name / company' : "Ім'я / компанія"}</label><input id="lead-modal-name" type="text" name="name" autocomplete="organization" placeholder={en ? 'Your name or company' : "Ваше ім'я або назва компанії"}></div>
+        <div class="field"><label for="lead-modal-phone">{en ? 'Phone number' : 'Номер телефону'}</label><input id="lead-modal-phone" type="tel" data-phone name="phone" autocomplete="tel" inputmode="tel" placeholder="+38 (0__) ___-__-__" required aria-describedby="lead-modal-phone-error"><span class="err" id="lead-modal-phone-error" aria-live="polite"></span></div>
+        <div class="field"><label for="lead-modal-address">{en ? 'Site address' : "Адреса об'єкта"}</label><input id="lead-modal-address" type="text" name="address" autocomplete="street-address" placeholder={en ? 'City, street, building' : 'Місто, вулиця, будинок'}></div>
+        <div class="field"><label for="lead-modal-message">{en ? 'Tell us what you need' : 'Опишіть деталі вашого звернення'}</label><textarea id="lead-modal-message" name="message" rows="3" placeholder={en ? 'Site type, services needed, approximate scale' : "Тип об'єкта, потрібні послуги, орієнтовний масштаб"}></textarea></div>
         <input type="hidden" name="tariff">
         <input type="hidden" name="source">
         <button class="btn btn--primary btn--block" type="submit">{en ? 'Send request' : 'Надіслати заявку'}</button>

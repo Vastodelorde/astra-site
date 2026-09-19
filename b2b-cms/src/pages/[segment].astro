@@ -150,10 +150,10 @@ const legacyManagerNote = 'Веде ваші договори, рахунки й
       <div class="lead-card" style="max-width:640px;margin-inline:auto">
         <form data-lead style="display:flex;flex-direction:column;gap:14px">
           <input type="hidden" name="mode" value="consult">
-          <div class="field"><label>Ім'я / компанія</label><input type="text" name="name" placeholder="Ваше ім'я або назва компанії"></div>
-          <div class="field"><label>Номер телефону</label><input type="tel" data-phone name="phone" placeholder="+38 (0__) ___-__-__" required><span class="err"></span></div>
-          <div class="field"><label>Адреса об'єкта</label><input type="text" name="address" placeholder="Місто, вулиця, будинок"></div>
-          <div class="field"><label>Опишіть деталі вашого звернення</label><textarea name="message" rows="3" placeholder="Тип об'єкта, потрібні послуги, орієнтовний масштаб"></textarea></div>
+          <div class="field"><label for={`${segment}-lead-name`}>Ім'я / компанія</label><input id={`${segment}-lead-name`} type="text" name="name" autocomplete="organization" placeholder="Ваше ім'я або назва компанії"></div>
+          <div class="field"><label for={`${segment}-lead-phone`}>Номер телефону</label><input id={`${segment}-lead-phone`} type="tel" data-phone name="phone" autocomplete="tel" inputmode="tel" placeholder="+38 (0__) ___-__-__" required aria-describedby={`${segment}-lead-phone-error`}><span class="err" id={`${segment}-lead-phone-error`} aria-live="polite"></span></div>
+          <div class="field"><label for={`${segment}-lead-address`}>Адреса об'єкта</label><input id={`${segment}-lead-address`} type="text" name="address" autocomplete="street-address" placeholder="Місто, вулиця, будинок"></div>
+          <div class="field"><label for={`${segment}-lead-message`}>Опишіть деталі вашого звернення</label><textarea id={`${segment}-lead-message`} name="message" rows="3" placeholder="Тип об'єкта, потрібні послуги, орієнтовний масштаб"></textarea></div>
           <input type="hidden" name="tariff">
           <button class="btn btn--primary btn--block" type="submit">Надіслати заявку</button>
           <p class="form-note">Натискаючи кнопку, ви погоджуєтесь з обробкою даних згідно з політикою конфіденційності.</p>

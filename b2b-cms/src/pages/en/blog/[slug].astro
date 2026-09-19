@@ -1,17 +1,18 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import BlogCard from '../../../components/BlogCard.astro';
-import { getBlogPost, getBlogPosts } from '../../../lib/sanity';
+import { getBlogPosts } from '../../../lib/sanity';
 import { starterEnSourceSlug } from '../../../data/blogEn';
 import { toHTML } from '@portabletext/to-html';
 
 export const prerender = false;
-const post = await getBlogPost(Astro.params.slug || '', 'en');
+const [posts, sourcePosts] = await Promise.all([getBlogPosts('en'), getBlogPosts()]);
+const post = posts.find((item) => item.slug === (Astro.params.slug || ''));
 if (!post) return new Response('Article not found', { status: 404, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
-const related = (await getBlogPosts('en')).filter((item) => item.slug !== post.slug).slice(0, 2);
+const related = posts.filter((item) => item.slug !== post.slug).slice(0, 2);
 const cover = post.image.startsWith('https://cdn.sanity.io/') ? `${post.image}?w=1600&auto=format&q=85` : post.image.startsWith('http') ? post.image : `../../../${post.image}`;
 const content = toHTML(post.body || []);
-const sourceSlug = Object.keys(starterEnSourceSlug).find((key) => starterEnSourceSlug[key] === post.slug);
+const sourceSlug = post.sourceSlug || Object.keys(starterEnSourceSlug).find((key) => starterEnSourceSlug[key] === post.slug && sourcePosts.some((item) => item.slug === key));
 const alternatePath = sourceSlug || post.sourceSlug ? `/blog/${sourceSlug || post.sourceSlug}/` : '/blog/';
 ---
 <Layout locale="en" alternatePath={alternatePath} title={`${post.title} | ASTRA Blog`} description={post.excerpt} canonical={`https://astra.in.ua/b2b/en/blog/${post.slug}/`} ogTitle={post.title} ogDescription={post.excerpt} ogImage={post.image.startsWith('http') ? post.image : `https://astra.in.ua/b2b/${post.image}`} pathPrefix="../../../" bodyClass="page-b2b page-blog ctx-biz mode-biz">

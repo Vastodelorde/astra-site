@@ -8,6 +8,11 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "test": "npm run test:worker && npm run test:syntax && npm run check && npm run build && npm run preflight",
+    "test:worker": "node --test worker/src/index.test.js",
+    "test:syntax": "node --check public/js/astra.js && node --check public/js/motion.js && node -e \"JSON.parse(require('node:fs').readFileSync('vercel.json','utf8'))\"",
+    "check": "astro check",
+    "preflight": "node scripts/preflight.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -17,5 +22,13 @@
     "@sanity/client": "^7.23.0",
     "@sanity/image-url": "^2.1.1",
     "astro": "^7.0.7"
+  },
+  "overrides": {
+    "path-to-regexp": "6.3.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^26.6.2",
+    "typescript": "^6.0.3"
   }
 }
