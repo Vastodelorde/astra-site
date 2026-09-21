@@ -39,6 +39,17 @@ const routes = [
 const failures = [];
 const fetched = new Map();
 let devServer;
+const isLocal = ['localhost', '127.0.0.1'].includes(baseUrl.hostname);
+
+function resolveLocalRoute(url) {
+  const resolved = new URL(url);
+  if (!isLocal || resolved.origin !== baseUrl.origin) return resolved;
+  if (resolved.pathname === '/index.html') resolved.pathname = '/';
+  else if (/^\/(?:operators|isp|install|cloud|poslugy|taryfy|pro|kontakty)\.html$/.test(resolved.pathname)) {
+    resolved.pathname = resolved.pathname.replace(/\.html$/, '/');
+  }
+  return resolved;
+}
 
 function check(condition, route, message) {
   if (!condition) failures.push(`${route}: ${message}`);
@@ -47,7 +58,7 @@ function check(condition, route, message) {
 async function request(url, timeout = 20000) {
   const key = url.href;
   if (!fetched.has(key)) {
-    fetched.set(key, fetch(url, { signal: AbortSignal.timeout(timeout), redirect: 'follow' }));
+    fetched.set(key, fetch(resolveLocalRoute(url), { signal: AbortSignal.timeout(timeout), redirect: 'follow' }));
   }
   return fetched.get(key);
 }

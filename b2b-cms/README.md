@@ -1,6 +1,6 @@
 # ASTRA B2B website
 
-Production website for ASTRA business customers. The project includes Ukrainian and English pages, a Sanity-managed blog and segment content, and lead forms delivered to Telegram through a Cloudflare Worker.
+Production website for ASTRA business customers. The project includes Ukrainian and English pages, structured Sanity-managed content, and lead forms delivered to Telegram through a Cloudflare Worker.
 
 ## Requirements
 
@@ -41,6 +41,7 @@ npm run test:syntax  # public JavaScript and Vercel configuration
 npm run check        # Astro and TypeScript diagnostics
 npm run preflight    # route, metadata, link, asset and form checks
 npm test             # complete handoff check: Worker tests, build, preflight
+npm run seed:content # seed managed pages, services, tariffs and site settings
 ```
 
 `npm run preflight` reuses a running local server or starts a temporary one. To test another deployment:
@@ -51,8 +52,10 @@ npm run preflight -- https://example.com/
 
 ## Content editing
 
-- Blog posts and segment pages are edited in Sanity Studio.
+- Blog posts, the home page, service catalog, plans, contacts, site settings and segment pages are edited in Sanity Studio. Ukrainian and English fields live in the same documents.
+- Managed pages are server-rendered and fetch published Sanity content without the CDN cache, so published changes appear without a site rebuild.
 - Local fallback content lives in `src/data/` and keeps the public site usable if Sanity is temporarily unavailable.
+- `npm run seed:content` is idempotent but overwrites the managed singleton pages with the repository fallback content. Use it for initial setup, not routine editing.
 - Shared navigation is split between `Header.astro`, `MobileMenu.astro`, and `Footer.astro`; update all three together.
 - Product rules and content ownership are documented in `PRODUCT.md`; visual rules are in `DESIGN.md`.
 
@@ -60,7 +63,7 @@ npm run preflight -- https://example.com/
 
 The current adapter and `vercel.json` target Vercel. Set all website environment variables for both Production and Preview before redeploying. The Sanity Studio and Cloudflare Worker are separate deployments.
 
-The site is not locked to Vercel. For a conventional Node.js host, replace `@astrojs/vercel` with `@astrojs/node`, change the adapter in `astro.config.mjs`, set the same environment variables, build the project, and run the generated server behind HTTPS. Confirm the final host supports Node.js SSR because the blog and English pages are rendered on request.
+The site is not locked to Vercel. For a conventional Node.js host, replace `@astrojs/vercel` with `@astrojs/node`, change the adapter in `astro.config.mjs`, set the same environment variables, build the project, and run the generated server behind HTTPS. Confirm the final host supports Node.js SSR because managed pages and the blog are rendered on request.
 
 ## Handoff checklist
 

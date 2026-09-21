@@ -13,6 +13,7 @@
     "test:syntax": "node --check public/js/astra.js && node --check public/js/motion.js && node -e \"JSON.parse(require('node:fs').readFileSync('vercel.json','utf8'))\"",
     "check": "astro check",
     "preflight": "node scripts/preflight.mjs",
+    "seed:content": "node --env-file=.env scripts/seed-site-content.ts",
     "preview": "astro preview",
     "astro": "astro"
   },

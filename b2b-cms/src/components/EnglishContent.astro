@@ -3,14 +3,18 @@ import Layout from '../layouts/Layout.astro';
 import BlogCard from './BlogCard.astro';
 import ServiceIcon from './ServiceIcon.astro';
 import { getBlogPosts } from '../lib/sanity';
+import { getEnglishManagedPage, getEnglishSegmentPage } from '../lib/managedEnglishPage';
 import type { EnglishPage } from '../data/enPages';
 
-const { page, slug } = Astro.props as { page: EnglishPage; slug: string };
+const { page: fallbackPage, slug } = Astro.props as { page: EnglishPage; slug: string };
+const segmentPages = new Set(['maliy', 'seredniy', 'velykyi']);
+const page = segmentPages.has(slug)
+  ? await getEnglishSegmentPage(slug, fallbackPage)
+  : await getEnglishManagedPage(slug, fallbackPage);
 const latestPosts = slug === 'index' ? (await getBlogPosts('en')).slice(0, 3) : [];
 const canonical = `https://astra.in.ua/b2b/en/${slug === 'index' ? '' : `${slug}.html`}`;
 const partnerImages = Array.from({ length: 17 }, (_, index) => index + 1);
 const brandImages = ['dahua', 'hikvision', 'u-prox', 'zkteco', 'bft', 'nice', 'came', 'faac'];
-const segmentPages = new Set(['maliy', 'seredniy', 'velykyi']);
 const sizeIcons = [
   '<path d="m2 7 4.4-4.4A2 2 0 0 1 7.8 2h8.4a2 2 0 0 1 1.4.6L22 7"/><path d="M4 7v13a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7"/><path d="M2 7h20"/><path d="M9 21v-6a2 2 0 0 1 4 0v6"/>',
   '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/>',

@@ -3,6 +3,9 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import LeadModal from '../components/LeadModal.astro';
 import MobileMenu from '../components/MobileMenu.astro';
+import { siteSettingsFallback } from '../data/siteContent';
+import { getSiteSettings } from '../lib/sanity';
+import { mergeContent } from '../lib/content';
 
 export interface Props {
   title: string;
@@ -43,6 +46,7 @@ const enPath = locale === 'en' ? pagePath : equivalentPath;
 const sitePrefix = `${pathPrefix}${locale === 'en' ? 'en/' : ''}`;
 const mountPath = Astro.url.pathname.startsWith('/b2b/') ? '/b2b' : '';
 const languageHref = `${mountPath}${equivalentPath}`;
+const siteSettings = mergeContent(siteSettingsFallback, await getSiteSettings());
 ---
 <!DOCTYPE html>
 <html lang={locale}>
@@ -75,7 +79,7 @@ const languageHref = `${mountPath}${equivalentPath}`;
 </head>
 <body class={bodyClass} data-lead-source={leadSource} data-lead-endpoint={leadEndpoint} data-turnstile-sitekey={turnstileSiteKey}>
 <a class="skip-link" href="#main-content">{locale === 'en' ? 'Skip to content' : 'Перейти до вмісту'}</a>
-<Header pathPrefix={pathPrefix} sitePrefix={sitePrefix} locale={locale} alternateHref={languageHref} />
+<Header pathPrefix={pathPrefix} sitePrefix={sitePrefix} locale={locale} alternateHref={languageHref} settings={siteSettings} />
 <main id="main-content" tabindex="-1">
   <slot />
 </main>

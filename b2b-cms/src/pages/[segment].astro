@@ -6,16 +6,11 @@ import { seredniy } from '../data/seredniy.ts';
 import { velykyi } from '../data/velykyi.ts';
 import { getSegmentPage } from '../lib/sanity.ts';
 
-export function getStaticPaths() {
-  return [
-    { params: { segment: 'maliy' }, props: { local: maliy } },
-    { params: { segment: 'seredniy' }, props: { local: seredniy } },
-    { params: { segment: 'velykyi' }, props: { local: velykyi } },
-  ];
-}
-
+export const prerender = false;
 const { segment } = Astro.params;
-const { local } = Astro.props as { local: any };
+const localPages: Record<string, any> = { maliy, seredniy, velykyi };
+const local = localPages[segment || ''];
+if (!local) return Astro.redirect('/404');
 const localServiceIcons = new Map((local.services?.items ?? []).map((item: any) => [item.href, item.icon]));
 
 // Prefer Sanity; fall back to the local file per page.

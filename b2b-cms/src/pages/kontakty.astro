@@ -1,13 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { contactPageFallback, siteSettingsFallback } from '../data/siteContent';
+import { getManagedPage, getSiteSettings } from '../lib/sanity';
+import { getSection, localize, mergeContent } from '../lib/content';
+
+export const prerender = false;
+const [managedPage, managedSettings] = await Promise.all([getManagedPage('contacts'), getSiteSettings()]);
+const page = mergeContent(contactPageFallback, managedPage);
+const settings = mergeContent(siteSettingsFallback, managedSettings);
+const seo: any = page.seo;
+const contacts = getSection<any>(page, 'contacts');
+const consult = getSection<any>(page, 'consult');
+const [support, messengers, accounting] = contacts.items;
+const t = (value: any) => localize(value, 'uk');
 ---
 <Layout
-  leadSource="Контакти"
-  title="Контакти для бізнесу · АСТРА"
-  description="Контакти АСТРА для бізнесу: цілодобова підтримка 0 800 20-38-38, месенджери Telegram та Viber, бухгалтерія для юридичних осіб у Львові та форма «Замовити консультацію»."
-  canonical="https://astra.in.ua/b2b/kontakty.html"
-  ogTitle="Контакти для бізнесу · АСТРА"
-  ogDescription="Цілодобова підтримка, месенджери та бухгалтерія для юросіб. Замовте консультацію для вашого об'єкта."
+  leadSource={t(page.hero.label)}
+  title={t(seo.title)}
+  description={t(seo.description)}
+  canonical={seo.canonicalUk}
+  ogTitle={t(seo.ogTitle) || t(seo.title)}
+  ogDescription={t(seo.ogDescription) || t(seo.description)}
 >
   <style is:global slot="head">
 .page-b2b .contact-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column}
@@ -36,14 +49,14 @@ import Layout from '../layouts/Layout.astro';
 .page-b2b .consult-side .msg-btn:hover{border-color:var(--blue)}
   </style>
   <section class="hero">
-    <div class="hero-bg"><img src="img/contacts-banner.jpg" loading="eager" alt="Команда підтримки АСТРА у центрі обслуговування"></div>
+    <div class="hero-bg"><img src={page.hero.imagePath} loading="eager" alt={t(page.hero.imageAlt)}></div>
     <div class="container">
       <div class="hero-inner">
-        <p class="breadcrumb"><a href="index.html">Головна</a> / Контакти</p>
-        <h1>Контакти для бізнесу</h1>
-        <p class="hero-sub">Цілодобова технічна підтримка, месенджери та окрема бухгалтерія для юридичних осіб. Залиште заявку. Наш менеджер зв'яжеться з вами і підбере рішення під ваш об'єкт.</p>
+        <p class="breadcrumb"><a href="index.html">Головна</a> / {t(page.hero.label)}</p>
+        <h1>{t(page.hero.title)}</h1>
+        <p class="hero-sub">{t(page.hero.intro)}</p>
         <div class="hero-cta">
-          <button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button>
+          <button class="btn btn--primary btn--lg" data-modal data-mode="consult">{t(page.hero.ctaLabel)}</button>
         </div>
       </div>
     </div>
@@ -52,57 +65,54 @@ import Layout from '../layouts/Layout.astro';
   <section class="section section--tint" id="contacts" aria-labelledby="contacts-h">
     <div class="container">
       <div class="section-head">
-        <h2 id="contacts-h">Як з нами зв'язатися</h2>
-        <p class="lead">Технічні питання: цілодобово телефоном чи в месенджерах. Документи та оплати для юросіб веде бухгалтерія.</p>
+        <h2 id="contacts-h">{t(contacts.heading)}</h2>
+        <p class="lead">{t(contacts.lead)}</p>
       </div>
 
       <div class="grid grid-3" style="gap:24px;align-items:start">
 
         <div class="contact-card">
-          <h3>Цілодобова підтримка</h3>
-          <p class="sub">Технічна лінія на зв'язку 24/7. Дзвінок на 0&nbsp;800 безкоштовний.</p>
+          <h3>{t(support.title)}</h3>
+          <p class="sub">{t(support.body)}</p>
           <ul class="phone-list">
-            <li><a href="tel:+380800203838"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.2 1l-2.2 2.2Z"/></svg>0&nbsp;800&nbsp;20-38-38 <span class="tag">безкоштовно</span></a></li>
-            <li><a href="tel:+380974183838"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.2 1l-2.2 2.2Z"/></svg>(097)&nbsp;418-3838</a></li>
-            <li><a href="tel:+380954183838"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.2 1l-2.2 2.2Z"/></svg>(095)&nbsp;418-3838</a></li>
-            <li><a href="tel:+380322328808"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.2 1l-2.2 2.2Z"/></svg>(032)&nbsp;232-8808</a></li>
+            <li><a href={settings.supportPhoneHref}><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.2 1l-2.2 2.2Z"/></svg>{settings.supportPhoneDisplay} <span class="tag">безкоштовно</span></a></li>
+            {settings.supportPhones.map((phone: any) => <li><a href={phone.href}><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.2 1l-2.2 2.2Z"/></svg>{t(phone.label)}</a></li>)}
           </ul>
         </div>
 
         <div class="contact-card">
-          <h3>Онлайн у месенджерах</h3>
-          <p class="sub">Напишіть нам, відповідаємо цілодобово.</p>
+          <h3>{t(messengers.title)}</h3>
+          <p class="sub">{t(messengers.body)}</p>
           <div class="msg-row">
-            <a class="msg-btn" href="https://t.me/astraispbot" target="_blank" rel="noopener">
+            <a class="msg-btn" href={settings.telegramUrl} target="_blank" rel="noopener">
               <span class="ic ic--tg" style="--msg-icon:url('assets/telegram.svg')" aria-hidden="true"></span>Telegram
             </a>
-            <a class="msg-btn" href="viber://chat?number=%2B380800203838" target="_blank" rel="noopener">
+            <a class="msg-btn" href={settings.viberUrl} target="_blank" rel="noopener">
               <span class="ic ic--viber" style="--msg-icon:url('assets/vb.svg')" aria-hidden="true"></span>Viber
             </a>
           </div>
-          <p class="sub" style="margin:22px 0 0">Потрібен дзвінок? Залиште номер у формі нижче, і менеджер передзвонить.</p>
+          <p class="sub" style="margin:22px 0 0">{t(messengers.result)}</p>
           <p style="margin-top:14px"><a class="link-arrow" href="#consult">Замовити консультацію <span class="ar" aria-hidden="true">→</span></a></p>
         </div>
 
         <div class="contact-card">
-          <h3>Бухгалтерія для юросіб</h3>
-          <p class="sub">Договори, акти та оплати для юридичних осіб, ТзОВ «АСТРА-ЛЬВІВ».</p>
+          <h3>{t(accounting.title)}</h3>
+          <p class="sub">{t(accounting.body)}</p>
           <address class="addr" style="margin-bottom:16px">
-            <strong>м. Львів, вул. Литвиненка, 3</strong>
+            <strong>{t(settings.accountingAddress)}</strong>
           </address>
           <ul class="phone-list">
-            <li><a href="tel:+380322328802"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.2 1l-2.2 2.2Z"/></svg>(032)&nbsp;232-8802</a></li>
-            <li><a href="tel:+380932899815"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.2 1l-2.2 2.2Z"/></svg>(093)&nbsp;289-9815</a></li>
+            {settings.accountingPhones.map((phone: any) => <li><a href={phone.href}><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.2 1l-2.2 2.2Z"/></svg>{t(phone.label)}</a></li>)}
           </ul>
           <div class="msg-row" style="margin-top:14px">
-            <a class="msg-btn" href="https://t.me/bukh_astra" target="_blank" rel="noopener">
+            <a class="msg-btn" href={settings.accountingTelegramUrl} target="_blank" rel="noopener">
               <span class="ic ic--tg" style="--msg-icon:url('assets/telegram.svg')" aria-hidden="true"></span>@bukh_astra
             </a>
-            <a class="msg-btn" href="viber://chat?number=%2B380932899815" target="_blank" rel="noopener">
+            <a class="msg-btn" href={settings.accountingViberUrl} target="_blank" rel="noopener">
               <span class="ic ic--viber" style="--msg-icon:url('assets/vb.svg')" aria-hidden="true"></span>Viber @bukh_astra
             </a>
           </div>
-          <p class="sub" style="margin:18px 0 0">E-mail: <a class="mail" href="mailto:info@astra.in.ua">info@astra.in.ua</a></p>
+          <p class="sub" style="margin:18px 0 0">E-mail: <a class="mail" href={`mailto:${settings.email}`}>{settings.email}</a></p>
         </div>
 
       </div>
@@ -113,20 +123,20 @@ import Layout from '../layouts/Layout.astro';
     <div class="container">
       <div class="consult-grid">
         <div>
-          <h2 id="consult-h">Замовити консультацію</h2>
-          <p class="lead">Залиште контакти й короткий опис задачі, і наш менеджер зв'яжеться з вами, підбере рішення під ваш масштаб і підготує комерційну пропозицію.</p>
+          <h2 id="consult-h">{t(consult.heading)}</h2>
+          <p class="lead">{t(consult.lead)}</p>
 
           <div class="consult-side">
-            <h3 style="color:#fff;margin-top:26px">Або напишіть у месенджери</h3>
+            <h3 style="color:#fff;margin-top:26px">{t(consult.label)}</h3>
             <div class="msg-row" style="margin-top:14px">
-              <a class="msg-btn" href="https://t.me/astraispbot" target="_blank" rel="noopener">
+              <a class="msg-btn" href={settings.telegramUrl} target="_blank" rel="noopener">
                 <span class="ic ic--tg" style="--msg-icon:url('assets/telegram.svg')" aria-hidden="true"></span>Telegram
               </a>
-              <a class="msg-btn" href="viber://chat?number=%2B380800203838" target="_blank" rel="noopener">
+              <a class="msg-btn" href={settings.viberUrl} target="_blank" rel="noopener">
                 <span class="ic ic--viber" style="--msg-icon:url('assets/vb.svg')" aria-hidden="true"></span>Viber
               </a>
             </div>
-            <p class="lead" style="margin-top:20px">Цілодобова підтримка: <a href="tel:+380800203838" style="color:#fff;font-weight:600">0&nbsp;800&nbsp;20-38-38</a></p>
+            <p class="lead" style="margin-top:20px">Цілодобова підтримка: <a href={settings.supportPhoneHref} style="color:#fff;font-weight:600">{settings.supportPhoneDisplay}</a></p>
           </div>
         </div>
 
@@ -153,10 +163,10 @@ import Layout from '../layouts/Layout.astro';
   <section class="section tight">
     <div class="container">
       <div class="cta-band">
-        <h2>Обговорімо інфраструктуру вашого об'єкта</h2>
-        <p class="lead">Залиште заявку, і персональний менеджер підбере рішення під ваш масштаб і підготує комерційну пропозицію.</p>
+        <h2>{t(page.cta.title)}</h2>
+        <p class="lead">{t(page.cta.text)}</p>
         <div class="row">
-          <button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button>
+          <button class="btn btn--primary btn--lg" data-modal data-mode="consult">{t(page.cta.label)}</button>
         </div>
       </div>
     </div>

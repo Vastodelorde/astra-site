@@ -1,127 +1,81 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { pricingPageFallback, tariffCatalogFallback } from '../data/siteContent';
+import { getManagedPage, getTariffs } from '../lib/sanity';
+import { getSection, localize, mergeContent } from '../lib/content';
+
+export const prerender = false;
+const [managedPage, managedTariffs] = await Promise.all([getManagedPage('pricing'), getTariffs()]);
+const page = mergeContent(pricingPageFallback, managedPage);
+const tariffs = mergeContent(tariffCatalogFallback, managedTariffs);
+const seo: any = page.seo;
+const plans = getSection<any>(page, 'plans');
+const operators = getSection<any>(page, 'operatory');
+const t = (value: any) => localize(value, 'uk');
 ---
 <Layout
-  leadSource="Тарифи"
-  title="Тарифи для бізнесу · АСТРА"
-  description="Усі бізнес-тарифи АСТРА: Бізнес 100–10000 із симетричною швидкістю, статичною IP та документообігом у кожному. Резервований канал, пріоритет в обслуговуванні та ASTRA TV. Для операторів: піринг, ВОЛЗ та колокація за індивідуальним розрахунком."
-  canonical="https://astra.in.ua/b2b/taryfy.html"
-  ogTitle="Тарифи для бізнесу · АСТРА"
-  ogDescription="Усі бізнес-тарифи АСТРА: симетрична швидкість, статична IP та документообіг у кожному. Для операторів: піринг, ВОЛЗ та колокація за індивідуальним розрахунком."
+  leadSource={t(page.hero.label)}
+  title={t(seo.title)}
+  description={t(seo.description)}
+  canonical={seo.canonicalUk}
+  ogTitle={t(seo.ogTitle) || t(seo.title)}
+  ogDescription={t(seo.ogDescription) || t(seo.description)}
 >
   <style is:global slot="head">
 .page-b2b .tariff-note{margin-top:clamp(20px,3vw,32px);font-size:.94rem;color:var(--muted);line-height:1.6}
-.page-b2b .tariff-note b{color:var(--navy-900)}
 .page-b2b .op-note{margin-top:clamp(20px,3vw,28px);font-size:.94rem;color:var(--muted);line-height:1.6}
-.page-b2b .op-note b{color:var(--navy-900)}
   </style>
   <section class="hero">
-    <div class="hero-bg"><img src="img/hero-biz.jpg" loading="eager" alt="Тарифи АСТРА для бізнесу"></div>
+    <div class="hero-bg"><img src={page.hero.imagePath} loading="eager" alt={t(page.hero.imageAlt)}></div>
     <div class="container">
       <div class="hero-inner">
-        <p class="breadcrumb"><a href="index.html">Головна</a> / Тарифи</p>
-        <h1>Тарифи для бізнесу</h1>
-        <p class="hero-sub">Усі бізнес-тарифи АСТРА в одному місці. Симетрична швидкість, статична IP та документообіг входять у кожен тариф. Точний склад послуг під ваш об'єкт ми прорахуємо на консультації.</p>
-        <div class="hero-cta">
-          <button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button>
-        </div>
+        <p class="breadcrumb"><a href="index.html">Головна</a> / {t(page.hero.label)}</p>
+        <h1>{t(page.hero.title)}</h1>
+        <p class="hero-sub">{t(page.hero.intro)}</p>
+        <div class="hero-cta"><button class="btn btn--primary btn--lg" data-modal data-mode="consult">{t(page.hero.ctaLabel)}</button></div>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <div class="section-head">
-        <h2>Бізнес-тарифи АСТРА</h2>
-        <p class="lead">Від Бізнес 100 для невеликого закладу до Бізнес 10000 для корпорації чи дата-центру. Швидкість і ціна ростуть, а базовий набір сервісів однаковий для всіх.</p>
-      </div>
+      <div class="section-head"><h2>{t(plans.heading)}</h2><p class="lead">{t(plans.lead)}</p></div>
       <div class="tariff-list">
-        <article class="trow">
-          <div class="sp"><span class="plan">Бізнес 100</span><span class="val">100<small>Мбіт/с</small></span></div>
-          <ul class="svc-list"><li>Виділена статична IP на вимогу</li><li>Симетричний резервований канал</li><li>Пріоритет: вирішення в день заявки</li><li>Ведення документації (угоди, рахунки, акти)</li><li>Додзвін до оператора перед чергою</li><li>Технічна підтримка 24/7</li><li>ASTRA TV</li></ul>
-          <div class="buy"><span class="price">500 <span class="per">грн/міс</span></span><button class="btn btn--primary" data-modal data-mode="callback" data-tariff="Бізнес 100">Замовити консультацію</button></div>
-        </article>
-        <article class="trow">
-          <div class="sp"><span class="plan">Бізнес 250</span><span class="val">250<small>Мбіт/с</small></span></div>
-          <ul class="svc-list"><li>Виділена статична IP на вимогу</li><li>Симетричний резервований канал</li><li>Пріоритет: вирішення в день заявки</li><li>Ведення документації (угоди, рахунки, акти)</li><li>Додзвін до оператора перед чергою</li><li>Технічна підтримка 24/7</li><li>ASTRA TV</li><li>Персональний акаунт-менеджер</li></ul>
-          <div class="buy"><span class="price">1 000 <span class="per">грн/міс</span></span><button class="btn btn--primary" data-modal data-mode="callback" data-tariff="Бізнес 250">Замовити консультацію</button></div>
-        </article>
-        <article class="trow">
-          <div class="sp"><span class="plan">Бізнес 500</span><span class="val">500<small>Мбіт/с</small></span></div>
-          <ul class="svc-list"><li>Виділена статична IP на вимогу</li><li>Симетричний резервований канал</li><li>Пріоритет: вирішення в день заявки</li><li>Ведення документації (угоди, рахунки, акти)</li><li>Додзвін до оператора перед чергою</li><li>Технічна підтримка 24/7</li><li>ASTRA TV</li><li>Персональний акаунт-менеджер</li></ul>
-          <div class="buy"><span class="price">2 000 <span class="per">грн/міс</span></span><button class="btn btn--primary" data-modal data-mode="callback" data-tariff="Бізнес 500">Замовити консультацію</button></div>
-        </article>
-        <article class="trow">
-          <div class="sp"><span class="plan">Бізнес 1000</span><span class="val">1 000<small>Мбіт/с</small></span></div>
-          <ul class="svc-list"><li>Виділена статична IP на вимогу</li><li>Симетричний резервований канал</li><li>Пріоритет: вирішення в день заявки</li><li>Ведення документації (угоди, рахунки, акти)</li><li>Додзвін до оператора перед чергою</li><li>Технічна підтримка 24/7</li><li>ASTRA TV</li><li>Персональний акаунт-менеджер</li></ul>
-          <div class="buy"><span class="price">3 500 <span class="per">грн/міс</span></span><button class="btn btn--primary" data-modal data-mode="callback" data-tariff="Бізнес 1000">Замовити консультацію</button></div>
-        </article>
-        <article class="trow">
-          <div class="sp"><span class="plan">Бізнес 2500</span><span class="val">2 500<small>Мбіт/с</small></span><span class="guar">мін. гарант. 1 GIGABIT</span></div>
-          <ul class="svc-list"><li>Виділена статична IP на вимогу</li><li>Симетричний резервований канал</li><li>Пріоритет: вирішення в день заявки</li><li>Ведення документації (угоди, рахунки, акти)</li><li>Додзвін до оператора перед чергою</li><li>Технічна підтримка 24/7</li><li>ASTRA TV</li><li>Персональний акаунт-менеджер</li></ul>
-          <div class="buy"><span class="price">5 000 <span class="per">грн/міс</span></span><button class="btn btn--primary" data-modal data-mode="callback" data-tariff="Бізнес 2500">Замовити консультацію</button></div>
-        </article>
-        <article class="trow">
-          <div class="sp"><span class="plan">Бізнес 10000</span><span class="val">10 000<small>Мбіт/с</small></span><span class="guar">мін. гарант. 2.5 GIGABIT</span></div>
-          <ul class="svc-list"><li>Виділена статична IP на вимогу</li><li>Симетричний резервований канал</li><li>Пріоритет: вирішення в день заявки</li><li>Ведення документації (угоди, рахунки, акти)</li><li>Додзвін до оператора перед чергою</li><li>Технічна підтримка 24/7</li><li>ASTRA TV</li><li>Персональний акаунт-менеджер</li></ul>
-          <div class="buy"><span class="price">9 000 <span class="per">грн/міс</span></span><button class="btn btn--primary" data-modal data-mode="callback" data-tariff="Бізнес 10000">Замовити консультацію</button></div>
-        </article>
+        {tariffs.map((tariff: any) => <article class="trow">
+          <div class="sp">
+            <span class="plan">{tariff.plan}</span>
+            <span class="val">{tariff.speed}<small>{tariff.unit}</small></span>
+            {tariff.guar && <span class="guar">{tariff.guar}</span>}
+          </div>
+          <ul class="svc-list">{tariff.features?.map((feature: string) => <li>{feature}</li>)}</ul>
+          <div class="buy">
+            <span class="price">{tariff.price} <span class="per">{tariff.per}</span></span>
+            <button class="btn btn--primary" data-modal data-mode="callback" data-tariff={tariff.tag || tariff.plan}>Замовити консультацію</button>
+          </div>
+        </article>)}
       </div>
-      <p class="tariff-note">Персональний <b>акаунт-менеджер</b> доступний клієнтам з тарифу Бізнес 250 і вище. Тарифи <b>Бізнес 2500</b> та <b>Бізнес 10000</b> потребують оптичного перетворювача XG/XGS-PON, який купується окремо.</p>
+      <p class="tariff-note">{t(plans.note)}</p>
     </div>
   </section>
 
   <section class="section section--tint" id="operatory">
     <div class="container">
-      <div class="section-head">
-        <h2>Оператори</h2>
-        <p class="lead">Окремий сценарій для ISP, telecom та дата-центр-клієнтів: послуги, яких немає в інших категоріях. Тарифи формуються за індивідуальним розрахунком.</p>
-      </div>
+      <div class="section-head"><h2>{t(operators.heading)}</h2><p class="lead">{t(operators.lead)}</p></div>
       <div class="grid grid-3">
-
-        <article class="card">
-          <h4>Піринг публічний і приватний</h4>
-          <p>Публічний та приватний обмін трафіком. Послуга доступна виключно юридичним особам та операторам.</p>
-          <a class="link-arrow" href="operators.html#peering">Детальніше <span class="ar" aria-hidden="true">→</span></a>
-        </article>
-
-        <article class="card">
-          <h4>Прямі канали в Європу</h4>
-          <p>Пряме підключення до європейських точок обміну трафіком з мінімальним пінгом.</p>
-          <a class="link-arrow" href="operators.html#europe">Детальніше <span class="ar" aria-hidden="true">→</span></a>
-        </article>
-
-        <article class="card">
-          <h4>ВОЛЗ під ключ</h4>
-          <p>Проєктування та будівництво волоконно-оптичних ліній зв'язку власними виїзними бригадами.</p>
-          <a class="link-arrow" href="operators.html#volz">Детальніше <span class="ar" aria-hidden="true">→</span></a>
-        </article>
-
-        <article class="card">
-          <h4>Колокація / оренда стійок</h4>
-          <p>Розміщення обладнання в нашому ЦОД у Львові: резервне живлення, клімат-контроль, моніторинг 24/7.</p>
-          <a class="link-arrow" href="operators.html#colocation">Детальніше <span class="ar" aria-hidden="true">→</span></a>
-        </article>
-
-        <article class="card">
-          <h4>Транзит / wholesale за індивідуальним розрахунком</h4>
-          <p>Оптовий транзит трафіку та виділена ємність під потреби вашої мережі.</p>
-          <a class="link-arrow" href="operators.html#wholesale">Детальніше <span class="ar" aria-hidden="true">→</span></a>
-        </article>
-
+        {operators.items?.map((item: any) => <article class="card">
+          <h4>{t(item.title)}</h4><p>{t(item.body)}</p>
+          <a class="link-arrow" href={item.href}>{t(item.label)} <span class="ar" aria-hidden="true">→</span></a>
+        </article>)}
       </div>
-      <p class="op-note">Умови для операторів залежать від ємності, маршрутів і термінів. Повний перелік послуг та розрахунок дивіться на сторінці <a class="link-arrow" href="operators.html">Для операторів <span class="ar" aria-hidden="true">→</span></a></p>
+      <p class="op-note">{t(operators.note)} <a class="link-arrow" href={operators.href}>{t(operators.label)} <span class="ar" aria-hidden="true">→</span></a></p>
     </div>
   </section>
 
   <section class="section tight">
     <div class="container">
       <div class="cta-band">
-        <h2>Не впевнені, який тариф підійде вашому об'єкту?</h2>
-        <p class="lead">Залиште заявку, і наш менеджер підбере швидкість і набір сервісів під ваш масштаб і підготує комерційну пропозицію.</p>
-        <div class="row">
-          <button class="btn btn--primary btn--lg" data-modal data-mode="consult">Замовити консультацію</button>
-        </div>
+        <h2>{t(page.cta.title)}</h2><p class="lead">{t(page.cta.text)}</p>
+        <div class="row"><button class="btn btn--primary btn--lg" data-modal data-mode="consult">{t(page.cta.label)}</button></div>
       </div>
     </div>
   </section>
