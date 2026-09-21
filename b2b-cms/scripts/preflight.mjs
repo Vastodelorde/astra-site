@@ -45,7 +45,7 @@ function resolveLocalRoute(url) {
   const resolved = new URL(url);
   if (!isLocal || resolved.origin !== baseUrl.origin) return resolved;
   if (resolved.pathname === '/index.html') resolved.pathname = '/';
-  else if (/^\/(?:operators|isp|install|cloud|poslugy|taryfy|pro|kontakty)\.html$/.test(resolved.pathname)) {
+  else if (/^\/(?:operators|isp|install|cloud|pro)\.html$/.test(resolved.pathname)) {
     resolved.pathname = resolved.pathname.replace(/\.html$/, '/');
   }
   return resolved;

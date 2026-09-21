@@ -23,9 +23,6 @@
     { "source": "/isp.html", "destination": "/isp/" },
     { "source": "/install.html", "destination": "/install/" },
     { "source": "/cloud.html", "destination": "/cloud/" },
-    { "source": "/poslugy.html", "destination": "/poslugy/" },
-    { "source": "/taryfy.html", "destination": "/taryfy/" },
-    { "source": "/pro.html", "destination": "/pro/" },
-    { "source": "/kontakty.html", "destination": "/kontakty/" }
+    { "source": "/pro.html", "destination": "/pro/" }
   ]
 }
