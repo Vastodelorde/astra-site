@@ -48,9 +48,11 @@
 .guide-steps li::before{content:counter(guide-step,decimal-leading-zero);display:block;margin-bottom:20px;font-family:var(--font-display);font-size:.76rem;font-weight:800;color:var(--red)}
 .guide-steps strong{display:block;color:var(--navy-900);line-height:1.35}
 .guide-steps span{display:block;margin-top:8px;font-size:.85rem;color:var(--muted);line-height:1.55}
-.guide-steps--compact{grid-template-columns:repeat(3,minmax(0,1fr))}
-.guide-steps--compact li:nth-child(3n){border-right:0}
-.guide-steps--compact li:nth-child(n+4){border-top:1px solid var(--line)}
+.guide-steps--compact{grid-template-columns:repeat(2,minmax(0,1fr))}
+.guide-steps--compact li,.guide-steps--compact li:first-child,.guide-steps--compact li:last-child{padding:22px 18px}
+.guide-steps--compact li:nth-child(odd){padding-left:0}
+.guide-steps--compact li:nth-child(even){padding-right:0;border-right:0}
+.guide-steps--compact li:nth-child(n+3){border-top:1px solid var(--line)}
 .guide-shot{margin:30px 0}
 .guide-shot img{width:100%;height:auto;border:1px solid var(--line);background:var(--surface-2)}
 .guide-shot--login img{aspect-ratio:16/7;object-fit:cover;object-position:center}
