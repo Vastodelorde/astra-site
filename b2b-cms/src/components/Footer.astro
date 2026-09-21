@@ -2,6 +2,7 @@
 const { pathPrefix = '', sitePrefix = pathPrefix, locale = 'uk' } = Astro.props;
 const en = locale === 'en';
 const link = (page: string) => `${sitePrefix}${page}`;
+const cmsGuideHref = `${pathPrefix}cms-guide/`;
 ---
 <footer class="site-footer">
   <div class="container footer-main">
@@ -31,6 +32,7 @@ const link = (page: string) => `${sitePrefix}${page}`;
     </div>
     <div><h5>{en ? 'Company' : 'Компанія'}</h5>
       <a href={link('pro.html')}>{en ? 'About us' : 'Про нас'}</a><a href={link('blog/')}>{en ? 'Blog' : 'Блог'}</a><a href={link('kontakty.html')}>{en ? 'Contacts' : 'Контакти'}</a>
+      <a href={cmsGuideHref}>{en ? 'CMS guide' : 'Гайд CMS'}</a>
       <a href="https://astra.in.ua" target="_blank" rel="noopener">{en ? 'Residential services ↗' : 'Приватним клієнтам ↗'}</a>
     </div>
     <div><h5>{en ? 'Portals ↗' : 'Сервіси ↗'}</h5>

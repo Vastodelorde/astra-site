@@ -1,0 +1,290 @@
+---
+import {
+  ArrowUp,
+  Check,
+  CircleAlert,
+  ExternalLink,
+  FileText,
+  Image,
+  Languages,
+  Search,
+  Settings2,
+} from '@lucide/astro';
+import Layout from '../../layouts/Layout.astro';
+
+const sections = [
+  ['quick-start', 'Швидкий старт'],
+  ['content-map', 'Що можна редагувати'],
+  ['safe-editing', 'Безпечне редагування'],
+  ['home-page', 'Головна сторінка'],
+  ['services', 'Послуги'],
+  ['tariffs', 'Тарифи'],
+  ['contacts', 'Контакти'],
+  ['segments', 'Сегменти й менеджери'],
+  ['blog', 'Блог'],
+  ['localization', 'EN, SEO та зображення'],
+  ['quality-check', 'Перевірка публікації'],
+  ['editor-checklist', 'Пам’ятка редактора'],
+];
+---
+<Layout
+  title="Гайд із використання ASTRA B2B CMS"
+  description="Практична інструкція для редагування контенту сайту ASTRA B2B у Sanity Studio."
+  canonical="https://astra.in.ua/b2b/cms-guide/"
+  pathPrefix="../"
+  alternatePath="/cms-guide/"
+  bodyClass="page-b2b page-cms-guide ctx-biz mode-biz"
+>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="stylesheet" href="../css/cms-guide.css">
+  </Fragment>
+
+  <section class="guide-hero">
+    <div class="container guide-hero__inner">
+      <div class="guide-hero__copy">
+        <p class="guide-kicker">Редакторська документація</p>
+        <h1>Як працювати з ASTRA B2B CMS</h1>
+        <p>Практичний гайд із редагування сторінок, тарифів, послуг, контактів і блогу в Sanity Studio.</p>
+        <div class="guide-hero__actions">
+          <a class="btn btn--primary btn--lg" href="https://astra-site-sanity.vercel.app/" target="_blank" rel="noopener">
+            Відкрити CMS <ExternalLink size={18} aria-hidden="true" />
+          </a>
+          <a class="btn btn--ghost on-navy btn--lg" href="#quick-start">Швидкий старт</a>
+        </div>
+      </div>
+      <dl class="guide-hero__facts">
+        <div><dt>Публікація</dt><dd>Одразу після Publish</dd></div>
+        <div><dt>Мови</dt><dd>Українська та англійська</dd></div>
+        <div><dt>Оновлено</dt><dd>21 вересня 2026</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="guide-progress" aria-hidden="true"><span></span></div>
+
+  <div class="container guide-layout">
+    <aside class="guide-sidebar" aria-label="Навігація по гайду">
+      <label class="guide-search" for="guide-search">
+        <Search size={18} aria-hidden="true" />
+        <span class="sr-only">Пошук у гайді</span>
+        <input id="guide-search" type="search" placeholder="Знайти в гайді" autocomplete="off" data-guide-search>
+      </label>
+      <nav class="guide-nav">
+        <p>Зміст</p>
+        <ol>
+          {sections.map(([id, label], index) => <li><a href={`#${id}`} data-guide-link={id}><span>{String(index + 1).padStart(2, '0')}</span>{label}</a></li>)}
+        </ol>
+      </nav>
+      <div class="guide-sidebar__note">
+        <Settings2 size={20} aria-hidden="true" />
+        <p><strong>Зміни структури</strong><br>Нові блоки, маршрути, іконки та системні поля узгоджуйте з розробником.</p>
+      </div>
+    </aside>
+
+    <article class="guide-content">
+      <p class="guide-search-status" aria-live="polite" data-guide-status></p>
+
+      <section class="guide-section" id="quick-start" data-guide-section>
+        <header class="guide-section__head"><span>01</span><div><h2>Швидкий старт</h2><p>Базовий процес займає кілька хвилин і не потребує доступу до коду.</p></div></header>
+        <ol class="guide-steps">
+          <li><strong>Відкрийте Studio.</strong><span>Перейдіть на <a href="https://astra-site-sanity.vercel.app/" target="_blank" rel="noopener">astra-site-sanity.vercel.app</a>.</span></li>
+          <li><strong>Увійдіть.</strong><span>Використайте Google, GitHub або e-mail, доданий до проєкту Sanity.</span></li>
+          <li><strong>Знайдіть документ.</strong><span>Оберіть у лівому меню сторінку або потрібний тип контенту.</span></li>
+          <li><strong>Внесіть зміни.</strong><span>Чернетка зберігається автоматично, але відвідувачі її ще не бачать.</span></li>
+          <li><strong>Натисніть Publish.</strong><span>Після цього відкрийте відповідну сторінку сайту й перевірте результат.</span></li>
+        </ol>
+        <figure class="guide-shot guide-shot--login">
+          <img src="../img/cms-guide/cms-login.jpg" alt="Екран вибору способу входу до Astra B2B CMS" width="1280" height="900" loading="lazy">
+          <figcaption>Екран входу. Оберіть спосіб, до якого прив’язано ваш обліковий запис.</figcaption>
+        </figure>
+        <div class="guide-callout guide-callout--warning"><CircleAlert aria-hidden="true" /><p><strong>Немає доступу?</strong> Попросіть адміністратора Sanity додати вашу електронну адресу. Не передавайте паролі або токени стороннім особам.</p></div>
+      </section>
+
+      <section class="guide-section" id="content-map" data-guide-section>
+        <header class="guide-section__head"><span>02</span><div><h2>Що можна редагувати</h2><p>Studio розділяє сторінки та повторювані документи, які використовуються в кількох місцях.</p></div></header>
+        <div class="guide-table-wrap">
+          <table class="guide-table">
+            <thead><tr><th>Розділ у Studio</th><th>Що контролює</th><th>Де перевіряти</th></tr></thead>
+            <tbody>
+              <tr><td>Налаштування сайту</td><td>Телефони, Telegram, Viber, бухгалтерія та e-mail</td><td>Шапка й контакти</td></tr>
+              <tr><td>Головна сторінка</td><td>SEO, hero, сегменти, проблеми, об’єкти, переваги, клієнти й CTA</td><td><a href="../" target="_blank" rel="noopener">Головна</a></td></tr>
+              <tr><td>Сторінки послуг, тарифів і контактів</td><td>Заголовки секцій, пояснення, примітки та фінальні CTA</td><td>Відповідні сторінки</td></tr>
+              <tr><td>Статті блогу</td><td>UK/EN статті, обкладинка, рубрика, URL і текст</td><td><a href="../blog/" target="_blank" rel="noopener">Блог</a></td></tr>
+              <tr><td>Послуги та тарифи</td><td>Картки каталогу, ціни, швидкості, склад і порядок</td><td>Каталог і сегменти</td></tr>
+              <tr><td>Акаунт-менеджери</td><td>Ім’я, роль, фото, alt і англійські поля</td><td>Сегментні сторінки</td></tr>
+              <tr><td>Сторінки сегментів</td><td>Малий, середній і великий бізнес</td><td>maliy, seredniy, velykyi</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="guide-callout"><FileText aria-hidden="true" /><p><strong>Поки поза CMS:</strong> ASTRA ISP, INSTALL, CLOUD і «Про нас». Заміна hero-файлів, указаних через <code>imagePath</code>, також потребує розробника й нового деплою.</p></div>
+      </section>
+
+      <section class="guide-section" id="safe-editing" data-guide-section>
+        <header class="guide-section__head"><span>03</span><div><h2>Безпечний сценарій редагування</h2><p>Ця послідовність працює для сторінки, тарифу, послуги, менеджера й статті.</p></div></header>
+        <ol class="guide-steps guide-steps--compact">
+          <li><strong>Прочитайте назви полів і підказки.</strong></li>
+          <li><strong>Змініть лише потрібний контент.</strong></li>
+          <li><strong>Заповніть UK та EN, якщо поля подані парою.</strong></li>
+          <li><strong>Перевірте орфографію, цифри, URL та alt.</strong></li>
+          <li><strong>Натисніть Publish.</strong></li>
+          <li><strong>Перевірте сторінку на комп’ютері й телефоні.</strong></li>
+        </ol>
+        <div class="guide-do-dont">
+          <div><h3><Check aria-hidden="true" /> Можна змінювати</h3><ul><li>Заголовки, описи, ціни та списки</li><li>Рубрики, дати й alt-тексти</li><li>Порядок через поле «Порядок»</li><li>Перевірені посилання</li></ul></div>
+          <div><h3><CircleAlert aria-hidden="true" /> Не змінювати самостійно</h3><ul><li>System key, ID і slug сегмента</li><li>Ключ іконки та технічний шлях фото</li><li>Тип документа, dataset і canonical</li><li>Документи, на які посилаються інші сторінки</li></ul></div>
+        </div>
+        <p class="guide-note"><strong>Draft не дорівнює Publish.</strong> Sanity автоматично зберігає чернетку, але сайт показує лише останню опубліковану версію.</p>
+      </section>
+
+      <section class="guide-section" id="home-page" data-guide-section>
+        <header class="guide-section__head"><span>04</span><div><h2>Головна сторінка</h2><p>Текст змінюється в CMS, а верстка, іконки й стилі лишаються стабільними.</p></div></header>
+        <figure class="guide-shot"><img src="../img/cms-guide/home-segments.jpg" alt="Секція рішень за масштабом бізнесу на головній сторінці" width="1200" height="570" loading="lazy"><figcaption>Секція «Рішення для будь-якого масштабу» з документа «Головна сторінка».</figcaption></figure>
+        <div class="guide-columns">
+          <div><h3>Що редагувати</h3><ul class="guide-checks"><li>SEO: title, description, Open Graph і canonical UK/EN</li><li>Перший екран: H1, вступ, alt і напис кнопки</li><li>Секції: заголовки, картки, списки, URL і підписи</li><li>Фінальний CTA: заголовок, пояснення й кнопка</li></ul></div>
+          <div class="guide-example"><p class="guide-label">Приклад</p><p>Щоб змінити опис «Середнього бізнесу», відкрийте <strong>Головна сторінка → Секції → Рішення для будь-якого масштабу → Елементи → Середній бізнес</strong>, оновіть UK та EN і натисніть Publish.</p></div>
+        </div>
+        <p class="guide-note"><strong>Системні поля:</strong> не змінюйте «Системний ID» секції та «Системний ключ» елемента. За ними сайт визначає місце контенту.</p>
+      </section>
+
+      <section class="guide-section" id="services" data-guide-section>
+        <header class="guide-section__head"><span>05</span><div><h2>Послуги</h2><p>Кожна картка послуги є окремим документом і централізовано оновлюється в каталозі.</p></div></header>
+        <figure class="guide-shot"><img src="../img/cms-guide/services-catalog.jpg" alt="Картки послуг ASTRA ISP на сторінці каталогу" width="1200" height="560" loading="lazy"><figcaption>Назва, опис, іконка, посилання і порядок карток беруться з документів «Послуга».</figcaption></figure>
+        <div class="guide-fields">
+          <div><strong>Назва / Опис</strong><span>Українська й англійська версії</span></div>
+          <div><strong>Текст посилання</strong><span>Зазвичай «Детальніше» / «Explore»</span></div>
+          <div><strong>Посилання UK / EN</strong><span>Адреса цільового розділу для кожної мови</span></div>
+          <div><strong>Напрям</strong><span><code>isp</code>, <code>install</code> або <code>cloud</code></span></div>
+          <div><strong>Порядок</strong><span>Менше число показується раніше</span></div>
+          <div><strong>Ключі</strong><span>System key та icon key не змінювати без розробника</span></div>
+        </div>
+      </section>
+
+      <section class="guide-section" id="tariffs" data-guide-section>
+        <header class="guide-section__head"><span>06</span><div><h2>Тарифи</h2><p>Один тариф може одночасно використовуватися на загальній і сегментній сторінках.</p></div></header>
+        <figure class="guide-shot"><img src="../img/cms-guide/tariffs.jpg" alt="Перші три бізнес-тарифи ASTRA" width="1200" height="780" loading="lazy"><figcaption>Ціна, швидкість і список переваг беруться з документів «Тариф».</figcaption></figure>
+        <div class="guide-example">
+          <p class="guide-label">Приклад: змінити ціну «Бізнес 500»</p>
+          <ol><li>Відкрийте <strong>Тарифи → Бізнес 500</strong>.</li><li>Змініть «Ціна», не додаючи валюту.</li><li>Перевірте «Період»: «грн/міс» і «UAH/mo».</li><li>Якщо змінився склад, синхронно оновіть UK та EN списки.</li><li>Натисніть Publish і перевірте тарифи та сегментні сторінки.</li></ol>
+        </div>
+        <p class="guide-note"><strong>Формат цифр:</strong> використовуйте <code>2 500</code>, а не <code>2500</code>. Одиниця швидкості й період заповнюються в окремих полях.</p>
+      </section>
+
+      <section class="guide-section" id="contacts" data-guide-section>
+        <header class="guide-section__head"><span>07</span><div><h2>Контакти й глобальні налаштування</h2><p>Глобальні значення використовуються не лише на сторінці контактів, а й у шапці сайту.</p></div></header>
+        <figure class="guide-shot"><img src="../img/cms-guide/contacts.jpg" alt="Контактні картки підтримки, месенджерів і бухгалтерії" width="1200" height="620" loading="lazy"><figcaption>Контакти підтримки, месенджери й бухгалтерія на production-сайті.</figcaption></figure>
+        <div class="guide-table-wrap"><table class="guide-table"><thead><tr><th>Потрібна зміна</th><th>Документ і поле</th></tr></thead><tbody>
+          <tr><td>Гаряча лінія в шапці</td><td>Налаштування сайту → Гаряча лінія</td></tr><tr><td>Додаткові телефони</td><td>Налаштування сайту → Додаткові телефони</td></tr><tr><td>Telegram / Viber</td><td>Налаштування сайту → відповідний URL</td></tr><tr><td>Бухгалтерія</td><td>Налаштування сайту → адреса, телефони й месенджери</td></tr><tr><td>Заголовки на сторінці</td><td>Сторінка контактів → Секції</td></tr>
+        </tbody></table></div>
+        <p class="guide-note"><strong>Телефонні поля:</strong> для відображення використовуйте <code>0 800 20-38-38</code>, а для посилання - <code>tel:+380800203838</code>.</p>
+      </section>
+
+      <section class="guide-section" id="segments" data-guide-section>
+        <header class="guide-section__head"><span>08</span><div><h2>Сегменти й акаунт-менеджери</h2><p>Малий, середній і великий бізнес збирають тарифи, менеджерів і релевантні послуги через references.</p></div></header>
+        <div class="guide-columns">
+          <div><h3>Сторінка сегмента</h3><ul class="guide-checks"><li>Slug: <code>maliy</code>, <code>seredniy</code> або <code>velykyi</code> - не змінювати</li><li>Hero: H1, вступ, breadcrumb, alt і шлях фото</li><li>References на тарифи й менеджерів</li><li>Картки «Що варто знати» UK/EN</li><li>Релевантні послуги та форма</li></ul></div>
+          <div><h3>Акаунт-менеджер</h3><ul class="guide-checks"><li>Ім’я EN: офіційна латинська транслітерація</li><li>Роль: коротка назва посади</li><li>Фото: прозорий PNG приблизно 3:4, від 520×700 px</li><li>Alt: «Андрій, акаунт-менеджер АСТРА»</li></ul></div>
+        </div>
+        <div class="guide-callout guide-callout--warning"><CircleAlert aria-hidden="true" /><p><strong>Не видаляйте linked document.</strong> Спочатку приберіть reference зі сторінки сегмента, опублікуйте сторінку й лише тоді вирішуйте питання видалення.</p></div>
+      </section>
+
+      <section class="guide-section" id="blog" data-guide-section>
+        <header class="guide-section__head"><span>09</span><div><h2>Блог</h2><p>Нові опубліковані статті з’являються на сайті без redeploy.</p></div></header>
+        <figure class="guide-shot"><img src="../img/cms-guide/blog.jpg" alt="Сторінка блогу ASTRA з картками статей" width="1200" height="550" loading="lazy"><figcaption>Обкладинка, рубрика, заголовок і короткий опис беруться з документа статті.</figcaption></figure>
+        <ol class="guide-steps guide-steps--compact">
+          <li><strong>Створіть документ у «Статті блогу».</strong></li>
+          <li><strong>Заповніть заголовок і slug.</strong><span>Латиниця, малі літери, слова через дефіси.</span></li>
+          <li><strong>Оберіть дату й рубрику.</strong></li>
+          <li><strong>Додайте excerpt до 240 символів.</strong></li>
+          <li><strong>Завантажте обкладинку, налаштуйте hotspot і alt.</strong></li>
+          <li><strong>Наберіть текст із H2/H3, списками та посиланнями.</strong></li>
+          <li><strong>Заповніть English translation.</strong></li>
+          <li><strong>Publish і перевірка картки та статті.</strong></li>
+        </ol>
+        <p class="guide-note"><strong>Приклад slug:</strong> «Як підготувати офіс до резервного інтернету» → <code>rezervnyi-internet-dlia-ofisu</code>.</p>
+      </section>
+
+      <section class="guide-section" id="localization" data-guide-section>
+        <header class="guide-section__head"><span>10</span><div><h2>Англійська версія, SEO та зображення</h2><p>Більшість полів мають пару UK / EN. Перевіряйте обидві версії в межах однієї зміни.</p></div></header>
+        <div class="guide-icon-grid">
+          <div><Languages aria-hidden="true" /><h3>Дві мови</h3><p>Англійська стаття з’явиться лише після заповнення <code>titleEn</code>, <code>slugEn</code>, <code>categoryEn</code>, <code>excerptEn</code> і <code>bodyEn</code>.</p></div>
+          <div><FileText aria-hidden="true" /><h3>SEO</h3><p>Title бажано тримати приблизно до 60 символів, description - близько 140-160. Canonical не змінюйте без узгодження.</p></div>
+          <div><Image aria-hidden="true" /><h3>Зображення</h3><p>Обкладинки блогу й фото менеджерів завантажуються в CMS. Файли через <code>imagePath</code> додає розробник.</p></div>
+        </div>
+        <div class="guide-table-wrap"><table class="guide-table"><thead><tr><th>Поле</th><th>Призначення</th></tr></thead><tbody><tr><td>Title</td><td>Назва вкладки й заголовок у пошуку</td></tr><tr><td>Description</td><td>Короткий опис для пошукової видачі</td></tr><tr><td>Open Graph</td><td>Вигляд посилання в соцмережах і месенджерах</td></tr><tr><td>Canonical UK / EN</td><td>Основна адреса сторінки</td></tr><tr><td>Alt</td><td>Змістовний опис зображення для доступності та SEO</td></tr></tbody></table></div>
+      </section>
+
+      <section class="guide-section" id="quality-check" data-guide-section>
+        <header class="guide-section__head"><span>11</span><div><h2>Перевірка після публікації</h2><p>Публікація завершена лише тоді, коли результат перевірено на реальному сайті.</p></div></header>
+        <ul class="guide-checklist">
+          <li><Check aria-hidden="true" /><span>Документ має статус <strong>Published</strong>, а не лише Draft.</span></li>
+          <li><Check aria-hidden="true" /><span>UK-сторінка містить новий текст, EN не містить українських фрагментів.</span></li>
+          <li><Check aria-hidden="true" /><span>Заголовки, картки й кнопки не ламають верстку.</span></li>
+          <li><Check aria-hidden="true" /><span>Посилання, телефони й месенджери відкривають правильну дію.</span></li>
+          <li><Check aria-hidden="true" /><span>Фото чітке, не обрізане критично й має alt.</span></li>
+          <li><Check aria-hidden="true" /><span>На телефоні немає горизонтального скролу або накладання тексту.</span></li>
+        </ul>
+        <div class="guide-table-wrap"><table class="guide-table"><thead><tr><th>Симптом</th><th>Що перевірити</th></tr></thead><tbody><tr><td>Зміни не видно</td><td>Publish, правильна мова, Ctrl+F5</td></tr><tr><td>Стаття не з’явилась</td><td>Дата не в майбутньому, обов’язкові поля заповнені</td></tr><tr><td>EN-стаття відсутня</td><td>Усі п’ять обов’язкових EN-полів</td></tr><tr><td>Картка не в тій групі</td><td>Напрям і поле «Порядок»</td></tr><tr><td>Зображення не оновилось</td><td>Asset у CMS або технічний <code>imagePath</code></td></tr><tr><td>Посилання дає 404</td><td>Шлях, мова, <code>.html</code> і якір <code>#section</code></td></tr></tbody></table></div>
+      </section>
+
+      <section class="guide-section" id="editor-checklist" data-guide-section>
+        <header class="guide-section__head"><span>12</span><div><h2>Пам’ятка редактора</h2><p>Коротка версія всього гайда для щоденної роботи.</p></div></header>
+        <div class="guide-memory-grid">
+          <div><h3>Перед зміною</h3><ul><li>Знайдіть правильний документ</li><li>Підготуйте UK та EN</li><li>Підготуйте alt для фото</li><li>Зафіксуйте старе значення</li></ul></div>
+          <div><h3>Під час редагування</h3><ul><li>Не чіпайте system key, ID і slug</li><li>Дотримуйтеся формату цифр і URL</li><li>Пишіть короткі заголовки</li><li>Не видаляйте referenced документи</li></ul></div>
+          <div><h3>Після Publish</h3><ul><li>Перевірте UK та EN</li><li>Перевірте desktop і телефон</li><li>Перейдіть по змінених посиланнях</li><li>Повідомте команду про суттєву зміну</li></ul></div>
+        </div>
+        <div class="guide-rule"><p>Контент можна змінювати самостійно. Структуру, системні поля, маршрути й файли зображень змінюйте разом із розробником.</p></div>
+        <div class="guide-links">
+          <a href="https://astra-site-sanity.vercel.app/" target="_blank" rel="noopener"><span>CMS</span>astra-site-sanity.vercel.app <ExternalLink size={16} aria-hidden="true" /></a>
+          <a href="https://astra-site-ayin.vercel.app/" target="_blank" rel="noopener"><span>Сайт</span>astra-site-ayin.vercel.app <ExternalLink size={16} aria-hidden="true" /></a>
+          <a href="https://astra-site-ayin.vercel.app/blog/" target="_blank" rel="noopener"><span>Блог</span>astra-site-ayin.vercel.app/blog <ExternalLink size={16} aria-hidden="true" /></a>
+        </div>
+      </section>
+
+      <div class="guide-empty" hidden data-guide-empty><Search aria-hidden="true" /><h2>Нічого не знайдено</h2><p>Спробуйте коротший запит або інше формулювання.</p></div>
+      <a class="guide-to-top" href="#main-content"><ArrowUp size={18} aria-hidden="true" /> На початок</a>
+    </article>
+  </div>
+
+  <script>
+    const sections = [...document.querySelectorAll<HTMLElement>('[data-guide-section]')];
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-guide-link]')];
+    const search = document.querySelector<HTMLInputElement>('[data-guide-search]');
+    const status = document.querySelector<HTMLElement>('[data-guide-status]');
+    const empty = document.querySelector<HTMLElement>('[data-guide-empty]');
+    const progress = document.querySelector<HTMLSpanElement>('.guide-progress span');
+
+    const normalize = (value: string) => value.toLocaleLowerCase('uk').trim();
+
+    search?.addEventListener('input', () => {
+      const query = normalize(search.value);
+      let count = 0;
+      sections.forEach((section) => {
+        const visible = !query || normalize(section.textContent).includes(query);
+        section.hidden = !visible;
+        const link = document.querySelector(`[data-guide-link="${section.id}"]`)?.closest('li');
+        if (link) link.hidden = !visible;
+        if (visible) count += 1;
+      });
+      if (status) status.textContent = query ? `Знайдено розділів: ${count}` : '';
+      if (empty) empty.hidden = count > 0;
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      const target = visible.target as HTMLElement;
+      links.forEach((link) => link.toggleAttribute('aria-current', link.dataset.guideLink === target.id));
+    }, { rootMargin: '-18% 0px -68% 0px', threshold: [0, .25, .5] });
+    sections.forEach((section) => observer.observe(section));
+
+    const updateProgress = () => {
+      const root = document.documentElement;
+      const max = root.scrollHeight - root.clientHeight;
+      if (progress) progress.style.transform = `scaleX(${max > 0 ? root.scrollTop / max : 0})`;
+    };
+    updateProgress();
+    document.addEventListener('scroll', updateProgress, { passive: true });
+  </script>
+</Layout>

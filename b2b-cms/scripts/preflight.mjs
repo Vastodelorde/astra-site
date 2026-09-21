@@ -14,6 +14,7 @@ const routes = [
   '/taryfy.html',
   '/pro.html',
   '/kontakty.html',
+  '/cms-guide/',
   '/blog/',
   '/blog/rezervnyi-internet-dlia-biznesu/',
   '/blog/videonagliad-na-skladi/',

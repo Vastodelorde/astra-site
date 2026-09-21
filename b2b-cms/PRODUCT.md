@@ -134,6 +134,7 @@
 | `taryfy.html` | `src/pages/taryfy.html.astro` | **Sanity SSR** → fallback | Усі 6 тарифів рядками + блок «Оператори» (`#operatory`) |
 | `pro.html` | `src/pages/pro.astro` | статично | Про нас: історія, trustbar (5 цифр), напрямки, «Чому обирають», фото команди (lightbox), логотипи клієнтів |
 | `kontakty.html` | `src/pages/kontakty.html.astro` | **Sanity SSR** → fallback | Контакти: 3 картки (підтримка / месенджери / бухгалтерія), форма (`#consult`) |
+| `cms-guide/` | `src/pages/cms-guide/index.astro` | статично | Службовий HTML-гайд для редактора CMS із пошуком, прикладами та скріншотами. Має `noindex,nofollow`, посилання доступне у футері. |
 
 ### 5.2 Навігація (дублюється в **трьох** місцях: при зміні оновлювати всі)
 1. **Header** (`src/components/Header.astro`). Topbar: лого → Telegram/Viber → телефон `0 800 20-38-38` → кнопка «Замовити консультацію» → бургер (≤1080px). Mainnav: Астра B2B · Малий бізнес · Середній бізнес · Великий бізнес · Оператори · **Напрямки ▾** (мега-меню з 4 колонок: ASTRA ISP / ASTRA INSTALL / ASTRA CLOUD / Каталог) · Про нас · Контакти.
