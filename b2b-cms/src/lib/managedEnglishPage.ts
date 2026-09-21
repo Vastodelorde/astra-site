@@ -1,4 +1,4 @@
-import type { EnglishPage } from '../data/enPages';
+import { plans as englishPlans, type ContentItem, type EnglishPage } from '../data/enPages';
 import {
   contactPageFallback,
   homePageFallback,
@@ -19,6 +19,22 @@ const pageConfig = {
 } as const;
 
 const en = (value: any) => localize(value, 'en');
+
+const translated = (value: unknown, fallback = '') =>
+  typeof value === 'string' && value.trim() ? value.trim() : fallback;
+
+function planFallback(tariff: any, items: ContentItem[] = englishPlans, index = 0) {
+  const speed = String(tariff.speed ?? '').replaceAll(/\D/g, '');
+  return items.find((item) => item.body.split(' · ')[0].replaceAll(/\D/g, '') === speed) || items[index];
+}
+
+function planBody(tariff: any, fallback?: ContentItem) {
+  const [, fallbackPrice = '', ...fallbackGuarantee] = fallback?.body.split(' · ') ?? [];
+  const speed = String(tariff.speed ?? '').trim() || fallback?.body.split(' · ')[0]?.replace(/\s*Mbps$/, '') || '';
+  const price = tariff.price ? `UAH ${tariff.price}/month` : fallbackPrice;
+  const guarantee = fallbackGuarantee.join(' · ');
+  return `${speed} Mbps · ${price}${guarantee ? ` · ${guarantee}` : ''}`;
+}
 
 function itemToEnglish(item: any, sectionId: string) {
   return {
@@ -83,11 +99,14 @@ export async function getEnglishManagedPage(slug: string, fallback: EnglishPage)
     const tariffs = mergeContent(tariffCatalogFallback, await getTariffs());
     result.sections = result.sections.map((section) => section.id === 'plans' ? {
       ...section,
-      items: tariffs.map((tariff: any) => ({
-        title: tariff.planEn || tariff.plan,
-        body: `${tariff.speed} ${tariff.unitEn || 'Mbps'} · ${tariff.price} ${tariff.perEn || 'UAH/mo'}${tariff.guar ? ` · ${tariff.guar}` : ''}`,
-        features: tariff.featuresEn?.length ? tariff.featuresEn : tariff.features,
-      })),
+      items: tariffs.map((tariff: any, index: number) => {
+        const fallbackItem = planFallback(tariff, englishPlans, index);
+        return {
+          title: translated(tariff.planEn, fallbackItem?.title),
+          body: planBody(tariff, fallbackItem),
+          features: tariff.featuresEn?.length ? tariff.featuresEn : fallbackItem?.features,
+        };
+      }),
     } : section);
   }
 
@@ -136,19 +155,22 @@ export async function getEnglishSegmentPage(slug: string, fallback: EnglishPage)
         ...section,
         heading: text(cms.tariffsHeadingEn, section.heading),
         lead: text(cms.tariffsLeadEn, section.lead),
-        items: cms.tariffs?.length ? cms.tariffs.map((tariff: any) => ({
-          title: tariff.planEn || tariff.plan,
-          body: `${tariff.speed} ${tariff.unitEn || tariff.unit} · ${tariff.price} ${tariff.perEn || tariff.per}${tariff.guar ? ` · ${tariff.guar}` : ''}`,
-          features: tariff.featuresEn?.length ? tariff.featuresEn : tariff.features,
-        })) : section.items,
+        items: cms.tariffs?.length ? cms.tariffs.map((tariff: any, index: number) => {
+          const fallbackItem = planFallback(tariff, section.items, index);
+          return {
+            title: translated(tariff.planEn, fallbackItem?.title),
+            body: planBody(tariff, fallbackItem),
+            features: tariff.featuresEn?.length ? tariff.featuresEn : fallbackItem?.features,
+          };
+        }) : section.items,
       };
       if (section.id === 'manager') return {
         ...section,
         heading: text(cms.managersHeadingEn, section.heading),
         lead: text(cms.managersLeadEn, section.lead),
         items: cms.managers?.length ? cms.managers.map((manager: any, index: number) => ({
-          title: manager.nameEn || manager.name,
-          body: manager.roleEn || manager.role,
+          title: translated(manager.nameEn, section.items?.[index]?.title),
+          body: translated(manager.roleEn, section.items?.[index]?.body),
           image: section.items?.[index]?.image,
         })) : section.items,
       };
@@ -156,21 +178,26 @@ export async function getEnglishSegmentPage(slug: string, fallback: EnglishPage)
         ...section,
         heading: text(cms.detailsHeadingEn, section.heading),
         lead: text(cms.detailsLeadEn, section.lead),
-        items: cms.diffs?.length ? cms.diffs.map((item: any) => ({
-          title: item.titleEn || item.title,
-          body: item.bodyEn || item.body,
+        items: cms.diffs?.length ? cms.diffs.map((item: any, index: number) => ({
+          title: translated(item.titleEn, section.items?.[index]?.title),
+          body: translated(item.bodyEn, section.items?.[index]?.body),
         })) : section.items,
       };
       if (section.id === 'services') return {
         ...section,
         heading: text(cms.servicesHeadingEn, section.heading),
         lead: text(cms.servicesLeadEn, section.lead),
-        items: cms.services?.length ? cms.services.map((item: any, index: number) => ({
-          title: item.titleEn || item.title,
-          body: item.bodyEn || item.body,
-          href: item.hrefEn || item.href,
-          icon: section.items?.[index]?.icon,
-        })) : section.items,
+        items: cms.services?.length ? cms.services.map((item: any, index: number) => {
+          const fallbackItem = section.items?.find((candidate) =>
+            candidate.href === item.hrefEn || candidate.href === item.href,
+          ) || section.items?.[index];
+          return {
+            title: translated(item.titleEn, fallbackItem?.title),
+            body: translated(item.bodyEn, fallbackItem?.body),
+            href: translated(item.hrefEn, fallbackItem?.href || item.href),
+            icon: fallbackItem?.icon,
+          };
+        }) : section.items,
       };
       if (section.id === 'contact') return {
         ...section,
