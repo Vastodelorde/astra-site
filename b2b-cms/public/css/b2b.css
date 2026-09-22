@@ -218,6 +218,18 @@
   .page-b2b .consult-side .msg-btn:hover{border-color:var(--blue);color:#fff}
 }
 
+/* Keep lazy media intentional while the browser downloads and decodes it. */
+.page-b2b .image-shell{position:relative;isolation:isolate;background:var(--navy-800)}
+.page-b2b .blog-card__media.image-shell{background:var(--blue-100)}
+.page-b2b .image-shell::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(135deg,oklch(.34 .055 258),oklch(.25 .045 264));opacity:1;transition:opacity .3s var(--ease);pointer-events:none}
+.page-b2b .blog-card__media.image-shell::before{background:linear-gradient(135deg,var(--blue-050),var(--blue-100))}
+.page-b2b .image-shell.image-loaded::before{opacity:0}
+.page-b2b .image-shell>img{position:relative;z-index:1}
+html.image-loading-ready .page-b2b :is(img[loading="lazy"],img.progressive-image){opacity:0;filter:blur(10px);transition:opacity .45s var(--ease),filter .55s var(--ease)}
+html.image-loading-ready .page-b2b img.progressive-image.image-quiet{filter:none}
+html.image-loading-ready .page-b2b img.progressive-image.image-loaded{opacity:1;filter:none}
+html.image-loading-ready .page-b2b img.progressive-image.image-load-failed{opacity:0}
+
 /* Campaign-like entrances; content stays visible when JS or motion is unavailable. */
 @keyframes b2b-enter{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @keyframes b2b-image-settle{from{transform:scale(1.07)}to{transform:scale(1)}}
@@ -239,7 +251,7 @@
   html.motion-ready .page-b2b .motion-card:nth-child(3n+2){transition-delay:65ms}
   html.motion-ready .page-b2b .motion-card:nth-child(3n+3){transition-delay:130ms}
 
-  html.motion-ready .page-b2b .motion-wipe img{clip-path:inset(0 0 100% 0);transform:scale(1.07);transition:clip-path .75s var(--ease),transform 1s var(--ease)}
+  html.motion-ready .page-b2b .motion-wipe img{clip-path:inset(0 0 100% 0);transform:scale(1.07);transition:clip-path .75s var(--ease),transform 1s var(--ease),opacity .45s var(--ease),filter .55s var(--ease)}
   html.motion-ready .page-b2b .motion-wipe.is-visible img{clip-path:inset(0);transform:none}
 }
 @media(max-width:1000px) and (prefers-reduced-motion:no-preference){
@@ -248,4 +260,8 @@
 }
 @media(max-width:680px) and (prefers-reduced-motion:no-preference){
   html.motion-ready .page-b2b .motion-card:nth-child(n){transition-delay:0ms}
+}
+@media(prefers-reduced-motion:reduce){
+  .page-b2b .image-shell::before{transition:opacity .18s linear}
+  html.image-loading-ready .page-b2b :is(img[loading="lazy"],img.progressive-image){filter:none;transition:opacity .18s linear}
 }

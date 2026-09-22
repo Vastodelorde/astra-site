@@ -5,7 +5,7 @@ const link = (page: string) => `${sitePrefix}${page}`;
 ---
 <header class="site-header">
   <div class="container topbar">
-    <a class="brand" href={link(en ? '' : 'index.html')} aria-label={en ? 'ASTRA, home' : 'АСТРА, на головну'}><img class="brand-mark" src={`${pathPrefix}assets/logo-mark.svg`} alt=""><span class="brand-word">{en ? 'ASTRA' : 'АСТРА'}</span></a>
+    <a class="brand" href={link('./')} aria-label={en ? 'ASTRA, home' : 'АСТРА, на головну'}><img class="brand-mark" src={`${pathPrefix}assets/logo-mark.svg`} alt=""><span class="brand-word">{en ? 'ASTRA' : 'АСТРА'}</span></a>
     <span class="t-msgs">
       <a class="t-msg" href={settings.telegramUrl} target="_blank" rel="noopener" aria-label="Telegram"><img src={`${pathPrefix}assets/telegram.svg`} alt=""></a>
       <a class="t-msg" href={settings.viberUrl} target="_blank" rel="noopener" aria-label="Viber"><img src={`${pathPrefix}assets/vb.svg`} alt=""></a>
@@ -17,7 +17,7 @@ const link = (page: string) => `${sitePrefix}${page}`;
   </div>
   <nav class="mainnav" aria-label={en ? 'Main navigation' : 'Головна навігація'}>
     <div class="container"><ul>
-      <li><a class="navlink" href={link(en ? '' : 'index.html')}>ASTRA B2B</a></li>
+      <li><a class="navlink" href={link('./')}>ASTRA B2B</a></li>
       <li><a class="navlink" href={link('maliy.html')}>{en ? 'Small business' : 'Малий бізнес'}</a></li>
       <li><a class="navlink" href={link('seredniy.html')}>{en ? 'Medium business' : 'Середній бізнес'}</a></li>
       <li><a class="navlink" href={link('velykyi.html')}>{en ? 'Large business' : 'Великий бізнес'}</a></li>

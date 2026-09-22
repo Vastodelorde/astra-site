@@ -54,6 +54,12 @@ const siteSettings = mergeContent(siteSettingsFallback, await getSiteSettings())
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07152e">
+<script is:inline>
+  document.documentElement.classList.add('image-loading-ready');
+  window.setTimeout(function () {
+    if (document.documentElement.dataset.imageLoaderActive !== 'true') document.documentElement.classList.remove('image-loading-ready');
+  }, 4000);
+</script>
 <title>{title}</title>
 <meta name="description" content={description}>
 <link rel="canonical" href={canonical}>
