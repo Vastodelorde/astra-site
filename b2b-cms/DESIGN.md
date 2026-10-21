@@ -202,7 +202,7 @@ OKLCH; нейтралі тоновані в navy-відтінок (hue 264). HEX
 | `.size-card` у `.size-grid` (2×2) | b2b | головна: сегменти | `.top` (`.ic` 54px: блакитний квадрат з inline-SVG · `.who` Display 800 · `.rng` muted) → `ul` у 2 колонки з галочками → `.link-arrow` |
 | `.dir-card` у `.grid-3` | b2b | головна, `pro`: 3 напрямки | `.badge` «ASTRA `.mk`ISP» · `p` · `.link-arrow` |
 | `.pain` у `.grid-3` | b2b | головна: болі | `.from` (Display 700, з лінією знизу) → `.to` (muted, блакитна галочка) |
-| `.seg-card` у `.grid-3` | astra + b2b | головна: типи об'єктів | Фото через `style="background-image: linear-gradient(…), url(…)"`, текст білий знизу, мін. висота 230px |
+| `.object-spreads` / `.object-spread` | b2b | головна: типи об'єктів | Відкриті редакційні розвороти 2 + 3: портретні фото різної висоти без затемнення, текст окремо; між розворотами тонкий роздільник. Порядок: кафе, ЖК, готель, офіс, склад. До 900px фото й опис утворюють окремі рядки, до 680px складаються вертикально. |
 | `.diff` у `.grid-2/3` | b2b | головна, `pro`, сегменти | **Navy-800 картка** з білим `h4` і `--on-navy-dim` текстом. Без номерів і eyebrow. |
 | `.card` | astra | `cloud`, `operators`, `taryfy` | Універсальна біла картка |
 | `.pillar` у `.pillars` (3 кол.) | b2b перевизначає astra | `isp`, `operators` | Біла картка: `h4` + `ul` з блакитними крапками. На navy-секції заголовок лишається темним. |
@@ -272,7 +272,7 @@ hero → #taryfy (білий, .trow) → #manager (tint, .mgr, опційно) �
 ```
 (Три tint-секції поспіль є поточним станом. Якщо робити ритм виразнішим, це редизайн, узгоджувати з замовником.)
 
-**Головна:** `hero--home` → size-grid (tint) → dir-card (білий) → pain (tint) → seg-card (білий) → diff (navy) → ref-grid + partners (tint) → cta-band.
+**Головна:** `hero--home` → size-grid (tint) → dir-card (білий) → pain (tint) → object-spreads (білий) → diff (navy) → ref-grid + partners (tint) → cta-band.
 
 ---
 

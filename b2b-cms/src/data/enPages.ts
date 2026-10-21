@@ -103,11 +103,11 @@ export const enPages: Record<string, EnglishPage> = {
         { title: 'Security risks', body: 'Reliable data protection and 24/7 video monitoring of the perimeter.' },
       ] },
       { kind: 'cards', id: 'objects', heading: 'Solutions by property type', lead: 'We build and maintain digital infrastructure around the specific needs of each type of property.', items: [
-        { title: 'Offices and business centers', body: 'Scalable from 1 to 500+ workstations, with seamless Wi-Fi and secure corporate VPN connections.', image: 'img/home-office.webp' },
-        { title: 'Residential complexes', body: 'Internet solutions for residential complexes, automation and unified access control and security systems.', image: 'img/home-residential.webp' },
         { title: 'Restaurants, cafes and retail chains', body: 'Connect hundreds of branches into one isolated network. Reliable guest Wi-Fi, access control and structured cabling.', image: 'img/home-retail.webp' },
-        { title: 'Warehouses and manufacturing', body: 'Reliable coverage across large areas for IoT devices, scanners and data collection terminals.', image: 'img/home-warehouse.webp' },
+        { title: 'Residential complexes', body: 'Internet solutions for residential complexes, automation and unified access control and security systems.', image: 'img/home-residential.webp' },
         { title: 'Hotels and coworking spaces', body: 'Secure enterprise-grade Wi-Fi, flexible traffic management and intelligent network analytics.', image: 'img/home-hospitality.webp' },
+        { title: 'Offices and business centers', body: 'Scalable from 1 to 500+ workstations, with seamless Wi-Fi and secure corporate VPN connections.', image: 'img/home-office.webp' },
+        { title: 'Warehouses and manufacturing', body: 'Reliable coverage across large areas for IoT devices, scanners and data collection terminals.', image: 'img/home-warehouse.webp' },
       ] },
       { kind: 'cards', tone: 'navy', id: 'chomu', heading: 'A partnership model that frees you from connectivity concerns', lead: 'We take care of the technical issues so you can focus on your business.', items: [
         { title: 'Personal approach and service', body: 'Your dedicated manager knows the specifics of every location, coordinates technical teams and resolves your questions quickly.' },

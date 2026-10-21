@@ -22,6 +22,50 @@
 .page-b2b .seg-card h4{margin:0 0 9px;line-height:1.15}
 .page-b2b .seg-card p{margin:0}
 
+.page-b2b .object-spreads{margin-top:56px}
+.page-b2b .object-spread{display:grid;column-gap:16px;row-gap:32px}
+.page-b2b .object-spread--pair{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1.85fr);grid-template-rows:1fr 1fr}
+.page-b2b .object-spread + .object-spread{margin-top:64px;padding-top:64px;border-top:1px solid var(--line)}
+.page-b2b .object-spread__item{display:contents}
+.page-b2b .object-spread__photo{position:relative;min-width:0;margin:0;overflow:hidden;background:var(--surface-2)}
+.page-b2b .object-spread__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.page-b2b .object-spread__copy{min-width:0}
+.page-b2b .object-spread__copy h3{margin:0 0 16px;font-size:1.75rem;line-height:1.2;letter-spacing:0;overflow-wrap:break-word}
+.page-b2b .object-spread__copy p{margin:0;font-size:1rem;line-height:1.65;color:var(--muted)}
+.page-b2b .object-spread--pair .object-spread__photo{grid-row:1 / 3;align-self:center;aspect-ratio:4 / 5}
+.page-b2b .object-spread--pair .object-spread__item:first-child .object-spread__photo{grid-column:1;aspect-ratio:3 / 4}
+.page-b2b .object-spread--pair .object-spread__item:nth-child(2) .object-spread__photo{grid-column:2}
+.page-b2b .object-spread--pair .object-spread__copy{grid-column:3;padding-left:48px}
+.page-b2b .object-spread--pair .object-spread__item:first-child .object-spread__copy{grid-row:1;align-self:end}
+.page-b2b .object-spread--pair .object-spread__item:nth-child(2) .object-spread__copy{grid-row:2;align-self:start}
+.page-b2b .object-spread--trio{grid-template-columns:minmax(0,2.3fr) repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,1fr);column-gap:12px;row-gap:28px}
+.page-b2b .object-spread--trio .object-spread__copy{grid-column:1;align-self:center;padding-right:48px}
+.page-b2b .object-spread--trio .object-spread__photo{grid-row:1 / 4;align-self:start;aspect-ratio:1 / 2}
+.page-b2b .object-spread--trio .object-spread__item:first-child .object-spread__copy{grid-row:1}
+.page-b2b .object-spread--trio .object-spread__item:first-child .object-spread__photo{grid-column:2}
+.page-b2b .object-spread--trio .object-spread__item:nth-child(2) .object-spread__copy{grid-row:2}
+.page-b2b .object-spread--trio .object-spread__item:nth-child(2) .object-spread__photo{grid-column:3;aspect-ratio:3 / 7}
+.page-b2b .object-spread--trio .object-spread__item:nth-child(3) .object-spread__copy{grid-row:3}
+.page-b2b .object-spread--trio .object-spread__item:nth-child(3) .object-spread__photo{grid-column:4;aspect-ratio:3 / 5;align-self:center}
+@media(max-width:1080px){
+  .page-b2b .object-spread--pair .object-spread__copy{padding-left:24px}
+  .page-b2b .object-spread--trio .object-spread__copy{padding-right:24px}
+  .page-b2b .object-spread__copy h3{font-size:1.5rem}
+  .page-b2b .object-spread__copy p{font-size:.94rem}
+}
+@media(max-width:900px){
+  .page-b2b .object-spreads{margin-top:40px}
+  .page-b2b .object-spread{display:flex;flex-direction:column;gap:40px}
+  .page-b2b .object-spread + .object-spread{margin-top:40px;padding-top:40px}
+  .page-b2b .object-spread .object-spread__item{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:32px;align-items:center}
+  .page-b2b .object-spread .object-spread__item:nth-child(n) .object-spread__photo{grid-area:auto;align-self:center;aspect-ratio:4 / 3}
+  .page-b2b .object-spread .object-spread__item:nth-child(n) .object-spread__copy{grid-area:auto;padding:0;align-self:center}
+}
+@media(max-width:680px){
+  .page-b2b .object-spread .object-spread__item{grid-template-columns:1fr;gap:22px}
+  .page-b2b .object-spread__copy h3{margin-bottom:12px}
+}
+
 .page-b2b .pain{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px}
 .page-b2b .pain .from{display:block;font-family:var(--font-display);font-weight:700;font-size:1.02rem;color:var(--navy-900);padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(--line)}
 .page-b2b .pain .to{display:flex;align-items:flex-start;gap:10px;font-size:.94rem;color:var(--muted);line-height:1.55}

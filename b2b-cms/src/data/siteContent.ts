@@ -39,11 +39,11 @@ const homePainsUk = [
 ];
 
 const homeObjectsUk = [
-  { key: 'offices', title: 'Офіси та бізнес-центри', body: 'Масштабований від 1 до 500+ робочих місць, безшовний Wi-Fi та захищені корпоративні VPN-канали.', imagePath: 'img/home-office.webp' },
-  { key: 'residential', title: 'Житлові комплекси', body: 'Інтернет-рішення для ЖК, автоматизація та уніфікація систем контролю доступу та безпеки.', imagePath: 'img/home-residential.webp' },
   { key: 'retail', title: 'Ресторани, кафе та рітейл-мережі', body: 'Об’єднання сотень філій в єдину ізольовану мережу. Надійний гостьовий Wi-Fi, СКУД та СКС.', imagePath: 'img/home-retail.webp' },
-  { key: 'warehouse', title: 'Склади та виробництва', body: 'Стабільне покриття великих площ для IoT-пристроїв, сканерів та терміналів збору даних.', imagePath: 'img/home-warehouse.webp' },
+  { key: 'residential', title: 'Житлові комплекси', body: 'Інтернет-рішення для ЖК, автоматизація та уніфікація систем контролю доступу та безпеки.', imagePath: 'img/home-residential.webp' },
   { key: 'hospitality', title: 'Готелі та коворкінги', body: 'Безпечний Wi-Fi Enterprise-рівня, гнучке керування трафіком та розумна аналітика мережі.', imagePath: 'img/home-hospitality.webp' },
+  { key: 'offices', title: 'Офіси та бізнес-центри', body: 'Масштабований від 1 до 500+ робочих місць, безшовний Wi-Fi та захищені корпоративні VPN-канали.', imagePath: 'img/home-office.webp' },
+  { key: 'warehouse', title: 'Склади та виробництва', body: 'Стабільне покриття великих площ для IoT-пристроїв, сканерів та терміналів збору даних.', imagePath: 'img/home-warehouse.webp' },
 ];
 
 const homeCollabUk = [
