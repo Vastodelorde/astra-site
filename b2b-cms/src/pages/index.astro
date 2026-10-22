@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
   import BlogCard from '../components/BlogCard.astro';
   import BusinessSizeIcon from '../components/BusinessSizeIcon.astro';
+  import ObjectSpreads from '../components/ObjectSpreads.astro';
   import { homePageFallback } from '../data/siteContent';
   import { getBlogPosts, getManagedPage } from '../lib/sanity';
   import { getSection, localize, mergeContent } from '../lib/content';
@@ -92,9 +93,7 @@ import Layout from '../layouts/Layout.astro';
         <h2>{t(objects.heading)}</h2>
         <p class="lead">{t(objects.lead)}</p>
       </div>
-      <div class="grid grid-3">
-        {objects.items?.map((item: any) => <article class="seg-card" style={`background-image:linear-gradient(180deg,transparent 30%,oklch(0.18 0.04 264 /.9)),url('${item.imagePath}')`}><div><h4>{t(item.title)}</h4><p>{t(item.body)}</p></div></article>)}
-      </div>
+      <ObjectSpreads items={(objects.items || []).map((item: any) => ({ title: t(item.title), body: t(item.body), image: item.imagePath, imageAlt: t(item.imageAlt) }))} />
     </div>
   </section>
 

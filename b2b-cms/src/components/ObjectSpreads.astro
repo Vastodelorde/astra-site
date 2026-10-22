@@ -1,0 +1,32 @@
+---
+interface ObjectItem {
+  title: string;
+  body: string;
+  image: string;
+  imageAlt?: string;
+}
+
+interface Props {
+  items: ObjectItem[];
+}
+
+const { items } = Astro.props;
+const spreads = [items.slice(0, 2), items.slice(2)];
+---
+<div class="object-spreads">
+  {spreads.filter((spread) => spread.length).map((spread, index) => (
+    <div class:list={['object-spread', index === 0 ? 'object-spread--pair' : 'object-spread--trio']}>
+      {spread.map((item) => (
+        <article class="object-spread__item">
+          <figure class="object-spread__photo">
+            <img src={item.image} alt={item.imageAlt || item.title} loading="lazy" decoding="async" />
+          </figure>
+          <div class="object-spread__copy">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  ))}
+</div>
