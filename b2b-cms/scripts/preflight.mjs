@@ -138,6 +138,9 @@ async function auditPage(route) {
   for (const tag of html.match(/<a\b[^>]*>/gi) || []) {
     const attrs = attributes(tag);
     if (attrs.target === '_blank') check(/\bnoopener\b/.test(attrs.rel || ''), route, 'target=_blank without rel=noopener');
+    if (route !== '/cms-guide/' && attrs.href) {
+      check(!new URL(attrs.href, url).pathname.split('/').includes('cms-guide'), route, 'staff CMS guide linked from a public page');
+    }
   }
 
   const resources = [
