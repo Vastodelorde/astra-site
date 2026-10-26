@@ -137,6 +137,17 @@ strong{font-weight:600}
 .btn--blue:hover{background:oklch(0.66 0.12 232)}
 .btn--lg{padding:17px 34px;font-size:1.04rem}
 .btn--sm{padding:10px 18px;font-size:0.86rem}
+
+
+/* ASTRA B2C — white button */
+.btn--b2c{background:#fff;color:var(--navy-900);border-color:#fff;box-shadow:0 12px 26px -12px rgba(255,255,255,.45)}
+.btn--b2c:hover{background:#f0f2f6;color:var(--navy-900);border-color:#f0f2f6;box-shadow:0 12px 30px -10px rgba(255,255,255,.60)}
+
+/* Client portal — red button with white outline */
+.btn--cabinet{background:var(--red);color:#fff;border:2px solid #fff;box-shadow:none}
+.btn--cabinet:hover{background:var(--red-600);color:#fff;border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.12)}
+
+
 .btn--block{display:flex;width:100%}
 .btn .ar{transition:transform .25s var(--ease)}
 
